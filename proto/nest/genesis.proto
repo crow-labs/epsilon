@@ -1,0 +1,15 @@
+syntax = "proto3";
+package crowlabs.epsilon.nest;
+
+import "gogoproto/gogo.proto";
+import "nest/params.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/crow-labs/epsilon/x/nest/types";
+
+// GenesisState defines the nest module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  string port_id = 2;
+  // this line is used by starport scaffolding # genesis/proto/state
+}
