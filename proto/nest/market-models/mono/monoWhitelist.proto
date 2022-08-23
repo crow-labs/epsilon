@@ -10,7 +10,7 @@ option go_package = "github.com/crow-labs/epsilon/x/nest/types";
 
 // MonoItem
 message MonoItem{
-    uint64 monoItemId = 1;
+    uint64 itemId = 1;
     string title = 2;
     string description = 3; 
     string sellerAddress = 4;
@@ -20,35 +20,35 @@ message MonoItem{
 
 // MonoSellOrder
 message MonoSellOrder{
-    uint64 monoSellOrderId =  1;
-    uint64 monoSellerId = 2;
-    uint64 monoItemId = 3;
+    uint64 sellOrderId =  1;
+    uint64 sellerId = 2;
+    uint64 itemId = 3;
 }
 
 // MonoBuyOrder
 message MonoBuyOrder{
-    uint64 monoBuyOrderId = 1;
-    uint64 monoBuyerId = 2;
-    uint64 monoItemId = 3;
+    uint64 buyOrderId = 1;
+    uint64 buyerId = 2;
+    uint64 itemId = 3;
 }
 
 // MonoEvidence
 message MonoEvidence{
-    uint64 monoEvidenceId = 1;
-    uint64 monoDisputeId = 2;
+    uint64 evidenceId = 1;
+    uint64 disputeId = 2;
     string externalLink = 3;
 }
 
 //MonoRebuttal
 message MonoRebuttal{
-    uint64 monoRebuttalId = 1;
-    uint64 MonoDisputeId = 2; 
+    uint64 rebuttalId = 1;
+    uint64 disputeId = 2; 
     MonoEvidence evidence = 3;
 }
 
 //monoDispute
 message MonoDispute{
-    uint64 monoDiputeId = 1;
+    uint64 diputeId = 1;
     string title = 2;
     string description = 3;
     MonoEvidenceId evidence = 4;
@@ -72,15 +72,15 @@ message MonoSentence{
 
 // MonoVote
 message MonoVote{
-    uint64 monoVoterId = 1;
-    uint64 monoDisputeId = 2;
-    MonoSentence MonoBuyerId = 3;
+    uint64 voterId = 1;
+    uint64 disputeId = 2;
+    MonoSentence buyerId = 3;
 }
 
 // MonoBuyer
 message MonoBuyer {
     string name =  1;
-    string monoBuyerId = 2;
+    string buyerId = 2;
     string status = 3;
     string address = 4;
     repeated uint64 activeOrderId = 5;
@@ -90,7 +90,7 @@ message MonoBuyer {
 // MonoSeller
 message MonoSeller {
     string name = 1;
-    string monoSellerId = 2;
+    string sellerId = 2;
     string status = 3;
     string address = 4;
     repeated uint64 activeOrderId = 5;
@@ -101,7 +101,7 @@ message MonoSeller {
 // MonoVoter
 message MonoVoter {
     string name = 1;
-    string monoVoterId = 2;
+    string voterId = 2;
     string status = 3;
     string address = 4;
     repeated MonoVote activeVotes = 5;
