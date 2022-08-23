@@ -9,7 +9,7 @@ package crowlabs.epsilon.nest.marketmodels.mono;
 import "nest/market-models/mono/monoDispute.proto";
 import "nest/market-models/mono/monoMarket.proto";
 
-option go_package = "github.com/crow-labs/epsilon/x/nest/market-models";
+option go_package = "github.com/crow-labs/epsilon/x/nest/market-models/mono";
 
 // Buyer defines a buyer in a marketplace where each listing has a quanity of one
 message Buyer {
@@ -19,6 +19,7 @@ message Buyer {
     string address = 4;
     repeated uint64 activeOrderId = 5;
     repeated uint64 completedOrderId = 6;
+    string contactInfo = 7;
 }
 
 // Seller defines a seller in the mono marketplace
@@ -30,6 +31,7 @@ message Seller {
     repeated uint64 activeOrderId = 5;
     repeated Item activeItems = 6;
     repeated uint64 completedOrderId = 7;
+    string contactInfo = 8;
 }
 
 // Voter defines a voter for the mono marketplace

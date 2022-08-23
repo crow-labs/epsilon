@@ -5,7 +5,7 @@ import "gogoproto/gogo.proto";
 import "nest/params.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
-option go_package = "github.com/crow-labs/epsilon/x/nest/market-models";
+option go_package = "github.com/crow-labs/epsilon/x/nest/market-models/mono";
 
 // GenesisState defines the nest module's genesis state.
 message GenesisState {

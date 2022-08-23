@@ -1,9 +1,16 @@
 package mono
 
-import "github.com/crow-labs/epsilon/x/nest/types"
+import (
+	"fmt"
+
+	"github.com/crow-labs/epsilon/x/nest/types"
+)
 
 const (
 	whitelistedStatus = "whitelisted"
+	monoBuyerPrefix   = "MonoBuyer%d/"
+	monoSellerPrefix  = "MonoSeller%d/"
+	monoVoterPrefix   = "MonoSeller%d/"
 )
 
 var (
@@ -15,19 +22,47 @@ var (
 // NewMonoBuyer returns a buyer for the mono whitelist
 // Invariants that are assumed and not checked:
 //  * buyerId doesn't already exist
-func NewMonoBuyer(buyerId uint64, name, status, address string) Buyer {
+func NewMonoBuyer(buyerId uint64, name, status, address, contactInfo string) Buyer {
 
-	activeOrders := make(map[uint64]types.BuyOrderI)
-	completedOrders := make(map[uint64]types.BuyOrderI)
+	activeOrders := make([]uint64, 0)
+	completedOrders := make([]uint64, 0)
+
+	prefixedId := fmt.Sprintf(monoBuyerPrefix, buyerId)
 
 	buyer := &Buyer{
 		Name:             name,
-		BuyerId:          buyerId,
+		BuyerId:          prefixedId,
 		Status:           whitelistedStatus,
 		Address:          address,
 		ActiveOrderId:    activeOrders,
 		CompletedOrderId: completedOrders,
+		ContactInfo:      contactInfo,
 	}
 
-	return buyer
+	return *buyer
+}
+
+// NewMonoSeller returns a seller for the mono whitelist
+// Invariants that are assumed but not checked:
+//  * sellerId doesn't already exist
+func NewMonoSeller(sellerId uint64, name, status, address, contactInfo string) Seller {
+
+	activeOrders := make([]uint64, 0)
+	completedOrders := make([]uint64, 0)
+	activeItems := make([]*Item, 0)
+
+	prefixedId := fmt.Sprintf(monoSellerPrefix, sellerId)
+
+	seller := &Seller{
+		Name:             name,
+		SellerId:         prefixedId,
+		Status:           whitelistedStatus,
+		Address:          address,
+		ActiveOrderId:    activeOrders,
+		ActiveItems:      activeItems,
+		CompletedOrderId: completedOrders,
+		ContactInfo:      contactInfo,
+	}
+
+	return *seller
 }

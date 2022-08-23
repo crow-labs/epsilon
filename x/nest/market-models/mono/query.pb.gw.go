@@ -2,11 +2,11 @@
 // source: nest/query.proto
 
 /*
-Package market_models is a reverse proxy.
+Package mono is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package market_models
+package mono
 
 import (
 	"context"
