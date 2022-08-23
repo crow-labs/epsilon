@@ -7,6 +7,6 @@ option go_package = "github.com/crow-labs/epsilon/x/nest/market-models";
 
 // Params defines the parameters for the module.
 message Params {
-  option (gogoproto.goproto_stringer) = false;
+  option (gogoproto.goproto_stringer) = true;
   
 }
