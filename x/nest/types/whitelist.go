@@ -13,12 +13,12 @@ import (
 type MemberI interface {
 	proto.Message
 
-	GetName(id string) (string, error)
-	GetId(AccAddr sdk.AccAddress) string
+	GetName() string
+	GetId(sdk.AccAddress) string
 	String() string
-	IsActive(id string, ctx sdk.Context) bool
-	IsJailed(id string, ctx sdk.Context) bool
-	IsBlacklisted(id string, ctx sdk.Context) bool
+	IsWhitelisted() bool
+	IsJailed() bool
+	IsBlacklisted() bool
 }
 
 // MarketActorI is an extension of the MemberI interface
@@ -29,16 +29,6 @@ type MarketActorI interface {
 
 	GetPrevOrders() []OrderI
 	GetActiveOrders() []OrderI
-
-	// Lists the order on the marketplace. Buy orders will deposit funds
-	// and sell orders will deposit collateral
-	OpenOrder(OrderI) error
-
-	// Removes deposit/collateral if order not yet confirmed
-	CloseOrder(OrderI) error
-
-	// Removes listing and loose collateral
-	CancelOrder(OrderI) error
 }
 
 // BuyerI defines an interface for a buyer in the marketplace
@@ -46,7 +36,17 @@ type MarketActorI interface {
 type BuyerI interface {
 	MarketActorI
 
-	GetAddress(id string) sdk.AccAddress
+	// Lists the order on the marketplace. Buy orders will deposit funds
+	// and sell orders will deposit collateral
+	OpenOrder(BuyOrderI) error
+
+	// Removes deposit/collateral if order not yet confirmed
+	CloseOrder(BuyOrderI) error
+
+	// Removes listing and loose collateral
+	CancelOrder(BuyOrderI) error
+
+	GetAddress() string
 	ConfirmBuyOrder(BuyOrderI) error
 }
 
@@ -54,7 +54,17 @@ type BuyerI interface {
 type SellerI interface {
 	MarketActorI
 
-	GetAddress(id string) sdk.AccAddress
+	// Lists the order on the marketplace. Buy orders will deposit funds
+	// and sell orders will deposit collateral
+	OpenOrder(SellOrderI) error
+
+	// Removes deposit/collateral if order not yet confirmed
+	CloseOrder(SellOrderI) error
+
+	// Removes listing and loose collateral
+	CancelOrder(SellOrderI) error
+
+	GetAddress() string
 	ListItem(ItemI) error
 	CreateItem(title string, desc string, sellerId string, price sdk.Coins, collateral sdk.Coins) (ItemI, error)
 	ConfirmSellOrder(SellOrderI) error
@@ -65,5 +75,5 @@ type VoterI interface {
 	MemberI
 
 	GetVotingPower() sdk.Int
-	VoteForDispute(DisputeI, VoteI)
+	VoteForDispute(DisputeI, VoteI) uint64
 }

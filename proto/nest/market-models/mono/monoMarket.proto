@@ -19,7 +19,7 @@ message Item{
 }
 
 // SellOrder defines the sell order placed by a seller in the mono marketplace
-message MonoSellOrder{
+message SellOrder{
     uint64 sellOrderId =  1;
     uint64 sellerId = 2;
     uint64 itemId = 3;
