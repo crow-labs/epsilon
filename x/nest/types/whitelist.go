@@ -59,3 +59,11 @@ type SellerI interface {
 	CreateItem(title string, desc string, sellerId string, price sdk.Coins, collateral sdk.Coins) (ItemI, error)
 	ConfirmSellOrder(SellOrderI) error
 }
+
+// VoterI defines an interface for a voter who votes to settle disputes in the marketplace
+type VoterI interface {
+	MemberI
+
+	GetVotingPower() sdk.Int
+	VoteForDispute(DisputeI, VoteI)
+}
