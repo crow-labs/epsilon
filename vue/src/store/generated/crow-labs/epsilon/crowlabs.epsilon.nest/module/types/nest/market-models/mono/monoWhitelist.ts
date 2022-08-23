@@ -1,13 +1,13 @@
 /* eslint-disable */
 import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import { MonoItem } from "../../../nest/market-models/mono/monoMarket";
-import { MonoVote } from "../../../nest/market-models/mono/monoDispute";
+import { Item } from "../../../nest/market-models/mono/monoMarket";
+import { Vote } from "../../../nest/market-models/mono/monoDispute";
 
 export const protobufPackage = "crowlabs.epsilon.nest.marketmodels.mono";
 
-/** MonoBuyer defines a buyer in a marketplace where each listing has a quanity of one */
-export interface MonoBuyer {
+/** Buyer defines a buyer in a marketplace where each listing has a quanity of one */
+export interface Buyer {
   name: string;
   buyerId: string;
   status: string;
@@ -16,28 +16,28 @@ export interface MonoBuyer {
   completedOrderId: number[];
 }
 
-/** MonoSeller defines a seller in the mono marketplace */
-export interface MonoSeller {
+/** Seller defines a seller in the mono marketplace */
+export interface Seller {
   name: string;
   sellerId: string;
   status: string;
   address: string;
   activeOrderId: number[];
-  activeItems: MonoItem[];
+  activeItems: Item[];
   completedOrderId: number[];
 }
 
-/** MonoVoter defines a voter for the mono marketplace */
-export interface MonoVoter {
+/** Voter defines a voter for the mono marketplace */
+export interface Voter {
   name: string;
   voterId: string;
   status: string;
   address: string;
-  activeVotes: MonoVote[];
-  completedVotes: MonoVote[];
+  activeVotes: Vote[];
+  completedVotes: Vote[];
 }
 
-const baseMonoBuyer: object = {
+const baseBuyer: object = {
   name: "",
   buyerId: "",
   status: "",
@@ -46,8 +46,8 @@ const baseMonoBuyer: object = {
   completedOrderId: 0,
 };
 
-export const MonoBuyer = {
-  encode(message: MonoBuyer, writer: Writer = Writer.create()): Writer {
+export const Buyer = {
+  encode(message: Buyer, writer: Writer = Writer.create()): Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -73,10 +73,10 @@ export const MonoBuyer = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoBuyer {
+  decode(input: Reader | Uint8Array, length?: number): Buyer {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoBuyer } as MonoBuyer;
+    const message = { ...baseBuyer } as Buyer;
     message.activeOrderId = [];
     message.completedOrderId = [];
     while (reader.pos < end) {
@@ -126,8 +126,8 @@ export const MonoBuyer = {
     return message;
   },
 
-  fromJSON(object: any): MonoBuyer {
-    const message = { ...baseMonoBuyer } as MonoBuyer;
+  fromJSON(object: any): Buyer {
+    const message = { ...baseBuyer } as Buyer;
     message.activeOrderId = [];
     message.completedOrderId = [];
     if (object.name !== undefined && object.name !== null) {
@@ -166,7 +166,7 @@ export const MonoBuyer = {
     return message;
   },
 
-  toJSON(message: MonoBuyer): unknown {
+  toJSON(message: Buyer): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.buyerId !== undefined && (obj.buyerId = message.buyerId);
@@ -185,8 +185,8 @@ export const MonoBuyer = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoBuyer>): MonoBuyer {
-    const message = { ...baseMonoBuyer } as MonoBuyer;
+  fromPartial(object: DeepPartial<Buyer>): Buyer {
+    const message = { ...baseBuyer } as Buyer;
     message.activeOrderId = [];
     message.completedOrderId = [];
     if (object.name !== undefined && object.name !== null) {
@@ -226,7 +226,7 @@ export const MonoBuyer = {
   },
 };
 
-const baseMonoSeller: object = {
+const baseSeller: object = {
   name: "",
   sellerId: "",
   status: "",
@@ -235,8 +235,8 @@ const baseMonoSeller: object = {
   completedOrderId: 0,
 };
 
-export const MonoSeller = {
-  encode(message: MonoSeller, writer: Writer = Writer.create()): Writer {
+export const Seller = {
+  encode(message: Seller, writer: Writer = Writer.create()): Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -255,7 +255,7 @@ export const MonoSeller = {
     }
     writer.ldelim();
     for (const v of message.activeItems) {
-      MonoItem.encode(v!, writer.uint32(50).fork()).ldelim();
+      Item.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     writer.uint32(58).fork();
     for (const v of message.completedOrderId) {
@@ -265,10 +265,10 @@ export const MonoSeller = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoSeller {
+  decode(input: Reader | Uint8Array, length?: number): Seller {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoSeller } as MonoSeller;
+    const message = { ...baseSeller } as Seller;
     message.activeOrderId = [];
     message.activeItems = [];
     message.completedOrderId = [];
@@ -298,7 +298,7 @@ export const MonoSeller = {
           }
           break;
         case 6:
-          message.activeItems.push(MonoItem.decode(reader, reader.uint32()));
+          message.activeItems.push(Item.decode(reader, reader.uint32()));
           break;
         case 7:
           if ((tag & 7) === 2) {
@@ -322,8 +322,8 @@ export const MonoSeller = {
     return message;
   },
 
-  fromJSON(object: any): MonoSeller {
-    const message = { ...baseMonoSeller } as MonoSeller;
+  fromJSON(object: any): Seller {
+    const message = { ...baseSeller } as Seller;
     message.activeOrderId = [];
     message.activeItems = [];
     message.completedOrderId = [];
@@ -354,7 +354,7 @@ export const MonoSeller = {
     }
     if (object.activeItems !== undefined && object.activeItems !== null) {
       for (const e of object.activeItems) {
-        message.activeItems.push(MonoItem.fromJSON(e));
+        message.activeItems.push(Item.fromJSON(e));
       }
     }
     if (
@@ -368,7 +368,7 @@ export const MonoSeller = {
     return message;
   },
 
-  toJSON(message: MonoSeller): unknown {
+  toJSON(message: Seller): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.sellerId !== undefined && (obj.sellerId = message.sellerId);
@@ -381,7 +381,7 @@ export const MonoSeller = {
     }
     if (message.activeItems) {
       obj.activeItems = message.activeItems.map((e) =>
-        e ? MonoItem.toJSON(e) : undefined
+        e ? Item.toJSON(e) : undefined
       );
     } else {
       obj.activeItems = [];
@@ -394,8 +394,8 @@ export const MonoSeller = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoSeller>): MonoSeller {
-    const message = { ...baseMonoSeller } as MonoSeller;
+  fromPartial(object: DeepPartial<Seller>): Seller {
+    const message = { ...baseSeller } as Seller;
     message.activeOrderId = [];
     message.activeItems = [];
     message.completedOrderId = [];
@@ -426,7 +426,7 @@ export const MonoSeller = {
     }
     if (object.activeItems !== undefined && object.activeItems !== null) {
       for (const e of object.activeItems) {
-        message.activeItems.push(MonoItem.fromPartial(e));
+        message.activeItems.push(Item.fromPartial(e));
       }
     }
     if (
@@ -441,15 +441,10 @@ export const MonoSeller = {
   },
 };
 
-const baseMonoVoter: object = {
-  name: "",
-  voterId: "",
-  status: "",
-  address: "",
-};
+const baseVoter: object = { name: "", voterId: "", status: "", address: "" };
 
-export const MonoVoter = {
-  encode(message: MonoVoter, writer: Writer = Writer.create()): Writer {
+export const Voter = {
+  encode(message: Voter, writer: Writer = Writer.create()): Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -463,18 +458,18 @@ export const MonoVoter = {
       writer.uint32(34).string(message.address);
     }
     for (const v of message.activeVotes) {
-      MonoVote.encode(v!, writer.uint32(42).fork()).ldelim();
+      Vote.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     for (const v of message.completedVotes) {
-      MonoVote.encode(v!, writer.uint32(50).fork()).ldelim();
+      Vote.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoVoter {
+  decode(input: Reader | Uint8Array, length?: number): Voter {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoVoter } as MonoVoter;
+    const message = { ...baseVoter } as Voter;
     message.activeVotes = [];
     message.completedVotes = [];
     while (reader.pos < end) {
@@ -493,10 +488,10 @@ export const MonoVoter = {
           message.address = reader.string();
           break;
         case 5:
-          message.activeVotes.push(MonoVote.decode(reader, reader.uint32()));
+          message.activeVotes.push(Vote.decode(reader, reader.uint32()));
           break;
         case 6:
-          message.completedVotes.push(MonoVote.decode(reader, reader.uint32()));
+          message.completedVotes.push(Vote.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -506,8 +501,8 @@ export const MonoVoter = {
     return message;
   },
 
-  fromJSON(object: any): MonoVoter {
-    const message = { ...baseMonoVoter } as MonoVoter;
+  fromJSON(object: any): Voter {
+    const message = { ...baseVoter } as Voter;
     message.activeVotes = [];
     message.completedVotes = [];
     if (object.name !== undefined && object.name !== null) {
@@ -532,18 +527,18 @@ export const MonoVoter = {
     }
     if (object.activeVotes !== undefined && object.activeVotes !== null) {
       for (const e of object.activeVotes) {
-        message.activeVotes.push(MonoVote.fromJSON(e));
+        message.activeVotes.push(Vote.fromJSON(e));
       }
     }
     if (object.completedVotes !== undefined && object.completedVotes !== null) {
       for (const e of object.completedVotes) {
-        message.completedVotes.push(MonoVote.fromJSON(e));
+        message.completedVotes.push(Vote.fromJSON(e));
       }
     }
     return message;
   },
 
-  toJSON(message: MonoVoter): unknown {
+  toJSON(message: Voter): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.voterId !== undefined && (obj.voterId = message.voterId);
@@ -551,14 +546,14 @@ export const MonoVoter = {
     message.address !== undefined && (obj.address = message.address);
     if (message.activeVotes) {
       obj.activeVotes = message.activeVotes.map((e) =>
-        e ? MonoVote.toJSON(e) : undefined
+        e ? Vote.toJSON(e) : undefined
       );
     } else {
       obj.activeVotes = [];
     }
     if (message.completedVotes) {
       obj.completedVotes = message.completedVotes.map((e) =>
-        e ? MonoVote.toJSON(e) : undefined
+        e ? Vote.toJSON(e) : undefined
       );
     } else {
       obj.completedVotes = [];
@@ -566,8 +561,8 @@ export const MonoVoter = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoVoter>): MonoVoter {
-    const message = { ...baseMonoVoter } as MonoVoter;
+  fromPartial(object: DeepPartial<Voter>): Voter {
+    const message = { ...baseVoter } as Voter;
     message.activeVotes = [];
     message.completedVotes = [];
     if (object.name !== undefined && object.name !== null) {
@@ -592,12 +587,12 @@ export const MonoVoter = {
     }
     if (object.activeVotes !== undefined && object.activeVotes !== null) {
       for (const e of object.activeVotes) {
-        message.activeVotes.push(MonoVote.fromPartial(e));
+        message.activeVotes.push(Vote.fromPartial(e));
       }
     }
     if (object.completedVotes !== undefined && object.completedVotes !== null) {
       for (const e of object.completedVotes) {
-        message.completedVotes.push(MonoVote.fromPartial(e));
+        message.completedVotes.push(Vote.fromPartial(e));
       }
     }
     return message;

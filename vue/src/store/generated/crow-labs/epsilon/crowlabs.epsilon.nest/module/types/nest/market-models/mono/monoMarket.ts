@@ -5,8 +5,8 @@ import { Coin } from "../../../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "crowlabs.epsilon.nest.marketmodels.mono";
 
-/** MonoItem defines an item on the mono marketplace, listed by a mono seller */
-export interface MonoItem {
+/** Item defines an item on the mono marketplace, listed by a mono seller */
+export interface Item {
   itemId: number;
   title: string;
   description: string;
@@ -15,29 +15,29 @@ export interface MonoItem {
   collateral: Coin[];
 }
 
-/** MonoSellOrder defines the sell order placed by a seller in the mono marketplace */
+/** SellOrder defines the sell order placed by a seller in the mono marketplace */
 export interface MonoSellOrder {
   sellOrderId: number;
   sellerId: number;
   itemId: number;
 }
 
-/** MonoBuyOrder defines the buy order placed by a buyer in the mono Marketplace */
-export interface MonoBuyOrder {
+/** BuyOrder defines the buy order placed by a buyer in the mono Marketplace */
+export interface BuyOrder {
   buyOrderId: number;
   buyerId: number;
   itemId: number;
 }
 
-const baseMonoItem: object = {
+const baseItem: object = {
   itemId: 0,
   title: "",
   description: "",
   sellerAddress: "",
 };
 
-export const MonoItem = {
-  encode(message: MonoItem, writer: Writer = Writer.create()): Writer {
+export const Item = {
+  encode(message: Item, writer: Writer = Writer.create()): Writer {
     if (message.itemId !== 0) {
       writer.uint32(8).uint64(message.itemId);
     }
@@ -59,10 +59,10 @@ export const MonoItem = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoItem {
+  decode(input: Reader | Uint8Array, length?: number): Item {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoItem } as MonoItem;
+    const message = { ...baseItem } as Item;
     message.minPrice = [];
     message.collateral = [];
     while (reader.pos < end) {
@@ -94,8 +94,8 @@ export const MonoItem = {
     return message;
   },
 
-  fromJSON(object: any): MonoItem {
-    const message = { ...baseMonoItem } as MonoItem;
+  fromJSON(object: any): Item {
+    const message = { ...baseItem } as Item;
     message.minPrice = [];
     message.collateral = [];
     if (object.itemId !== undefined && object.itemId !== null) {
@@ -131,7 +131,7 @@ export const MonoItem = {
     return message;
   },
 
-  toJSON(message: MonoItem): unknown {
+  toJSON(message: Item): unknown {
     const obj: any = {};
     message.itemId !== undefined && (obj.itemId = message.itemId);
     message.title !== undefined && (obj.title = message.title);
@@ -156,8 +156,8 @@ export const MonoItem = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoItem>): MonoItem {
-    const message = { ...baseMonoItem } as MonoItem;
+  fromPartial(object: DeepPartial<Item>): Item {
+    const message = { ...baseItem } as Item;
     message.minPrice = [];
     message.collateral = [];
     if (object.itemId !== undefined && object.itemId !== null) {
@@ -284,10 +284,10 @@ export const MonoSellOrder = {
   },
 };
 
-const baseMonoBuyOrder: object = { buyOrderId: 0, buyerId: 0, itemId: 0 };
+const baseBuyOrder: object = { buyOrderId: 0, buyerId: 0, itemId: 0 };
 
-export const MonoBuyOrder = {
-  encode(message: MonoBuyOrder, writer: Writer = Writer.create()): Writer {
+export const BuyOrder = {
+  encode(message: BuyOrder, writer: Writer = Writer.create()): Writer {
     if (message.buyOrderId !== 0) {
       writer.uint32(8).uint64(message.buyOrderId);
     }
@@ -300,10 +300,10 @@ export const MonoBuyOrder = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoBuyOrder {
+  decode(input: Reader | Uint8Array, length?: number): BuyOrder {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoBuyOrder } as MonoBuyOrder;
+    const message = { ...baseBuyOrder } as BuyOrder;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -324,8 +324,8 @@ export const MonoBuyOrder = {
     return message;
   },
 
-  fromJSON(object: any): MonoBuyOrder {
-    const message = { ...baseMonoBuyOrder } as MonoBuyOrder;
+  fromJSON(object: any): BuyOrder {
+    const message = { ...baseBuyOrder } as BuyOrder;
     if (object.buyOrderId !== undefined && object.buyOrderId !== null) {
       message.buyOrderId = Number(object.buyOrderId);
     } else {
@@ -344,7 +344,7 @@ export const MonoBuyOrder = {
     return message;
   },
 
-  toJSON(message: MonoBuyOrder): unknown {
+  toJSON(message: BuyOrder): unknown {
     const obj: any = {};
     message.buyOrderId !== undefined && (obj.buyOrderId = message.buyOrderId);
     message.buyerId !== undefined && (obj.buyerId = message.buyerId);
@@ -352,8 +352,8 @@ export const MonoBuyOrder = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoBuyOrder>): MonoBuyOrder {
-    const message = { ...baseMonoBuyOrder } as MonoBuyOrder;
+  fromPartial(object: DeepPartial<BuyOrder>): BuyOrder {
+    const message = { ...baseBuyOrder } as BuyOrder;
     if (object.buyOrderId !== undefined && object.buyOrderId !== null) {
       message.buyOrderId = object.buyOrderId;
     } else {

@@ -8,47 +8,47 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/crow-labs/epsilon/x/nest/market-models";
 
-// MonoEvidence defines evidence for a dispute/rebutal in the mono marketplace
-message MonoEvidence{
+// Evidence defines evidence for a dispute/rebutal in the mono marketplace
+message Evidence{
     uint64 evidenceId = 1;
     uint64 disputeId = 2;
     string externalLink = 3;
 }
 
-//MonoRebuttal defines the rebutal for a raised dispute in the mono marketplace
-message MonoRebuttal{
+//Rebuttal defines the rebutal for a raised dispute in the mono marketplace
+message Rebuttal{
     uint64 rebuttalId = 1;
     uint64 disputeId = 2; 
-    MonoEvidence evidence = 3;
+    Evidence evidence = 3;
 }
 
-//monoDispute defines a dispute over a mono markeplace exchange of physical goods
-message MonoDispute{
+//Dispute defines a dispute over a mono markeplace exchange of physical goods
+message Dispute{
     uint64 diputeId = 1;
     string title = 2;
     string description = 3;
-    MonoEvidence evidence = 4;
+    Evidence evidence = 4;
 }
 
-// MonoFundDistribution defines a structure to divide distributed funds in
-message MonoFundDistribution{
+// FundDistribution defines a structure to divide distributed funds in
+message FundDistribution{
     repeated cosmos.base.v1beta1.Coin plaintifAmount = 1 [(gogoproto.nullable) = false];
     repeated cosmos.base.v1beta1.Coin defendantAmount = 2 [(gogoproto.nullable) = false];
 }
 
-// MonoSentence defines the outcome of a dispute
-message MonoSentence{
+// Sentence defines the outcome of a dispute
+message Sentence{
     uint64 voteId = 1;
     bool plaintifGuilty = 2;
     bool defendantGuilty = 3;
     bool plainttifBlacklisted = 4;
     bool defendantBlacklisted = 5;
-    MonoFundDistribution fundDistr = 6;
+    FundDistribution fundDistr = 6;
 }
 
-// MonoVote defines the vote that is cast for a MonoDispute
-message MonoVote{
+// Vote defines the vote that is cast for a MonoDispute
+message Vote{
     uint64 voterId = 1;
     uint64 disputeId = 2;
-    MonoSentence buyerId = 3;
+    Sentence buyerId = 3;
 }

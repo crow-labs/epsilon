@@ -8,8 +8,8 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/crow-labs/epsilon/x/nest/market-models";
 
-// MonoItem defines an item on the mono marketplace, listed by a mono seller
-message MonoItem{
+// Item defines an item on the mono marketplace, listed by a mono seller
+message Item{
     uint64 itemId = 1;
     string title = 2;
     string description = 3; 
@@ -18,15 +18,15 @@ message MonoItem{
     repeated cosmos.base.v1beta1.Coin collateral = 6 [(gogoproto.nullable) = false]; 
 }
 
-// MonoSellOrder defines the sell order placed by a seller in the mono marketplace
+// SellOrder defines the sell order placed by a seller in the mono marketplace
 message MonoSellOrder{
     uint64 sellOrderId =  1;
     uint64 sellerId = 2;
     uint64 itemId = 3;
 } 
 
-// MonoBuyOrder defines the buy order placed by a buyer in the mono Marketplace
-message MonoBuyOrder{
+// BuyOrder defines the buy order placed by a buyer in the mono Marketplace
+message BuyOrder{
     uint64 buyOrderId = 1;
     uint64 buyerId = 2;
     uint64 itemId = 3;

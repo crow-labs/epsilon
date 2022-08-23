@@ -11,8 +11,8 @@ import "nest/market-models/mono/monoMarket.proto";
 
 option go_package = "github.com/crow-labs/epsilon/x/nest/market-models";
 
-// MonoBuyer defines a buyer in a marketplace where each listing has a quanity of one
-message MonoBuyer {
+// Buyer defines a buyer in a marketplace where each listing has a quanity of one
+message Buyer {
     string name =  1;
     string buyerId = 2;
     string status = 3;
@@ -21,23 +21,23 @@ message MonoBuyer {
     repeated uint64 completedOrderId = 6;
 }
 
-// MonoSeller defines a seller in the mono marketplace
-message MonoSeller {
+// Seller defines a seller in the mono marketplace
+message Seller {
     string name = 1;
     string sellerId = 2;
     string status = 3;
     string address = 4;
     repeated uint64 activeOrderId = 5;
-    repeated MonoItem activeItems = 6;
+    repeated Item activeItems = 6;
     repeated uint64 completedOrderId = 7;
 }
 
-// MonoVoter defines a voter for the mono marketplace
-message MonoVoter {
+// Voter defines a voter for the mono marketplace
+message Voter {
     string name = 1;
     string voterId = 2;
     string status = 3;
     string address = 4;
-    repeated MonoVote activeVotes = 5;
-    repeated MonoVote completedVotes = 6;
+    repeated Vote activeVotes = 5;
+    repeated Vote completedVotes = 6;
 }

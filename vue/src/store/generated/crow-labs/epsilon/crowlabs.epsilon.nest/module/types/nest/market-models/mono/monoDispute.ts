@@ -5,59 +5,55 @@ import { Coin } from "../../../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "crowlabs.epsilon.nest.marketmodels.mono";
 
-/** MonoEvidence defines evidence for a dispute/rebutal in the mono marketplace */
-export interface MonoEvidence {
+/** Evidence defines evidence for a dispute/rebutal in the mono marketplace */
+export interface Evidence {
   evidenceId: number;
   disputeId: number;
   externalLink: string;
 }
 
-/** MonoRebuttal defines the rebutal for a raised dispute in the mono marketplace */
-export interface MonoRebuttal {
+/** Rebuttal defines the rebutal for a raised dispute in the mono marketplace */
+export interface Rebuttal {
   rebuttalId: number;
   disputeId: number;
-  evidence: MonoEvidence | undefined;
+  evidence: Evidence | undefined;
 }
 
-/** monoDispute defines a dispute over a mono markeplace exchange of physical goods */
-export interface MonoDispute {
+/** Dispute defines a dispute over a mono markeplace exchange of physical goods */
+export interface Dispute {
   diputeId: number;
   title: string;
   description: string;
-  evidence: MonoEvidence | undefined;
+  evidence: Evidence | undefined;
 }
 
-/** MonoFundDistribution defines a structure to divide distributed funds in */
-export interface MonoFundDistribution {
+/** FundDistribution defines a structure to divide distributed funds in */
+export interface FundDistribution {
   plaintifAmount: Coin[];
   defendantAmount: Coin[];
 }
 
-/** MonoSentence defines the outcome of a dispute */
-export interface MonoSentence {
+/** Sentence defines the outcome of a dispute */
+export interface Sentence {
   voteId: number;
   plaintifGuilty: boolean;
   defendantGuilty: boolean;
   plainttifBlacklisted: boolean;
   defendantBlacklisted: boolean;
-  fundDistr: MonoFundDistribution | undefined;
+  fundDistr: FundDistribution | undefined;
 }
 
-/** MonoVote defines the vote that is cast for a MonoDispute */
-export interface MonoVote {
+/** Vote defines the vote that is cast for a MonoDispute */
+export interface Vote {
   voterId: number;
   disputeId: number;
-  buyerId: MonoSentence | undefined;
+  buyerId: Sentence | undefined;
 }
 
-const baseMonoEvidence: object = {
-  evidenceId: 0,
-  disputeId: 0,
-  externalLink: "",
-};
+const baseEvidence: object = { evidenceId: 0, disputeId: 0, externalLink: "" };
 
-export const MonoEvidence = {
-  encode(message: MonoEvidence, writer: Writer = Writer.create()): Writer {
+export const Evidence = {
+  encode(message: Evidence, writer: Writer = Writer.create()): Writer {
     if (message.evidenceId !== 0) {
       writer.uint32(8).uint64(message.evidenceId);
     }
@@ -70,10 +66,10 @@ export const MonoEvidence = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoEvidence {
+  decode(input: Reader | Uint8Array, length?: number): Evidence {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoEvidence } as MonoEvidence;
+    const message = { ...baseEvidence } as Evidence;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -94,8 +90,8 @@ export const MonoEvidence = {
     return message;
   },
 
-  fromJSON(object: any): MonoEvidence {
-    const message = { ...baseMonoEvidence } as MonoEvidence;
+  fromJSON(object: any): Evidence {
+    const message = { ...baseEvidence } as Evidence;
     if (object.evidenceId !== undefined && object.evidenceId !== null) {
       message.evidenceId = Number(object.evidenceId);
     } else {
@@ -114,7 +110,7 @@ export const MonoEvidence = {
     return message;
   },
 
-  toJSON(message: MonoEvidence): unknown {
+  toJSON(message: Evidence): unknown {
     const obj: any = {};
     message.evidenceId !== undefined && (obj.evidenceId = message.evidenceId);
     message.disputeId !== undefined && (obj.disputeId = message.disputeId);
@@ -123,8 +119,8 @@ export const MonoEvidence = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoEvidence>): MonoEvidence {
-    const message = { ...baseMonoEvidence } as MonoEvidence;
+  fromPartial(object: DeepPartial<Evidence>): Evidence {
+    const message = { ...baseEvidence } as Evidence;
     if (object.evidenceId !== undefined && object.evidenceId !== null) {
       message.evidenceId = object.evidenceId;
     } else {
@@ -144,10 +140,10 @@ export const MonoEvidence = {
   },
 };
 
-const baseMonoRebuttal: object = { rebuttalId: 0, disputeId: 0 };
+const baseRebuttal: object = { rebuttalId: 0, disputeId: 0 };
 
-export const MonoRebuttal = {
-  encode(message: MonoRebuttal, writer: Writer = Writer.create()): Writer {
+export const Rebuttal = {
+  encode(message: Rebuttal, writer: Writer = Writer.create()): Writer {
     if (message.rebuttalId !== 0) {
       writer.uint32(8).uint64(message.rebuttalId);
     }
@@ -155,15 +151,15 @@ export const MonoRebuttal = {
       writer.uint32(16).uint64(message.disputeId);
     }
     if (message.evidence !== undefined) {
-      MonoEvidence.encode(message.evidence, writer.uint32(26).fork()).ldelim();
+      Evidence.encode(message.evidence, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoRebuttal {
+  decode(input: Reader | Uint8Array, length?: number): Rebuttal {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoRebuttal } as MonoRebuttal;
+    const message = { ...baseRebuttal } as Rebuttal;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -174,7 +170,7 @@ export const MonoRebuttal = {
           message.disputeId = longToNumber(reader.uint64() as Long);
           break;
         case 3:
-          message.evidence = MonoEvidence.decode(reader, reader.uint32());
+          message.evidence = Evidence.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -184,8 +180,8 @@ export const MonoRebuttal = {
     return message;
   },
 
-  fromJSON(object: any): MonoRebuttal {
-    const message = { ...baseMonoRebuttal } as MonoRebuttal;
+  fromJSON(object: any): Rebuttal {
+    const message = { ...baseRebuttal } as Rebuttal;
     if (object.rebuttalId !== undefined && object.rebuttalId !== null) {
       message.rebuttalId = Number(object.rebuttalId);
     } else {
@@ -197,26 +193,26 @@ export const MonoRebuttal = {
       message.disputeId = 0;
     }
     if (object.evidence !== undefined && object.evidence !== null) {
-      message.evidence = MonoEvidence.fromJSON(object.evidence);
+      message.evidence = Evidence.fromJSON(object.evidence);
     } else {
       message.evidence = undefined;
     }
     return message;
   },
 
-  toJSON(message: MonoRebuttal): unknown {
+  toJSON(message: Rebuttal): unknown {
     const obj: any = {};
     message.rebuttalId !== undefined && (obj.rebuttalId = message.rebuttalId);
     message.disputeId !== undefined && (obj.disputeId = message.disputeId);
     message.evidence !== undefined &&
       (obj.evidence = message.evidence
-        ? MonoEvidence.toJSON(message.evidence)
+        ? Evidence.toJSON(message.evidence)
         : undefined);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoRebuttal>): MonoRebuttal {
-    const message = { ...baseMonoRebuttal } as MonoRebuttal;
+  fromPartial(object: DeepPartial<Rebuttal>): Rebuttal {
+    const message = { ...baseRebuttal } as Rebuttal;
     if (object.rebuttalId !== undefined && object.rebuttalId !== null) {
       message.rebuttalId = object.rebuttalId;
     } else {
@@ -228,7 +224,7 @@ export const MonoRebuttal = {
       message.disputeId = 0;
     }
     if (object.evidence !== undefined && object.evidence !== null) {
-      message.evidence = MonoEvidence.fromPartial(object.evidence);
+      message.evidence = Evidence.fromPartial(object.evidence);
     } else {
       message.evidence = undefined;
     }
@@ -236,10 +232,10 @@ export const MonoRebuttal = {
   },
 };
 
-const baseMonoDispute: object = { diputeId: 0, title: "", description: "" };
+const baseDispute: object = { diputeId: 0, title: "", description: "" };
 
-export const MonoDispute = {
-  encode(message: MonoDispute, writer: Writer = Writer.create()): Writer {
+export const Dispute = {
+  encode(message: Dispute, writer: Writer = Writer.create()): Writer {
     if (message.diputeId !== 0) {
       writer.uint32(8).uint64(message.diputeId);
     }
@@ -250,15 +246,15 @@ export const MonoDispute = {
       writer.uint32(26).string(message.description);
     }
     if (message.evidence !== undefined) {
-      MonoEvidence.encode(message.evidence, writer.uint32(34).fork()).ldelim();
+      Evidence.encode(message.evidence, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoDispute {
+  decode(input: Reader | Uint8Array, length?: number): Dispute {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoDispute } as MonoDispute;
+    const message = { ...baseDispute } as Dispute;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -272,7 +268,7 @@ export const MonoDispute = {
           message.description = reader.string();
           break;
         case 4:
-          message.evidence = MonoEvidence.decode(reader, reader.uint32());
+          message.evidence = Evidence.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -282,8 +278,8 @@ export const MonoDispute = {
     return message;
   },
 
-  fromJSON(object: any): MonoDispute {
-    const message = { ...baseMonoDispute } as MonoDispute;
+  fromJSON(object: any): Dispute {
+    const message = { ...baseDispute } as Dispute;
     if (object.diputeId !== undefined && object.diputeId !== null) {
       message.diputeId = Number(object.diputeId);
     } else {
@@ -300,14 +296,14 @@ export const MonoDispute = {
       message.description = "";
     }
     if (object.evidence !== undefined && object.evidence !== null) {
-      message.evidence = MonoEvidence.fromJSON(object.evidence);
+      message.evidence = Evidence.fromJSON(object.evidence);
     } else {
       message.evidence = undefined;
     }
     return message;
   },
 
-  toJSON(message: MonoDispute): unknown {
+  toJSON(message: Dispute): unknown {
     const obj: any = {};
     message.diputeId !== undefined && (obj.diputeId = message.diputeId);
     message.title !== undefined && (obj.title = message.title);
@@ -315,13 +311,13 @@ export const MonoDispute = {
       (obj.description = message.description);
     message.evidence !== undefined &&
       (obj.evidence = message.evidence
-        ? MonoEvidence.toJSON(message.evidence)
+        ? Evidence.toJSON(message.evidence)
         : undefined);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoDispute>): MonoDispute {
-    const message = { ...baseMonoDispute } as MonoDispute;
+  fromPartial(object: DeepPartial<Dispute>): Dispute {
+    const message = { ...baseDispute } as Dispute;
     if (object.diputeId !== undefined && object.diputeId !== null) {
       message.diputeId = object.diputeId;
     } else {
@@ -338,7 +334,7 @@ export const MonoDispute = {
       message.description = "";
     }
     if (object.evidence !== undefined && object.evidence !== null) {
-      message.evidence = MonoEvidence.fromPartial(object.evidence);
+      message.evidence = Evidence.fromPartial(object.evidence);
     } else {
       message.evidence = undefined;
     }
@@ -346,13 +342,10 @@ export const MonoDispute = {
   },
 };
 
-const baseMonoFundDistribution: object = {};
+const baseFundDistribution: object = {};
 
-export const MonoFundDistribution = {
-  encode(
-    message: MonoFundDistribution,
-    writer: Writer = Writer.create()
-  ): Writer {
+export const FundDistribution = {
+  encode(message: FundDistribution, writer: Writer = Writer.create()): Writer {
     for (const v of message.plaintifAmount) {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -362,10 +355,10 @@ export const MonoFundDistribution = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoFundDistribution {
+  decode(input: Reader | Uint8Array, length?: number): FundDistribution {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoFundDistribution } as MonoFundDistribution;
+    const message = { ...baseFundDistribution } as FundDistribution;
     message.plaintifAmount = [];
     message.defendantAmount = [];
     while (reader.pos < end) {
@@ -385,8 +378,8 @@ export const MonoFundDistribution = {
     return message;
   },
 
-  fromJSON(object: any): MonoFundDistribution {
-    const message = { ...baseMonoFundDistribution } as MonoFundDistribution;
+  fromJSON(object: any): FundDistribution {
+    const message = { ...baseFundDistribution } as FundDistribution;
     message.plaintifAmount = [];
     message.defendantAmount = [];
     if (object.plaintifAmount !== undefined && object.plaintifAmount !== null) {
@@ -405,7 +398,7 @@ export const MonoFundDistribution = {
     return message;
   },
 
-  toJSON(message: MonoFundDistribution): unknown {
+  toJSON(message: FundDistribution): unknown {
     const obj: any = {};
     if (message.plaintifAmount) {
       obj.plaintifAmount = message.plaintifAmount.map((e) =>
@@ -424,8 +417,8 @@ export const MonoFundDistribution = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoFundDistribution>): MonoFundDistribution {
-    const message = { ...baseMonoFundDistribution } as MonoFundDistribution;
+  fromPartial(object: DeepPartial<FundDistribution>): FundDistribution {
+    const message = { ...baseFundDistribution } as FundDistribution;
     message.plaintifAmount = [];
     message.defendantAmount = [];
     if (object.plaintifAmount !== undefined && object.plaintifAmount !== null) {
@@ -445,7 +438,7 @@ export const MonoFundDistribution = {
   },
 };
 
-const baseMonoSentence: object = {
+const baseSentence: object = {
   voteId: 0,
   plaintifGuilty: false,
   defendantGuilty: false,
@@ -453,8 +446,8 @@ const baseMonoSentence: object = {
   defendantBlacklisted: false,
 };
 
-export const MonoSentence = {
-  encode(message: MonoSentence, writer: Writer = Writer.create()): Writer {
+export const Sentence = {
+  encode(message: Sentence, writer: Writer = Writer.create()): Writer {
     if (message.voteId !== 0) {
       writer.uint32(8).uint64(message.voteId);
     }
@@ -471,7 +464,7 @@ export const MonoSentence = {
       writer.uint32(40).bool(message.defendantBlacklisted);
     }
     if (message.fundDistr !== undefined) {
-      MonoFundDistribution.encode(
+      FundDistribution.encode(
         message.fundDistr,
         writer.uint32(50).fork()
       ).ldelim();
@@ -479,10 +472,10 @@ export const MonoSentence = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoSentence {
+  decode(input: Reader | Uint8Array, length?: number): Sentence {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoSentence } as MonoSentence;
+    const message = { ...baseSentence } as Sentence;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -502,10 +495,7 @@ export const MonoSentence = {
           message.defendantBlacklisted = reader.bool();
           break;
         case 6:
-          message.fundDistr = MonoFundDistribution.decode(
-            reader,
-            reader.uint32()
-          );
+          message.fundDistr = FundDistribution.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -515,8 +505,8 @@ export const MonoSentence = {
     return message;
   },
 
-  fromJSON(object: any): MonoSentence {
-    const message = { ...baseMonoSentence } as MonoSentence;
+  fromJSON(object: any): Sentence {
+    const message = { ...baseSentence } as Sentence;
     if (object.voteId !== undefined && object.voteId !== null) {
       message.voteId = Number(object.voteId);
     } else {
@@ -552,14 +542,14 @@ export const MonoSentence = {
       message.defendantBlacklisted = false;
     }
     if (object.fundDistr !== undefined && object.fundDistr !== null) {
-      message.fundDistr = MonoFundDistribution.fromJSON(object.fundDistr);
+      message.fundDistr = FundDistribution.fromJSON(object.fundDistr);
     } else {
       message.fundDistr = undefined;
     }
     return message;
   },
 
-  toJSON(message: MonoSentence): unknown {
+  toJSON(message: Sentence): unknown {
     const obj: any = {};
     message.voteId !== undefined && (obj.voteId = message.voteId);
     message.plaintifGuilty !== undefined &&
@@ -572,13 +562,13 @@ export const MonoSentence = {
       (obj.defendantBlacklisted = message.defendantBlacklisted);
     message.fundDistr !== undefined &&
       (obj.fundDistr = message.fundDistr
-        ? MonoFundDistribution.toJSON(message.fundDistr)
+        ? FundDistribution.toJSON(message.fundDistr)
         : undefined);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoSentence>): MonoSentence {
-    const message = { ...baseMonoSentence } as MonoSentence;
+  fromPartial(object: DeepPartial<Sentence>): Sentence {
+    const message = { ...baseSentence } as Sentence;
     if (object.voteId !== undefined && object.voteId !== null) {
       message.voteId = object.voteId;
     } else {
@@ -614,7 +604,7 @@ export const MonoSentence = {
       message.defendantBlacklisted = false;
     }
     if (object.fundDistr !== undefined && object.fundDistr !== null) {
-      message.fundDistr = MonoFundDistribution.fromPartial(object.fundDistr);
+      message.fundDistr = FundDistribution.fromPartial(object.fundDistr);
     } else {
       message.fundDistr = undefined;
     }
@@ -622,10 +612,10 @@ export const MonoSentence = {
   },
 };
 
-const baseMonoVote: object = { voterId: 0, disputeId: 0 };
+const baseVote: object = { voterId: 0, disputeId: 0 };
 
-export const MonoVote = {
-  encode(message: MonoVote, writer: Writer = Writer.create()): Writer {
+export const Vote = {
+  encode(message: Vote, writer: Writer = Writer.create()): Writer {
     if (message.voterId !== 0) {
       writer.uint32(8).uint64(message.voterId);
     }
@@ -633,15 +623,15 @@ export const MonoVote = {
       writer.uint32(16).uint64(message.disputeId);
     }
     if (message.buyerId !== undefined) {
-      MonoSentence.encode(message.buyerId, writer.uint32(26).fork()).ldelim();
+      Sentence.encode(message.buyerId, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoVote {
+  decode(input: Reader | Uint8Array, length?: number): Vote {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoVote } as MonoVote;
+    const message = { ...baseVote } as Vote;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -652,7 +642,7 @@ export const MonoVote = {
           message.disputeId = longToNumber(reader.uint64() as Long);
           break;
         case 3:
-          message.buyerId = MonoSentence.decode(reader, reader.uint32());
+          message.buyerId = Sentence.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -662,8 +652,8 @@ export const MonoVote = {
     return message;
   },
 
-  fromJSON(object: any): MonoVote {
-    const message = { ...baseMonoVote } as MonoVote;
+  fromJSON(object: any): Vote {
+    const message = { ...baseVote } as Vote;
     if (object.voterId !== undefined && object.voterId !== null) {
       message.voterId = Number(object.voterId);
     } else {
@@ -675,26 +665,26 @@ export const MonoVote = {
       message.disputeId = 0;
     }
     if (object.buyerId !== undefined && object.buyerId !== null) {
-      message.buyerId = MonoSentence.fromJSON(object.buyerId);
+      message.buyerId = Sentence.fromJSON(object.buyerId);
     } else {
       message.buyerId = undefined;
     }
     return message;
   },
 
-  toJSON(message: MonoVote): unknown {
+  toJSON(message: Vote): unknown {
     const obj: any = {};
     message.voterId !== undefined && (obj.voterId = message.voterId);
     message.disputeId !== undefined && (obj.disputeId = message.disputeId);
     message.buyerId !== undefined &&
       (obj.buyerId = message.buyerId
-        ? MonoSentence.toJSON(message.buyerId)
+        ? Sentence.toJSON(message.buyerId)
         : undefined);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoVote>): MonoVote {
-    const message = { ...baseMonoVote } as MonoVote;
+  fromPartial(object: DeepPartial<Vote>): Vote {
+    const message = { ...baseVote } as Vote;
     if (object.voterId !== undefined && object.voterId !== null) {
       message.voterId = object.voterId;
     } else {
@@ -706,7 +696,7 @@ export const MonoVote = {
       message.disputeId = 0;
     }
     if (object.buyerId !== undefined && object.buyerId !== null) {
-      message.buyerId = MonoSentence.fromPartial(object.buyerId);
+      message.buyerId = Sentence.fromPartial(object.buyerId);
     } else {
       message.buyerId = undefined;
     }

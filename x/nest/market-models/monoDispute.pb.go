@@ -24,25 +24,25 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// MonoEvidence defines evidence for a dispute/rebutal in the mono marketplace
-type MonoEvidence struct {
+// Evidence defines evidence for a dispute/rebutal in the mono marketplace
+type Evidence struct {
 	EvidenceId   uint64 `protobuf:"varint,1,opt,name=evidenceId,proto3" json:"evidenceId,omitempty"`
 	DisputeId    uint64 `protobuf:"varint,2,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
 	ExternalLink string `protobuf:"bytes,3,opt,name=externalLink,proto3" json:"externalLink,omitempty"`
 }
 
-func (m *MonoEvidence) Reset()         { *m = MonoEvidence{} }
-func (m *MonoEvidence) String() string { return proto.CompactTextString(m) }
-func (*MonoEvidence) ProtoMessage()    {}
-func (*MonoEvidence) Descriptor() ([]byte, []int) {
+func (m *Evidence) Reset()         { *m = Evidence{} }
+func (m *Evidence) String() string { return proto.CompactTextString(m) }
+func (*Evidence) ProtoMessage()    {}
+func (*Evidence) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1be600aaa49bca9e, []int{0}
 }
-func (m *MonoEvidence) XXX_Unmarshal(b []byte) error {
+func (m *Evidence) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MonoEvidence) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Evidence) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MonoEvidence.Marshal(b, m, deterministic)
+		return xxx_messageInfo_Evidence.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -52,58 +52,58 @@ func (m *MonoEvidence) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return b[:n], nil
 	}
 }
-func (m *MonoEvidence) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MonoEvidence.Merge(m, src)
+func (m *Evidence) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Evidence.Merge(m, src)
 }
-func (m *MonoEvidence) XXX_Size() int {
+func (m *Evidence) XXX_Size() int {
 	return m.Size()
 }
-func (m *MonoEvidence) XXX_DiscardUnknown() {
-	xxx_messageInfo_MonoEvidence.DiscardUnknown(m)
+func (m *Evidence) XXX_DiscardUnknown() {
+	xxx_messageInfo_Evidence.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MonoEvidence proto.InternalMessageInfo
+var xxx_messageInfo_Evidence proto.InternalMessageInfo
 
-func (m *MonoEvidence) GetEvidenceId() uint64 {
+func (m *Evidence) GetEvidenceId() uint64 {
 	if m != nil {
 		return m.EvidenceId
 	}
 	return 0
 }
 
-func (m *MonoEvidence) GetDisputeId() uint64 {
+func (m *Evidence) GetDisputeId() uint64 {
 	if m != nil {
 		return m.DisputeId
 	}
 	return 0
 }
 
-func (m *MonoEvidence) GetExternalLink() string {
+func (m *Evidence) GetExternalLink() string {
 	if m != nil {
 		return m.ExternalLink
 	}
 	return ""
 }
 
-//MonoRebuttal defines the rebutal for a raised dispute in the mono marketplace
-type MonoRebuttal struct {
-	RebuttalId uint64        `protobuf:"varint,1,opt,name=rebuttalId,proto3" json:"rebuttalId,omitempty"`
-	DisputeId  uint64        `protobuf:"varint,2,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
-	Evidence   *MonoEvidence `protobuf:"bytes,3,opt,name=evidence,proto3" json:"evidence,omitempty"`
+//Rebuttal defines the rebutal for a raised dispute in the mono marketplace
+type Rebuttal struct {
+	RebuttalId uint64    `protobuf:"varint,1,opt,name=rebuttalId,proto3" json:"rebuttalId,omitempty"`
+	DisputeId  uint64    `protobuf:"varint,2,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
+	Evidence   *Evidence `protobuf:"bytes,3,opt,name=evidence,proto3" json:"evidence,omitempty"`
 }
 
-func (m *MonoRebuttal) Reset()         { *m = MonoRebuttal{} }
-func (m *MonoRebuttal) String() string { return proto.CompactTextString(m) }
-func (*MonoRebuttal) ProtoMessage()    {}
-func (*MonoRebuttal) Descriptor() ([]byte, []int) {
+func (m *Rebuttal) Reset()         { *m = Rebuttal{} }
+func (m *Rebuttal) String() string { return proto.CompactTextString(m) }
+func (*Rebuttal) ProtoMessage()    {}
+func (*Rebuttal) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1be600aaa49bca9e, []int{1}
 }
-func (m *MonoRebuttal) XXX_Unmarshal(b []byte) error {
+func (m *Rebuttal) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MonoRebuttal) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Rebuttal) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MonoRebuttal.Marshal(b, m, deterministic)
+		return xxx_messageInfo_Rebuttal.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -113,59 +113,59 @@ func (m *MonoRebuttal) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return b[:n], nil
 	}
 }
-func (m *MonoRebuttal) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MonoRebuttal.Merge(m, src)
+func (m *Rebuttal) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Rebuttal.Merge(m, src)
 }
-func (m *MonoRebuttal) XXX_Size() int {
+func (m *Rebuttal) XXX_Size() int {
 	return m.Size()
 }
-func (m *MonoRebuttal) XXX_DiscardUnknown() {
-	xxx_messageInfo_MonoRebuttal.DiscardUnknown(m)
+func (m *Rebuttal) XXX_DiscardUnknown() {
+	xxx_messageInfo_Rebuttal.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MonoRebuttal proto.InternalMessageInfo
+var xxx_messageInfo_Rebuttal proto.InternalMessageInfo
 
-func (m *MonoRebuttal) GetRebuttalId() uint64 {
+func (m *Rebuttal) GetRebuttalId() uint64 {
 	if m != nil {
 		return m.RebuttalId
 	}
 	return 0
 }
 
-func (m *MonoRebuttal) GetDisputeId() uint64 {
+func (m *Rebuttal) GetDisputeId() uint64 {
 	if m != nil {
 		return m.DisputeId
 	}
 	return 0
 }
 
-func (m *MonoRebuttal) GetEvidence() *MonoEvidence {
+func (m *Rebuttal) GetEvidence() *Evidence {
 	if m != nil {
 		return m.Evidence
 	}
 	return nil
 }
 
-//monoDispute defines a dispute over a mono markeplace exchange of physical goods
-type MonoDispute struct {
-	DiputeId    uint64        `protobuf:"varint,1,opt,name=diputeId,proto3" json:"diputeId,omitempty"`
-	Title       string        `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Description string        `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Evidence    *MonoEvidence `protobuf:"bytes,4,opt,name=evidence,proto3" json:"evidence,omitempty"`
+//Dispute defines a dispute over a mono markeplace exchange of physical goods
+type Dispute struct {
+	DiputeId    uint64    `protobuf:"varint,1,opt,name=diputeId,proto3" json:"diputeId,omitempty"`
+	Title       string    `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Description string    `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Evidence    *Evidence `protobuf:"bytes,4,opt,name=evidence,proto3" json:"evidence,omitempty"`
 }
 
-func (m *MonoDispute) Reset()         { *m = MonoDispute{} }
-func (m *MonoDispute) String() string { return proto.CompactTextString(m) }
-func (*MonoDispute) ProtoMessage()    {}
-func (*MonoDispute) Descriptor() ([]byte, []int) {
+func (m *Dispute) Reset()         { *m = Dispute{} }
+func (m *Dispute) String() string { return proto.CompactTextString(m) }
+func (*Dispute) ProtoMessage()    {}
+func (*Dispute) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1be600aaa49bca9e, []int{2}
 }
-func (m *MonoDispute) XXX_Unmarshal(b []byte) error {
+func (m *Dispute) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MonoDispute) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Dispute) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MonoDispute.Marshal(b, m, deterministic)
+		return xxx_messageInfo_Dispute.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -175,64 +175,64 @@ func (m *MonoDispute) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-func (m *MonoDispute) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MonoDispute.Merge(m, src)
+func (m *Dispute) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Dispute.Merge(m, src)
 }
-func (m *MonoDispute) XXX_Size() int {
+func (m *Dispute) XXX_Size() int {
 	return m.Size()
 }
-func (m *MonoDispute) XXX_DiscardUnknown() {
-	xxx_messageInfo_MonoDispute.DiscardUnknown(m)
+func (m *Dispute) XXX_DiscardUnknown() {
+	xxx_messageInfo_Dispute.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MonoDispute proto.InternalMessageInfo
+var xxx_messageInfo_Dispute proto.InternalMessageInfo
 
-func (m *MonoDispute) GetDiputeId() uint64 {
+func (m *Dispute) GetDiputeId() uint64 {
 	if m != nil {
 		return m.DiputeId
 	}
 	return 0
 }
 
-func (m *MonoDispute) GetTitle() string {
+func (m *Dispute) GetTitle() string {
 	if m != nil {
 		return m.Title
 	}
 	return ""
 }
 
-func (m *MonoDispute) GetDescription() string {
+func (m *Dispute) GetDescription() string {
 	if m != nil {
 		return m.Description
 	}
 	return ""
 }
 
-func (m *MonoDispute) GetEvidence() *MonoEvidence {
+func (m *Dispute) GetEvidence() *Evidence {
 	if m != nil {
 		return m.Evidence
 	}
 	return nil
 }
 
-// MonoFundDistribution defines a structure to divide distributed funds in
-type MonoFundDistribution struct {
+// FundDistribution defines a structure to divide distributed funds in
+type FundDistribution struct {
 	PlaintifAmount  []types.Coin `protobuf:"bytes,1,rep,name=plaintifAmount,proto3" json:"plaintifAmount"`
 	DefendantAmount []types.Coin `protobuf:"bytes,2,rep,name=defendantAmount,proto3" json:"defendantAmount"`
 }
 
-func (m *MonoFundDistribution) Reset()         { *m = MonoFundDistribution{} }
-func (m *MonoFundDistribution) String() string { return proto.CompactTextString(m) }
-func (*MonoFundDistribution) ProtoMessage()    {}
-func (*MonoFundDistribution) Descriptor() ([]byte, []int) {
+func (m *FundDistribution) Reset()         { *m = FundDistribution{} }
+func (m *FundDistribution) String() string { return proto.CompactTextString(m) }
+func (*FundDistribution) ProtoMessage()    {}
+func (*FundDistribution) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1be600aaa49bca9e, []int{3}
 }
-func (m *MonoFundDistribution) XXX_Unmarshal(b []byte) error {
+func (m *FundDistribution) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MonoFundDistribution) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *FundDistribution) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MonoFundDistribution.Marshal(b, m, deterministic)
+		return xxx_messageInfo_FundDistribution.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -242,54 +242,54 @@ func (m *MonoFundDistribution) XXX_Marshal(b []byte, deterministic bool) ([]byte
 		return b[:n], nil
 	}
 }
-func (m *MonoFundDistribution) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MonoFundDistribution.Merge(m, src)
+func (m *FundDistribution) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FundDistribution.Merge(m, src)
 }
-func (m *MonoFundDistribution) XXX_Size() int {
+func (m *FundDistribution) XXX_Size() int {
 	return m.Size()
 }
-func (m *MonoFundDistribution) XXX_DiscardUnknown() {
-	xxx_messageInfo_MonoFundDistribution.DiscardUnknown(m)
+func (m *FundDistribution) XXX_DiscardUnknown() {
+	xxx_messageInfo_FundDistribution.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MonoFundDistribution proto.InternalMessageInfo
+var xxx_messageInfo_FundDistribution proto.InternalMessageInfo
 
-func (m *MonoFundDistribution) GetPlaintifAmount() []types.Coin {
+func (m *FundDistribution) GetPlaintifAmount() []types.Coin {
 	if m != nil {
 		return m.PlaintifAmount
 	}
 	return nil
 }
 
-func (m *MonoFundDistribution) GetDefendantAmount() []types.Coin {
+func (m *FundDistribution) GetDefendantAmount() []types.Coin {
 	if m != nil {
 		return m.DefendantAmount
 	}
 	return nil
 }
 
-// MonoSentence defines the outcome of a dispute
-type MonoSentence struct {
-	VoteId               uint64                `protobuf:"varint,1,opt,name=voteId,proto3" json:"voteId,omitempty"`
-	PlaintifGuilty       bool                  `protobuf:"varint,2,opt,name=plaintifGuilty,proto3" json:"plaintifGuilty,omitempty"`
-	DefendantGuilty      bool                  `protobuf:"varint,3,opt,name=defendantGuilty,proto3" json:"defendantGuilty,omitempty"`
-	PlainttifBlacklisted bool                  `protobuf:"varint,4,opt,name=plainttifBlacklisted,proto3" json:"plainttifBlacklisted,omitempty"`
-	DefendantBlacklisted bool                  `protobuf:"varint,5,opt,name=defendantBlacklisted,proto3" json:"defendantBlacklisted,omitempty"`
-	FundDistr            *MonoFundDistribution `protobuf:"bytes,6,opt,name=fundDistr,proto3" json:"fundDistr,omitempty"`
+// Sentence defines the outcome of a dispute
+type Sentence struct {
+	VoteId               uint64            `protobuf:"varint,1,opt,name=voteId,proto3" json:"voteId,omitempty"`
+	PlaintifGuilty       bool              `protobuf:"varint,2,opt,name=plaintifGuilty,proto3" json:"plaintifGuilty,omitempty"`
+	DefendantGuilty      bool              `protobuf:"varint,3,opt,name=defendantGuilty,proto3" json:"defendantGuilty,omitempty"`
+	PlainttifBlacklisted bool              `protobuf:"varint,4,opt,name=plainttifBlacklisted,proto3" json:"plainttifBlacklisted,omitempty"`
+	DefendantBlacklisted bool              `protobuf:"varint,5,opt,name=defendantBlacklisted,proto3" json:"defendantBlacklisted,omitempty"`
+	FundDistr            *FundDistribution `protobuf:"bytes,6,opt,name=fundDistr,proto3" json:"fundDistr,omitempty"`
 }
 
-func (m *MonoSentence) Reset()         { *m = MonoSentence{} }
-func (m *MonoSentence) String() string { return proto.CompactTextString(m) }
-func (*MonoSentence) ProtoMessage()    {}
-func (*MonoSentence) Descriptor() ([]byte, []int) {
+func (m *Sentence) Reset()         { *m = Sentence{} }
+func (m *Sentence) String() string { return proto.CompactTextString(m) }
+func (*Sentence) ProtoMessage()    {}
+func (*Sentence) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1be600aaa49bca9e, []int{4}
 }
-func (m *MonoSentence) XXX_Unmarshal(b []byte) error {
+func (m *Sentence) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MonoSentence) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Sentence) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MonoSentence.Marshal(b, m, deterministic)
+		return xxx_messageInfo_Sentence.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -299,79 +299,79 @@ func (m *MonoSentence) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return b[:n], nil
 	}
 }
-func (m *MonoSentence) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MonoSentence.Merge(m, src)
+func (m *Sentence) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Sentence.Merge(m, src)
 }
-func (m *MonoSentence) XXX_Size() int {
+func (m *Sentence) XXX_Size() int {
 	return m.Size()
 }
-func (m *MonoSentence) XXX_DiscardUnknown() {
-	xxx_messageInfo_MonoSentence.DiscardUnknown(m)
+func (m *Sentence) XXX_DiscardUnknown() {
+	xxx_messageInfo_Sentence.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MonoSentence proto.InternalMessageInfo
+var xxx_messageInfo_Sentence proto.InternalMessageInfo
 
-func (m *MonoSentence) GetVoteId() uint64 {
+func (m *Sentence) GetVoteId() uint64 {
 	if m != nil {
 		return m.VoteId
 	}
 	return 0
 }
 
-func (m *MonoSentence) GetPlaintifGuilty() bool {
+func (m *Sentence) GetPlaintifGuilty() bool {
 	if m != nil {
 		return m.PlaintifGuilty
 	}
 	return false
 }
 
-func (m *MonoSentence) GetDefendantGuilty() bool {
+func (m *Sentence) GetDefendantGuilty() bool {
 	if m != nil {
 		return m.DefendantGuilty
 	}
 	return false
 }
 
-func (m *MonoSentence) GetPlainttifBlacklisted() bool {
+func (m *Sentence) GetPlainttifBlacklisted() bool {
 	if m != nil {
 		return m.PlainttifBlacklisted
 	}
 	return false
 }
 
-func (m *MonoSentence) GetDefendantBlacklisted() bool {
+func (m *Sentence) GetDefendantBlacklisted() bool {
 	if m != nil {
 		return m.DefendantBlacklisted
 	}
 	return false
 }
 
-func (m *MonoSentence) GetFundDistr() *MonoFundDistribution {
+func (m *Sentence) GetFundDistr() *FundDistribution {
 	if m != nil {
 		return m.FundDistr
 	}
 	return nil
 }
 
-// MonoVote defines the vote that is cast for a MonoDispute
-type MonoVote struct {
-	VoterId   uint64        `protobuf:"varint,1,opt,name=voterId,proto3" json:"voterId,omitempty"`
-	DisputeId uint64        `protobuf:"varint,2,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
-	BuyerId   *MonoSentence `protobuf:"bytes,3,opt,name=buyerId,proto3" json:"buyerId,omitempty"`
+// Vote defines the vote that is cast for a MonoDispute
+type Vote struct {
+	VoterId   uint64    `protobuf:"varint,1,opt,name=voterId,proto3" json:"voterId,omitempty"`
+	DisputeId uint64    `protobuf:"varint,2,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
+	BuyerId   *Sentence `protobuf:"bytes,3,opt,name=buyerId,proto3" json:"buyerId,omitempty"`
 }
 
-func (m *MonoVote) Reset()         { *m = MonoVote{} }
-func (m *MonoVote) String() string { return proto.CompactTextString(m) }
-func (*MonoVote) ProtoMessage()    {}
-func (*MonoVote) Descriptor() ([]byte, []int) {
+func (m *Vote) Reset()         { *m = Vote{} }
+func (m *Vote) String() string { return proto.CompactTextString(m) }
+func (*Vote) ProtoMessage()    {}
+func (*Vote) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1be600aaa49bca9e, []int{5}
 }
-func (m *MonoVote) XXX_Unmarshal(b []byte) error {
+func (m *Vote) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MonoVote) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Vote) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MonoVote.Marshal(b, m, deterministic)
+		return xxx_messageInfo_Vote.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -381,33 +381,33 @@ func (m *MonoVote) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *MonoVote) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MonoVote.Merge(m, src)
+func (m *Vote) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Vote.Merge(m, src)
 }
-func (m *MonoVote) XXX_Size() int {
+func (m *Vote) XXX_Size() int {
 	return m.Size()
 }
-func (m *MonoVote) XXX_DiscardUnknown() {
-	xxx_messageInfo_MonoVote.DiscardUnknown(m)
+func (m *Vote) XXX_DiscardUnknown() {
+	xxx_messageInfo_Vote.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MonoVote proto.InternalMessageInfo
+var xxx_messageInfo_Vote proto.InternalMessageInfo
 
-func (m *MonoVote) GetVoterId() uint64 {
+func (m *Vote) GetVoterId() uint64 {
 	if m != nil {
 		return m.VoterId
 	}
 	return 0
 }
 
-func (m *MonoVote) GetDisputeId() uint64 {
+func (m *Vote) GetDisputeId() uint64 {
 	if m != nil {
 		return m.DisputeId
 	}
 	return 0
 }
 
-func (m *MonoVote) GetBuyerId() *MonoSentence {
+func (m *Vote) GetBuyerId() *Sentence {
 	if m != nil {
 		return m.BuyerId
 	}
@@ -415,12 +415,12 @@ func (m *MonoVote) GetBuyerId() *MonoSentence {
 }
 
 func init() {
-	proto.RegisterType((*MonoEvidence)(nil), "crowlabs.epsilon.nest.marketmodels.mono.MonoEvidence")
-	proto.RegisterType((*MonoRebuttal)(nil), "crowlabs.epsilon.nest.marketmodels.mono.MonoRebuttal")
-	proto.RegisterType((*MonoDispute)(nil), "crowlabs.epsilon.nest.marketmodels.mono.MonoDispute")
-	proto.RegisterType((*MonoFundDistribution)(nil), "crowlabs.epsilon.nest.marketmodels.mono.MonoFundDistribution")
-	proto.RegisterType((*MonoSentence)(nil), "crowlabs.epsilon.nest.marketmodels.mono.MonoSentence")
-	proto.RegisterType((*MonoVote)(nil), "crowlabs.epsilon.nest.marketmodels.mono.MonoVote")
+	proto.RegisterType((*Evidence)(nil), "crowlabs.epsilon.nest.marketmodels.mono.Evidence")
+	proto.RegisterType((*Rebuttal)(nil), "crowlabs.epsilon.nest.marketmodels.mono.Rebuttal")
+	proto.RegisterType((*Dispute)(nil), "crowlabs.epsilon.nest.marketmodels.mono.Dispute")
+	proto.RegisterType((*FundDistribution)(nil), "crowlabs.epsilon.nest.marketmodels.mono.FundDistribution")
+	proto.RegisterType((*Sentence)(nil), "crowlabs.epsilon.nest.marketmodels.mono.Sentence")
+	proto.RegisterType((*Vote)(nil), "crowlabs.epsilon.nest.marketmodels.mono.Vote")
 }
 
 func init() {
@@ -428,46 +428,46 @@ func init() {
 }
 
 var fileDescriptor_1be600aaa49bca9e = []byte{
-	// 576 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0x41, 0x6f, 0xd3, 0x30,
-	0x14, 0x6e, 0xd6, 0xae, 0x6b, 0xdd, 0x09, 0x24, 0xab, 0x42, 0xa1, 0x42, 0xa1, 0xca, 0x01, 0xca,
-	0x61, 0x8e, 0x5a, 0xc4, 0x91, 0x03, 0x65, 0x30, 0x55, 0x30, 0x21, 0x82, 0xc4, 0x01, 0x4e, 0x49,
-	0xec, 0x16, 0xab, 0x89, 0x1d, 0xc5, 0x4e, 0xd9, 0xfe, 0x05, 0x12, 0x3f, 0x80, 0x3b, 0x67, 0xae,
-	0xdc, 0x77, 0xdc, 0x91, 0x13, 0x42, 0xed, 0x1f, 0x41, 0xb6, 0xd3, 0x26, 0x2b, 0x93, 0x36, 0x10,
-	0x97, 0xca, 0xef, 0x7b, 0xfe, 0xde, 0xf7, 0xf5, 0xbd, 0x17, 0x83, 0x07, 0x8c, 0x08, 0xe9, 0x25,
-	0x41, 0x36, 0x27, 0xf2, 0x20, 0xe1, 0x98, 0xc4, 0xc2, 0x4b, 0x38, 0xe3, 0xfa, 0xe7, 0x90, 0x8a,
-	0x34, 0x97, 0x04, 0xa5, 0x19, 0x97, 0x1c, 0xde, 0x8f, 0x32, 0xfe, 0x31, 0x0e, 0x42, 0x81, 0x48,
-	0x2a, 0x68, 0xcc, 0x19, 0x52, 0x5c, 0x64, 0xb8, 0x86, 0x8a, 0x14, 0xab, 0xe7, 0x44, 0x5c, 0x24,
-	0x5c, 0x78, 0x61, 0x20, 0x88, 0xb7, 0x18, 0x86, 0x44, 0x06, 0x43, 0x2f, 0xe2, 0x94, 0x99, 0x42,
-	0xbd, 0xee, 0x8c, 0xcf, 0xb8, 0x3e, 0x7a, 0xea, 0x64, 0x50, 0x37, 0x05, 0xfb, 0xc7, 0x9c, 0xf1,
-	0x67, 0x0b, 0x8a, 0x09, 0x8b, 0x08, 0x74, 0x00, 0x20, 0xc5, 0x79, 0x82, 0x6d, 0xab, 0x6f, 0x0d,
-	0x1a, 0x7e, 0x05, 0x81, 0x77, 0x40, 0x1b, 0x1b, 0x7f, 0x13, 0x6c, 0xef, 0xe8, 0x74, 0x09, 0x40,
-	0x17, 0xec, 0x93, 0x13, 0x49, 0x32, 0x16, 0xc4, 0x2f, 0x29, 0x9b, 0xdb, 0xf5, 0xbe, 0x35, 0x68,
-	0xfb, 0x17, 0x30, 0xf7, 0x8b, 0x65, 0x24, 0x7d, 0x12, 0xe6, 0x52, 0x06, 0xb1, 0x92, 0xcc, 0x8a,
-	0x73, 0x29, 0x59, 0x22, 0x57, 0x48, 0xbe, 0x06, 0xad, 0xb5, 0x3d, 0x2d, 0xd7, 0x19, 0x3d, 0x42,
-	0xd7, 0x6c, 0x19, 0xaa, 0xfe, 0x73, 0x7f, 0x53, 0xc6, 0xfd, 0x66, 0x81, 0xce, 0x71, 0x39, 0x08,
-	0xd8, 0x03, 0x2d, 0x4c, 0x0b, 0x7d, 0x63, 0x6f, 0x13, 0xc3, 0x2e, 0xd8, 0x95, 0x54, 0xc6, 0x44,
-	0x1b, 0x6b, 0xfb, 0x26, 0x80, 0x7d, 0xd0, 0xc1, 0x44, 0x44, 0x19, 0x4d, 0x25, 0xe5, 0xac, 0x68,
-	0x43, 0x15, 0xba, 0x60, 0xbb, 0xf1, 0x7f, 0x6c, 0x7f, 0xb5, 0x40, 0x57, 0xa5, 0x9e, 0xe7, 0x0c,
-	0x1f, 0x52, 0x21, 0x33, 0x1a, 0xe6, 0x5a, 0xeb, 0x08, 0xdc, 0x48, 0xe3, 0x80, 0x32, 0x49, 0xa7,
-	0x4f, 0x12, 0x9e, 0x33, 0x69, 0x5b, 0xfd, 0xfa, 0xa0, 0x33, 0xba, 0x8d, 0xcc, 0xca, 0x20, 0xb5,
-	0x32, 0xa8, 0x58, 0x19, 0xf4, 0x94, 0x53, 0x36, 0x6e, 0x9c, 0xfd, 0xbc, 0x5b, 0xf3, 0xb7, 0x68,
-	0x70, 0x02, 0x6e, 0x62, 0x32, 0x25, 0x0c, 0x07, 0x4c, 0x16, 0x95, 0x76, 0xae, 0x57, 0x69, 0x9b,
-	0xe7, 0x7e, 0xdf, 0x31, 0x5b, 0xf0, 0x86, 0x30, 0xa9, 0x17, 0xef, 0x16, 0x68, 0x2e, 0x78, 0xa5,
-	0xc5, 0x45, 0x04, 0xef, 0x95, 0xe6, 0x8f, 0x72, 0x1a, 0xcb, 0x53, 0xdd, 0xe9, 0x96, 0xbf, 0x85,
-	0xc2, 0x41, 0xc5, 0x5b, 0x71, 0xb1, 0xae, 0x2f, 0x6e, 0xc3, 0x70, 0x04, 0xba, 0x86, 0x2b, 0xe9,
-	0x74, 0x1c, 0x07, 0xd1, 0x3c, 0xa6, 0x42, 0x12, 0xac, 0xc7, 0xd0, 0xf2, 0x2f, 0xcd, 0x29, 0xce,
-	0xa6, 0x4c, 0x95, 0xb3, 0x6b, 0x38, 0x97, 0xe5, 0xe0, 0x7b, 0xd0, 0x9e, 0xae, 0x47, 0x61, 0x37,
-	0xf5, 0x8c, 0x1f, 0xff, 0xd5, 0x8c, 0xb7, 0x07, 0xe9, 0x97, 0xf5, 0xdc, 0xcf, 0x16, 0x68, 0xa9,
-	0x3b, 0x6f, 0xb9, 0x24, 0xd0, 0x06, 0x7b, 0xaa, 0x5b, 0xd9, 0xa6, 0x79, 0xeb, 0xf0, 0x8a, 0x6f,
-	0xe7, 0x15, 0xd8, 0x0b, 0xf3, 0x53, 0xcd, 0xfb, 0x97, 0x4f, 0x67, 0x3d, 0x3b, 0x7f, 0x5d, 0x65,
-	0xfc, 0xe2, 0x6c, 0xe9, 0x58, 0xe7, 0x4b, 0xc7, 0xfa, 0xb5, 0x74, 0xac, 0x4f, 0x2b, 0xa7, 0x76,
-	0xbe, 0x72, 0x6a, 0x3f, 0x56, 0x4e, 0xed, 0xdd, 0x70, 0x46, 0xe5, 0x87, 0x3c, 0x44, 0x11, 0x4f,
-	0x3c, 0xa5, 0x71, 0xa0, 0x44, 0xbc, 0x42, 0xc4, 0x3b, 0xf1, 0xfe, 0x7c, 0x10, 0xc3, 0xa6, 0x7e,
-	0xa1, 0x1e, 0xfe, 0x0e, 0x00, 0x00, 0xff, 0xff, 0x3c, 0x4b, 0x36, 0x1d, 0x2d, 0x05, 0x00, 0x00,
+	// 565 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0xcf, 0x6e, 0xd3, 0x30,
+	0x18, 0x6f, 0xb6, 0x6e, 0x4d, 0xbf, 0x22, 0x40, 0x56, 0x85, 0x42, 0x85, 0x42, 0x95, 0x03, 0x94,
+	0xc3, 0x1c, 0xb5, 0x9c, 0x38, 0x52, 0x06, 0x53, 0x35, 0xb8, 0x04, 0x09, 0x24, 0x6e, 0x49, 0xec,
+	0x16, 0xab, 0x8e, 0x5d, 0xc5, 0x4e, 0xd9, 0x9e, 0x81, 0x0b, 0x37, 0xde, 0x80, 0x13, 0x57, 0xde,
+	0x61, 0xc7, 0x1d, 0x39, 0x21, 0xd4, 0xbe, 0x08, 0x8a, 0x93, 0xb4, 0x5d, 0x99, 0xb4, 0x22, 0x2e,
+	0x91, 0xfd, 0x73, 0x7e, 0x7f, 0xf2, 0x7d, 0x5f, 0x0c, 0x4f, 0x04, 0x55, 0xda, 0x4f, 0xc2, 0x74,
+	0x4a, 0xf5, 0x51, 0x22, 0x09, 0xe5, 0xca, 0x4f, 0xa4, 0x90, 0xe6, 0x71, 0xcc, 0xd4, 0x2c, 0xd3,
+	0x14, 0xcf, 0x52, 0xa9, 0x25, 0x7a, 0x1c, 0xa7, 0xf2, 0x13, 0x0f, 0x23, 0x85, 0xe9, 0x4c, 0x31,
+	0x2e, 0x05, 0xce, 0xb9, 0xb8, 0xe0, 0x16, 0x54, 0x9c, 0xb3, 0x3a, 0x6e, 0x2c, 0x55, 0x22, 0x95,
+	0x1f, 0x85, 0x8a, 0xfa, 0xf3, 0x7e, 0x44, 0x75, 0xd8, 0xf7, 0x63, 0xc9, 0x44, 0x21, 0xd4, 0x69,
+	0x4f, 0xe4, 0x44, 0x9a, 0xa5, 0x9f, 0xaf, 0x0a, 0xd4, 0xe3, 0x60, 0xbf, 0x9c, 0x33, 0x42, 0x45,
+	0x4c, 0x91, 0x0b, 0x40, 0xcb, 0xf5, 0x88, 0x38, 0x56, 0xd7, 0xea, 0xd5, 0x83, 0x0d, 0x04, 0x3d,
+	0x80, 0x26, 0x29, 0xb2, 0x8d, 0x88, 0xb3, 0x67, 0x8e, 0xd7, 0x00, 0xf2, 0xe0, 0x16, 0x3d, 0xd3,
+	0x34, 0x15, 0x21, 0x7f, 0xcd, 0xc4, 0xd4, 0xd9, 0xef, 0x5a, 0xbd, 0x66, 0x70, 0x05, 0xf3, 0xbe,
+	0x5a, 0x60, 0x07, 0x34, 0xca, 0xb4, 0x0e, 0x79, 0x6e, 0x97, 0x96, 0xeb, 0xb5, 0xdd, 0x1a, 0xb9,
+	0xc1, 0xee, 0x0d, 0xd8, 0x55, 0x34, 0x63, 0xd5, 0x1a, 0xf4, 0xf1, 0x8e, 0xa5, 0xc2, 0xd5, 0x17,
+	0x07, 0x2b, 0x09, 0xef, 0xbb, 0x05, 0x8d, 0xb2, 0xf0, 0xa8, 0x03, 0x36, 0x61, 0xa5, 0x6f, 0x11,
+	0x6b, 0xb5, 0x47, 0x6d, 0x38, 0xd0, 0x4c, 0x73, 0x6a, 0x02, 0x35, 0x83, 0x62, 0x83, 0xba, 0xd0,
+	0x22, 0x54, 0xc5, 0x29, 0x9b, 0x69, 0x26, 0x45, 0xf9, 0xe9, 0x9b, 0xd0, 0x95, 0xb8, 0xf5, 0xff,
+	0x8f, 0xfb, 0xcd, 0x82, 0xbb, 0xaf, 0x32, 0x41, 0x8e, 0x99, 0xd2, 0x29, 0x8b, 0x32, 0xe3, 0x71,
+	0x02, 0xb7, 0x67, 0x3c, 0x64, 0x42, 0xb3, 0xf1, 0xf3, 0x44, 0x66, 0x42, 0x3b, 0x56, 0x77, 0xbf,
+	0xd7, 0x1a, 0xdc, 0xc7, 0xc5, 0x68, 0xe0, 0x7c, 0x34, 0x70, 0x39, 0x1a, 0xf8, 0x85, 0x64, 0x62,
+	0x58, 0xbf, 0xf8, 0xf5, 0xb0, 0x16, 0x6c, 0xd1, 0xd0, 0x08, 0xee, 0x10, 0x3a, 0xa6, 0x82, 0x84,
+	0x42, 0x97, 0x4a, 0x7b, 0xbb, 0x29, 0x6d, 0xf3, 0xbc, 0x1f, 0x7b, 0x60, 0xbf, 0xa5, 0x42, 0x9b,
+	0x01, 0xbb, 0x07, 0x87, 0x73, 0xb9, 0x51, 0xd6, 0x72, 0x87, 0x1e, 0xad, 0x83, 0x9f, 0x64, 0x8c,
+	0xeb, 0x73, 0x53, 0x5d, 0x3b, 0xd8, 0x42, 0x51, 0x6f, 0x23, 0x57, 0xf9, 0xe2, 0xbe, 0x79, 0x71,
+	0x1b, 0x46, 0x03, 0x68, 0x17, 0x5c, 0xcd, 0xc6, 0x43, 0x1e, 0xc6, 0x53, 0xce, 0x94, 0xa6, 0xc4,
+	0x94, 0xde, 0x0e, 0xae, 0x3d, 0xcb, 0x39, 0x2b, 0x99, 0x4d, 0xce, 0x41, 0xc1, 0xb9, 0xee, 0x0c,
+	0xbd, 0x87, 0xe6, 0xb8, 0x6a, 0x83, 0x73, 0x68, 0xfa, 0xfa, 0x6c, 0xe7, 0xbe, 0x6e, 0x37, 0x30,
+	0x58, 0x6b, 0x79, 0x9f, 0x2d, 0xa8, 0xbf, 0x93, 0x9a, 0x22, 0x07, 0x1a, 0x79, 0x95, 0xd2, 0x55,
+	0xd1, 0xaa, 0xed, 0x0d, 0xff, 0xc7, 0x29, 0x34, 0xa2, 0xec, 0xdc, 0xf0, 0xfe, 0xf5, 0xf7, 0xa8,
+	0xfa, 0x15, 0x54, 0x0a, 0xc3, 0xd3, 0x8b, 0x85, 0x6b, 0x5d, 0x2e, 0x5c, 0xeb, 0xf7, 0xc2, 0xb5,
+	0xbe, 0x2c, 0xdd, 0xda, 0xe5, 0xd2, 0xad, 0xfd, 0x5c, 0xba, 0xb5, 0x0f, 0xfd, 0x09, 0xd3, 0x1f,
+	0xb3, 0x08, 0xc7, 0x32, 0xf1, 0x73, 0xfd, 0xa3, 0xdc, 0xc0, 0x2f, 0x0d, 0xfc, 0x33, 0xff, 0xef,
+	0x8b, 0x2e, 0x3a, 0x34, 0x37, 0xcf, 0xd3, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x79, 0xa1, 0x30,
+	0x52, 0x05, 0x05, 0x00, 0x00,
 }
 
-func (m *MonoEvidence) Marshal() (dAtA []byte, err error) {
+func (m *Evidence) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -477,12 +477,12 @@ func (m *MonoEvidence) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MonoEvidence) MarshalTo(dAtA []byte) (int, error) {
+func (m *Evidence) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MonoEvidence) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *Evidence) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -507,7 +507,7 @@ func (m *MonoEvidence) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MonoRebuttal) Marshal() (dAtA []byte, err error) {
+func (m *Rebuttal) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -517,12 +517,12 @@ func (m *MonoRebuttal) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MonoRebuttal) MarshalTo(dAtA []byte) (int, error) {
+func (m *Rebuttal) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MonoRebuttal) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *Rebuttal) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -552,7 +552,7 @@ func (m *MonoRebuttal) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MonoDispute) Marshal() (dAtA []byte, err error) {
+func (m *Dispute) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -562,12 +562,12 @@ func (m *MonoDispute) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MonoDispute) MarshalTo(dAtA []byte) (int, error) {
+func (m *Dispute) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MonoDispute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *Dispute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -606,7 +606,7 @@ func (m *MonoDispute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MonoFundDistribution) Marshal() (dAtA []byte, err error) {
+func (m *FundDistribution) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -616,12 +616,12 @@ func (m *MonoFundDistribution) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MonoFundDistribution) MarshalTo(dAtA []byte) (int, error) {
+func (m *FundDistribution) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MonoFundDistribution) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *FundDistribution) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -657,7 +657,7 @@ func (m *MonoFundDistribution) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MonoSentence) Marshal() (dAtA []byte, err error) {
+func (m *Sentence) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -667,12 +667,12 @@ func (m *MonoSentence) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MonoSentence) MarshalTo(dAtA []byte) (int, error) {
+func (m *Sentence) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MonoSentence) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *Sentence) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -737,7 +737,7 @@ func (m *MonoSentence) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MonoVote) Marshal() (dAtA []byte, err error) {
+func (m *Vote) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -747,12 +747,12 @@ func (m *MonoVote) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MonoVote) MarshalTo(dAtA []byte) (int, error) {
+func (m *Vote) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MonoVote) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *Vote) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -793,7 +793,7 @@ func encodeVarintMonoDispute(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *MonoEvidence) Size() (n int) {
+func (m *Evidence) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -812,7 +812,7 @@ func (m *MonoEvidence) Size() (n int) {
 	return n
 }
 
-func (m *MonoRebuttal) Size() (n int) {
+func (m *Rebuttal) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -831,7 +831,7 @@ func (m *MonoRebuttal) Size() (n int) {
 	return n
 }
 
-func (m *MonoDispute) Size() (n int) {
+func (m *Dispute) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -855,7 +855,7 @@ func (m *MonoDispute) Size() (n int) {
 	return n
 }
 
-func (m *MonoFundDistribution) Size() (n int) {
+func (m *FundDistribution) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -876,7 +876,7 @@ func (m *MonoFundDistribution) Size() (n int) {
 	return n
 }
 
-func (m *MonoSentence) Size() (n int) {
+func (m *Sentence) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -904,7 +904,7 @@ func (m *MonoSentence) Size() (n int) {
 	return n
 }
 
-func (m *MonoVote) Size() (n int) {
+func (m *Vote) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -929,7 +929,7 @@ func sovMonoDispute(x uint64) (n int) {
 func sozMonoDispute(x uint64) (n int) {
 	return sovMonoDispute(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *MonoEvidence) Unmarshal(dAtA []byte) error {
+func (m *Evidence) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -952,10 +952,10 @@ func (m *MonoEvidence) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MonoEvidence: wiretype end group for non-group")
+			return fmt.Errorf("proto: Evidence: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MonoEvidence: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: Evidence: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1049,7 +1049,7 @@ func (m *MonoEvidence) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MonoRebuttal) Unmarshal(dAtA []byte) error {
+func (m *Rebuttal) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1072,10 +1072,10 @@ func (m *MonoRebuttal) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MonoRebuttal: wiretype end group for non-group")
+			return fmt.Errorf("proto: Rebuttal: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MonoRebuttal: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: Rebuttal: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1146,7 +1146,7 @@ func (m *MonoRebuttal) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Evidence == nil {
-				m.Evidence = &MonoEvidence{}
+				m.Evidence = &Evidence{}
 			}
 			if err := m.Evidence.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -1173,7 +1173,7 @@ func (m *MonoRebuttal) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MonoDispute) Unmarshal(dAtA []byte) error {
+func (m *Dispute) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1196,10 +1196,10 @@ func (m *MonoDispute) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MonoDispute: wiretype end group for non-group")
+			return fmt.Errorf("proto: Dispute: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MonoDispute: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: Dispute: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1315,7 +1315,7 @@ func (m *MonoDispute) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Evidence == nil {
-				m.Evidence = &MonoEvidence{}
+				m.Evidence = &Evidence{}
 			}
 			if err := m.Evidence.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -1342,7 +1342,7 @@ func (m *MonoDispute) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MonoFundDistribution) Unmarshal(dAtA []byte) error {
+func (m *FundDistribution) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1365,10 +1365,10 @@ func (m *MonoFundDistribution) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MonoFundDistribution: wiretype end group for non-group")
+			return fmt.Errorf("proto: FundDistribution: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MonoFundDistribution: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: FundDistribution: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1460,7 +1460,7 @@ func (m *MonoFundDistribution) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MonoSentence) Unmarshal(dAtA []byte) error {
+func (m *Sentence) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1483,10 +1483,10 @@ func (m *MonoSentence) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MonoSentence: wiretype end group for non-group")
+			return fmt.Errorf("proto: Sentence: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MonoSentence: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: Sentence: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1618,7 +1618,7 @@ func (m *MonoSentence) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.FundDistr == nil {
-				m.FundDistr = &MonoFundDistribution{}
+				m.FundDistr = &FundDistribution{}
 			}
 			if err := m.FundDistr.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -1645,7 +1645,7 @@ func (m *MonoSentence) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MonoVote) Unmarshal(dAtA []byte) error {
+func (m *Vote) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1668,10 +1668,10 @@ func (m *MonoVote) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MonoVote: wiretype end group for non-group")
+			return fmt.Errorf("proto: Vote: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MonoVote: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: Vote: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1742,7 +1742,7 @@ func (m *MonoVote) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.BuyerId == nil {
-				m.BuyerId = &MonoSentence{}
+				m.BuyerId = &Sentence{}
 			}
 			if err := m.BuyerId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
