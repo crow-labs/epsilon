@@ -8,21 +8,21 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/crow-labs/epsilon/x/nest/types";
 
-// MonoEvidence
+// MonoEvidence defines evidence for a dispute/rebutal in the mono marketplace
 message MonoEvidence{
     uint64 evidenceId = 1;
     uint64 disputeId = 2;
     string externalLink = 3;
 }
 
-//MonoRebuttal
+//MonoRebuttal defines the rebutal for a raised dispute in the mono marketplace
 message MonoRebuttal{
     uint64 rebuttalId = 1;
     uint64 disputeId = 2; 
     MonoEvidence evidence = 3;
 }
 
-//monoDispute
+//monoDispute defines a dispute over a mono markeplace exchange of physical goods
 message MonoDispute{
     uint64 diputeId = 1;
     string title = 2;
@@ -30,13 +30,13 @@ message MonoDispute{
     MonoEvidenceId evidence = 4;
 }
 
-// MonoFundDistribution
+// MonoFundDistribution defines a structure to divide distributed funds in
 message MonoFundDistribution{
     repeated cosmos.base.v1beta1.Coin plaintifAmount = 1 [(gogoproto.nullable) = false];
     repeated cosmos.base.v1beta1.Coin defendantAmount = 2 [(gogoproto.nullable) = false];
 }
 
-// MonoSentence
+// MonoSentence defines the outcome of a dispute
 message MonoSentence{
     uint64 voteId = 1;
     bool plaintifGuilty = 2;
@@ -46,7 +46,7 @@ message MonoSentence{
     MonoFundDistribution fundDistr = 6;
 }
 
-// MonoVote
+// MonoVote defines the vote that is cast for a MonoDispute
 message MonoVote{
     uint64 voterId = 1;
     uint64 disputeId = 2;

@@ -8,7 +8,7 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/crow-labs/epsilon/x/nest/types";
 
-// MonoBuyer
+// MonoBuyer defines a buyer in a marketplace where each listing has a quanity of one
 message MonoBuyer {
     string name =  1;
     string buyerId = 2;
@@ -18,7 +18,7 @@ message MonoBuyer {
     repeated uint64 completedOrderId = 6;
 }
 
-// MonoSeller
+// MonoSeller defines a seller in the mono marketplace
 message MonoSeller {
     string name = 1;
     string sellerId = 2;
@@ -29,7 +29,7 @@ message MonoSeller {
     repeated uint64 completedOrderId = 7;
 }
 
-// MonoVoter
+// MonoVoter defines a voter for the mono marketplace
 message MonoVoter {
     string name = 1;
     string voterId = 2;
