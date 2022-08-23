@@ -1,0 +1,33 @@
+syntax = "proto3";
+package crowlabs.epsilon.nest;
+
+import "cosmos_proto/cosmos.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/crow-labs/epsilon/x/nest/types";
+
+// MonoItem
+message MonoItem{
+    uint64 itemId = 1;
+    string title = 2;
+    string description = 3; 
+    string sellerAddress = 4;
+    repeated cosmos.base.v1beta1.Coin minPrice = 5 [(gogoproto.nullable) = false]; 
+    repeated cosmos.base.v1beta1.Coin collateral = 6 [(gogoproto.nullable) = false]; 
+}
+
+// MonoSellOrder
+message MonoSellOrder{
+    uint64 sellOrderId =  1;
+    uint64 sellerId = 2;
+    uint64 itemId = 3;
+}
+
+// MonoBuyOrder
+message MonoBuyOrder{
+    uint64 buyOrderId = 1;
+    uint64 buyerId = 2;
+    uint64 itemId = 3;
+}
