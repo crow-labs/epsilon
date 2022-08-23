@@ -1,0 +1,109 @@
+syntax = "proto3";
+package crowlabs.epsilon.nest;
+
+import "cosmos_proto/cosmos.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/crow-labs/epsilon/x/nest/types";
+
+// MonoItem
+message MonoItem{
+    uint64 monoItemId = 1;
+    string title = 2;
+    string description = 3; 
+    string sellerAddress = 4;
+    repeated cosmos.base.v1beta1.Coin minPrice = 5 [(gogoproto.nullable) = false]; 
+    repeated cosmos.base.v1beta1.Coin collateral = 6 [(gogoproto.nullable) = false]; 
+}
+
+// MonoSellOrder
+message MonoSellOrder{
+    uint64 monoSellOrderId =  1;
+    uint64 monoSellerId = 2;
+    uint64 monoItemId = 3;
+}
+
+// MonoBuyOrder
+message MonoBuyOrder{
+    uint64 monoBuyOrderId = 1;
+    uint64 monoBuyerId = 2;
+    uint64 monoItemId = 3;
+}
+
+// MonoEvidence
+message MonoEvidence{
+    uint64 monoEvidenceId = 1;
+    uint64 monoDisputeId = 2;
+    string externalLink = 3;
+}
+
+//MonoRebuttal
+message MonoRebuttal{
+    uint64 monoRebuttalId = 1;
+    uint64 MonoDisputeId = 2; 
+    MonoEvidence evidence = 3;
+}
+
+//monoDispute
+message MonoDispute{
+    uint64 monoDiputeId = 1;
+    string title = 2;
+    string description = 3;
+    MonoEvidenceId evidence = 4;
+}
+
+// MonoFundDistribution
+message MonoFundDistribution{
+    repeated cosmos.base.v1beta1.Coin plaintifAmount = 1 [(gogoproto.nullable) = false];
+    repeated cosmos.base.v1beta1.Coin defendantAmount = 2 [(gogoproto.nullable) = false];
+}
+
+// MonoSentence
+message MonoSentence{
+    uint64 voteId = 1;
+    bool plaintifGuilty = 2;
+    bool defendantGuilty = 3;
+    bool plainttifBlacklisted = 4;
+    bool defendantBlacklisted = 5;
+    MonoFundDistribution fundDistr = 6;
+}
+
+// MonoVote
+message MonoVote{
+    uint64 monoVoterId = 1;
+    uint64 monoDisputeId = 2;
+    MonoSentence MonoBuyerId = 3;
+}
+
+// MonoBuyer
+message MonoBuyer {
+    string name =  1;
+    string monoBuyerId = 2;
+    string status = 3;
+    string address = 4;
+    repeated uint64 activeOrderId = 5;
+    repeated uint64 completedOrderId = 6;
+}
+
+// MonoSeller
+message MonoSeller {
+    string name = 1;
+    string monoSellerId = 2;
+    string status = 3;
+    string address = 4;
+    repeated uint64 activeOrderId = 5;
+    repeated MonoItem activeItems = 6;
+    repeated uint64 completedOrderId = 7;
+}
+
+// MonoVoter
+message MonoVoter {
+    string name = 1;
+    string monoVoterId = 2;
+    string status = 3;
+    string address = 4;
+    repeated MonoVote activeVotes = 5;
+    repeated MonoVote completedVotes = 6;
+}
