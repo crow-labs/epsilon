@@ -5,7 +5,7 @@ package mono
 
 import (
 	fmt "fmt"
-	types "github.com/cosmos/cosmos-sdk/types"
+	_ "github.com/cosmos/cosmos-sdk/types"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	io "io"
@@ -26,8 +26,8 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // Evidence defines evidence for a dispute/rebutal in the mono marketplace
 type Evidence struct {
-	EvidenceId   uint64 `protobuf:"varint,1,opt,name=evidenceId,proto3" json:"evidenceId,omitempty"`
-	DisputeId    uint64 `protobuf:"varint,2,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
+	EvidenceId   string `protobuf:"bytes,1,opt,name=evidenceId,proto3" json:"evidenceId,omitempty"`
+	DisputeId    string `protobuf:"bytes,2,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
 	ExternalLink string `protobuf:"bytes,3,opt,name=externalLink,proto3" json:"externalLink,omitempty"`
 }
 
@@ -64,18 +64,18 @@ func (m *Evidence) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Evidence proto.InternalMessageInfo
 
-func (m *Evidence) GetEvidenceId() uint64 {
+func (m *Evidence) GetEvidenceId() string {
 	if m != nil {
 		return m.EvidenceId
 	}
-	return 0
+	return ""
 }
 
-func (m *Evidence) GetDisputeId() uint64 {
+func (m *Evidence) GetDisputeId() string {
 	if m != nil {
 		return m.DisputeId
 	}
-	return 0
+	return ""
 }
 
 func (m *Evidence) GetExternalLink() string {
@@ -87,9 +87,9 @@ func (m *Evidence) GetExternalLink() string {
 
 //Rebuttal defines the rebutal for a raised dispute in the mono marketplace
 type Rebuttal struct {
-	RebuttalId uint64    `protobuf:"varint,1,opt,name=rebuttalId,proto3" json:"rebuttalId,omitempty"`
-	DisputeId  uint64    `protobuf:"varint,2,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
-	Evidence   *Evidence `protobuf:"bytes,3,opt,name=evidence,proto3" json:"evidence,omitempty"`
+	RebuttalId string `protobuf:"bytes,1,opt,name=rebuttalId,proto3" json:"rebuttalId,omitempty"`
+	DisputeId  string `protobuf:"bytes,2,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
+	EvidenceId string `protobuf:"bytes,3,opt,name=evidenceId,proto3" json:"evidenceId,omitempty"`
 }
 
 func (m *Rebuttal) Reset()         { *m = Rebuttal{} }
@@ -125,33 +125,33 @@ func (m *Rebuttal) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Rebuttal proto.InternalMessageInfo
 
-func (m *Rebuttal) GetRebuttalId() uint64 {
+func (m *Rebuttal) GetRebuttalId() string {
 	if m != nil {
 		return m.RebuttalId
 	}
-	return 0
+	return ""
 }
 
-func (m *Rebuttal) GetDisputeId() uint64 {
+func (m *Rebuttal) GetDisputeId() string {
 	if m != nil {
 		return m.DisputeId
 	}
-	return 0
+	return ""
 }
 
-func (m *Rebuttal) GetEvidence() *Evidence {
+func (m *Rebuttal) GetEvidenceId() string {
 	if m != nil {
-		return m.Evidence
+		return m.EvidenceId
 	}
-	return nil
+	return ""
 }
 
 //Dispute defines a dispute over a mono markeplace exchange of physical goods
 type Dispute struct {
-	DiputeId    uint64    `protobuf:"varint,1,opt,name=diputeId,proto3" json:"diputeId,omitempty"`
-	Title       string    `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Description string    `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Evidence    *Evidence `protobuf:"bytes,4,opt,name=evidence,proto3" json:"evidence,omitempty"`
+	DisputeId   string `protobuf:"bytes,1,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
+	Title       string `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	EvidenceId  string `protobuf:"bytes,4,opt,name=evidenceId,proto3" json:"evidenceId,omitempty"`
 }
 
 func (m *Dispute) Reset()         { *m = Dispute{} }
@@ -187,11 +187,11 @@ func (m *Dispute) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Dispute proto.InternalMessageInfo
 
-func (m *Dispute) GetDiputeId() uint64 {
+func (m *Dispute) GetDisputeId() string {
 	if m != nil {
-		return m.DiputeId
+		return m.DisputeId
 	}
-	return 0
+	return ""
 }
 
 func (m *Dispute) GetTitle() string {
@@ -208,81 +208,30 @@ func (m *Dispute) GetDescription() string {
 	return ""
 }
 
-func (m *Dispute) GetEvidence() *Evidence {
+func (m *Dispute) GetEvidenceId() string {
 	if m != nil {
-		return m.Evidence
+		return m.EvidenceId
 	}
-	return nil
-}
-
-// FundDistribution defines a structure to divide distributed funds in
-type FundDistribution struct {
-	PlaintifAmount  []types.Coin `protobuf:"bytes,1,rep,name=plaintifAmount,proto3" json:"plaintifAmount"`
-	DefendantAmount []types.Coin `protobuf:"bytes,2,rep,name=defendantAmount,proto3" json:"defendantAmount"`
-}
-
-func (m *FundDistribution) Reset()         { *m = FundDistribution{} }
-func (m *FundDistribution) String() string { return proto.CompactTextString(m) }
-func (*FundDistribution) ProtoMessage()    {}
-func (*FundDistribution) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1be600aaa49bca9e, []int{3}
-}
-func (m *FundDistribution) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *FundDistribution) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_FundDistribution.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *FundDistribution) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_FundDistribution.Merge(m, src)
-}
-func (m *FundDistribution) XXX_Size() int {
-	return m.Size()
-}
-func (m *FundDistribution) XXX_DiscardUnknown() {
-	xxx_messageInfo_FundDistribution.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_FundDistribution proto.InternalMessageInfo
-
-func (m *FundDistribution) GetPlaintifAmount() []types.Coin {
-	if m != nil {
-		return m.PlaintifAmount
-	}
-	return nil
-}
-
-func (m *FundDistribution) GetDefendantAmount() []types.Coin {
-	if m != nil {
-		return m.DefendantAmount
-	}
-	return nil
+	return ""
 }
 
 // Sentence defines the outcome of a dispute
 type Sentence struct {
-	VoteId               uint64            `protobuf:"varint,1,opt,name=voteId,proto3" json:"voteId,omitempty"`
-	PlaintifGuilty       bool              `protobuf:"varint,2,opt,name=plaintifGuilty,proto3" json:"plaintifGuilty,omitempty"`
-	DefendantGuilty      bool              `protobuf:"varint,3,opt,name=defendantGuilty,proto3" json:"defendantGuilty,omitempty"`
-	PlainttifBlacklisted bool              `protobuf:"varint,4,opt,name=plainttifBlacklisted,proto3" json:"plainttifBlacklisted,omitempty"`
-	DefendantBlacklisted bool              `protobuf:"varint,5,opt,name=defendantBlacklisted,proto3" json:"defendantBlacklisted,omitempty"`
-	FundDistr            *FundDistribution `protobuf:"bytes,6,opt,name=fundDistr,proto3" json:"fundDistr,omitempty"`
+	VoteId               string `protobuf:"bytes,1,opt,name=voteId,proto3" json:"voteId,omitempty"`
+	PlaintifGuilty       bool   `protobuf:"varint,2,opt,name=plaintifGuilty,proto3" json:"plaintifGuilty,omitempty"`
+	DefendantGuilty      bool   `protobuf:"varint,3,opt,name=defendantGuilty,proto3" json:"defendantGuilty,omitempty"`
+	PlaintifBlacklisted  bool   `protobuf:"varint,4,opt,name=plaintifBlacklisted,proto3" json:"plaintifBlacklisted,omitempty"`
+	DefendantBlacklisted bool   `protobuf:"varint,5,opt,name=defendantBlacklisted,proto3" json:"defendantBlacklisted,omitempty"`
+	PlaintifJailTime     uint64 `protobuf:"varint,6,opt,name=plaintifJailTime,proto3" json:"plaintifJailTime,omitempty"`
+	DefendantJailTime    uint64 `protobuf:"varint,7,opt,name=defendantJailTime,proto3" json:"defendantJailTime,omitempty"`
+	AmountToReturn       uint64 `protobuf:"varint,8,opt,name=amountToReturn,proto3" json:"amountToReturn,omitempty"`
 }
 
 func (m *Sentence) Reset()         { *m = Sentence{} }
 func (m *Sentence) String() string { return proto.CompactTextString(m) }
 func (*Sentence) ProtoMessage()    {}
 func (*Sentence) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1be600aaa49bca9e, []int{4}
+	return fileDescriptor_1be600aaa49bca9e, []int{3}
 }
 func (m *Sentence) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -311,11 +260,11 @@ func (m *Sentence) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Sentence proto.InternalMessageInfo
 
-func (m *Sentence) GetVoteId() uint64 {
+func (m *Sentence) GetVoteId() string {
 	if m != nil {
 		return m.VoteId
 	}
-	return 0
+	return ""
 }
 
 func (m *Sentence) GetPlaintifGuilty() bool {
@@ -332,9 +281,9 @@ func (m *Sentence) GetDefendantGuilty() bool {
 	return false
 }
 
-func (m *Sentence) GetPlainttifBlacklisted() bool {
+func (m *Sentence) GetPlaintifBlacklisted() bool {
 	if m != nil {
-		return m.PlainttifBlacklisted
+		return m.PlaintifBlacklisted
 	}
 	return false
 }
@@ -346,25 +295,40 @@ func (m *Sentence) GetDefendantBlacklisted() bool {
 	return false
 }
 
-func (m *Sentence) GetFundDistr() *FundDistribution {
+func (m *Sentence) GetPlaintifJailTime() uint64 {
 	if m != nil {
-		return m.FundDistr
+		return m.PlaintifJailTime
 	}
-	return nil
+	return 0
+}
+
+func (m *Sentence) GetDefendantJailTime() uint64 {
+	if m != nil {
+		return m.DefendantJailTime
+	}
+	return 0
+}
+
+func (m *Sentence) GetAmountToReturn() uint64 {
+	if m != nil {
+		return m.AmountToReturn
+	}
+	return 0
 }
 
 // Vote defines the vote that is cast for a MonoDispute
 type Vote struct {
-	VoterId   uint64    `protobuf:"varint,1,opt,name=voterId,proto3" json:"voterId,omitempty"`
-	DisputeId uint64    `protobuf:"varint,2,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
-	BuyerId   *Sentence `protobuf:"bytes,3,opt,name=buyerId,proto3" json:"buyerId,omitempty"`
+	VoteId    string    `protobuf:"bytes,1,opt,name=voteId,proto3" json:"voteId,omitempty"`
+	VoterId   string    `protobuf:"bytes,2,opt,name=voterId,proto3" json:"voterId,omitempty"`
+	DisputeId string    `protobuf:"bytes,3,opt,name=disputeId,proto3" json:"disputeId,omitempty"`
+	VoteInfo  *Sentence `protobuf:"bytes,4,opt,name=voteInfo,proto3" json:"voteInfo,omitempty"`
 }
 
 func (m *Vote) Reset()         { *m = Vote{} }
 func (m *Vote) String() string { return proto.CompactTextString(m) }
 func (*Vote) ProtoMessage()    {}
 func (*Vote) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1be600aaa49bca9e, []int{5}
+	return fileDescriptor_1be600aaa49bca9e, []int{4}
 }
 func (m *Vote) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -393,23 +357,30 @@ func (m *Vote) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Vote proto.InternalMessageInfo
 
-func (m *Vote) GetVoterId() uint64 {
+func (m *Vote) GetVoteId() string {
+	if m != nil {
+		return m.VoteId
+	}
+	return ""
+}
+
+func (m *Vote) GetVoterId() string {
 	if m != nil {
 		return m.VoterId
 	}
-	return 0
+	return ""
 }
 
-func (m *Vote) GetDisputeId() uint64 {
+func (m *Vote) GetDisputeId() string {
 	if m != nil {
 		return m.DisputeId
 	}
-	return 0
+	return ""
 }
 
-func (m *Vote) GetBuyerId() *Sentence {
+func (m *Vote) GetVoteInfo() *Sentence {
 	if m != nil {
-		return m.BuyerId
+		return m.VoteInfo
 	}
 	return nil
 }
@@ -418,7 +389,6 @@ func init() {
 	proto.RegisterType((*Evidence)(nil), "crowlabs.epsilon.nest.marketmodels.mono.Evidence")
 	proto.RegisterType((*Rebuttal)(nil), "crowlabs.epsilon.nest.marketmodels.mono.Rebuttal")
 	proto.RegisterType((*Dispute)(nil), "crowlabs.epsilon.nest.marketmodels.mono.Dispute")
-	proto.RegisterType((*FundDistribution)(nil), "crowlabs.epsilon.nest.marketmodels.mono.FundDistribution")
 	proto.RegisterType((*Sentence)(nil), "crowlabs.epsilon.nest.marketmodels.mono.Sentence")
 	proto.RegisterType((*Vote)(nil), "crowlabs.epsilon.nest.marketmodels.mono.Vote")
 }
@@ -428,43 +398,39 @@ func init() {
 }
 
 var fileDescriptor_1be600aaa49bca9e = []byte{
-	// 566 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0xcf, 0x8a, 0xd3, 0x40,
-	0x18, 0x6f, 0xda, 0x6e, 0x9b, 0x7e, 0x15, 0x95, 0xa1, 0x48, 0x2c, 0x12, 0x4b, 0x0e, 0x5a, 0x0f,
-	0x3b, 0xa1, 0x15, 0x04, 0x8f, 0xd6, 0xd5, 0xa5, 0xa8, 0x20, 0x11, 0x14, 0xbc, 0xe5, 0xcf, 0xb4,
-	0x0e, 0x9d, 0xcc, 0x94, 0xcc, 0xa4, 0xee, 0x3e, 0x83, 0x17, 0x6f, 0xbe, 0x81, 0x27, 0xaf, 0xbe,
-	0xc3, 0x1e, 0xf7, 0xe8, 0x49, 0xa4, 0x7d, 0x11, 0xc9, 0x24, 0x69, 0xbb, 0x65, 0x65, 0x2b, 0x7b,
-	0x09, 0x33, 0xbf, 0xc9, 0xef, 0x4f, 0xbe, 0xef, 0xcb, 0xc0, 0x23, 0x4e, 0xa4, 0x72, 0x63, 0x3f,
-	0x99, 0x11, 0x75, 0x18, 0x8b, 0x88, 0x30, 0xe9, 0xc6, 0x82, 0x0b, 0xfd, 0x38, 0xa2, 0x72, 0x9e,
-	0x2a, 0x82, 0xe7, 0x89, 0x50, 0x02, 0x3d, 0x0c, 0x13, 0xf1, 0x99, 0xf9, 0x81, 0xc4, 0x64, 0x2e,
-	0x29, 0x13, 0x1c, 0x67, 0x5c, 0x9c, 0x73, 0x73, 0x2a, 0xce, 0x58, 0x5d, 0x3b, 0x14, 0x32, 0x16,
-	0xd2, 0x0d, 0x7c, 0x49, 0xdc, 0xc5, 0x20, 0x20, 0xca, 0x1f, 0xb8, 0xa1, 0xa0, 0x3c, 0x17, 0xea,
-	0x76, 0xa6, 0x62, 0x2a, 0xf4, 0xd2, 0xcd, 0x56, 0x39, 0xea, 0x30, 0x30, 0x5f, 0x2c, 0x68, 0x44,
-	0x78, 0x48, 0x90, 0x0d, 0x40, 0x8a, 0xf5, 0x38, 0xb2, 0x8c, 0x9e, 0xd1, 0xaf, 0x7b, 0x5b, 0x08,
-	0xba, 0x07, 0xad, 0x28, 0xcf, 0x36, 0x8e, 0xac, 0xaa, 0x3e, 0xde, 0x00, 0xc8, 0x81, 0x1b, 0xe4,
-	0x44, 0x91, 0x84, 0xfb, 0xec, 0x35, 0xe5, 0x33, 0xab, 0xd6, 0x33, 0xfa, 0x2d, 0xef, 0x02, 0xe6,
-	0x7c, 0x33, 0xc0, 0xf4, 0x48, 0x90, 0x2a, 0xe5, 0xb3, 0xcc, 0x2e, 0x29, 0xd6, 0x1b, 0xbb, 0x0d,
-	0x72, 0x85, 0xdd, 0x1b, 0x30, 0xcb, 0x68, 0xda, 0xaa, 0x3d, 0x1c, 0xe0, 0x3d, 0x4b, 0x85, 0xcb,
-	0x2f, 0xf6, 0xd6, 0x12, 0xce, 0x0f, 0x03, 0x9a, 0x45, 0xe1, 0x51, 0x17, 0xcc, 0x88, 0x16, 0xbe,
-	0x79, 0xac, 0xf5, 0x1e, 0x75, 0xe0, 0x40, 0x51, 0xc5, 0x88, 0x0e, 0xd4, 0xf2, 0xf2, 0x0d, 0xea,
-	0x41, 0x3b, 0x22, 0x32, 0x4c, 0xe8, 0x5c, 0x51, 0xc1, 0x8b, 0x4f, 0xdf, 0x86, 0x2e, 0xc4, 0xad,
-	0x5f, 0x3f, 0xee, 0x77, 0x03, 0x6e, 0xbf, 0x4c, 0x79, 0x74, 0x44, 0xa5, 0x4a, 0x68, 0x90, 0x6a,
-	0x8f, 0x63, 0xb8, 0x39, 0x67, 0x3e, 0xe5, 0x8a, 0x4e, 0x9e, 0xc5, 0x22, 0xe5, 0xca, 0x32, 0x7a,
-	0xb5, 0x7e, 0x7b, 0x78, 0x17, 0xe7, 0xa3, 0x81, 0xb3, 0xd1, 0xc0, 0xc5, 0x68, 0xe0, 0xe7, 0x82,
-	0xf2, 0x51, 0xfd, 0xec, 0xf7, 0xfd, 0x8a, 0xb7, 0x43, 0x43, 0x63, 0xb8, 0x15, 0x91, 0x09, 0xe1,
-	0x91, 0xcf, 0x55, 0xa1, 0x54, 0xdd, 0x4f, 0x69, 0x97, 0xe7, 0xfc, 0xac, 0x82, 0xf9, 0x8e, 0x70,
-	0xa5, 0x07, 0xec, 0x0e, 0x34, 0x16, 0x62, 0xab, 0xac, 0xc5, 0x0e, 0x3d, 0xd8, 0x04, 0x3f, 0x4e,
-	0x29, 0x53, 0xa7, 0xba, 0xba, 0xa6, 0xb7, 0x83, 0xa2, 0xfe, 0x56, 0xae, 0xe2, 0xc5, 0x9a, 0x7e,
-	0x71, 0x17, 0x46, 0x43, 0xe8, 0xe4, 0x5c, 0x45, 0x27, 0x23, 0xe6, 0x87, 0x33, 0x46, 0xa5, 0x22,
-	0x91, 0x2e, 0xbd, 0xe9, 0x5d, 0x7a, 0x96, 0x71, 0xd6, 0x32, 0xdb, 0x9c, 0x83, 0x9c, 0x73, 0xd9,
-	0x19, 0xfa, 0x00, 0xad, 0x49, 0xd9, 0x06, 0xab, 0xa1, 0xfb, 0xfa, 0x74, 0xef, 0xbe, 0xee, 0x36,
-	0xd0, 0xdb, 0x68, 0x39, 0x5f, 0x0c, 0xa8, 0xbf, 0x17, 0x8a, 0x20, 0x0b, 0x9a, 0x59, 0x95, 0x92,
-	0x75, 0xd1, 0xca, 0xed, 0x15, 0xff, 0xc7, 0x2b, 0x68, 0x06, 0xe9, 0xa9, 0xe6, 0xfd, 0xef, 0xef,
-	0x51, 0xf6, 0xcb, 0x2b, 0x15, 0x46, 0x6f, 0xcf, 0x96, 0xb6, 0x71, 0xbe, 0xb4, 0x8d, 0x3f, 0x4b,
-	0xdb, 0xf8, 0xba, 0xb2, 0x2b, 0xe7, 0x2b, 0xbb, 0xf2, 0x6b, 0x65, 0x57, 0x3e, 0x3e, 0x99, 0x52,
-	0xf5, 0x29, 0x0d, 0x70, 0x28, 0x62, 0x37, 0xd3, 0x3f, 0xcc, 0x0c, 0xdc, 0xc2, 0xc0, 0x3d, 0x71,
-	0xff, 0x71, 0xd1, 0x05, 0x0d, 0x7d, 0xfd, 0x3c, 0xfe, 0x1b, 0x00, 0x00, 0xff, 0xff, 0xa7, 0x71,
-	0x5f, 0xad, 0x0a, 0x05, 0x00, 0x00,
+	// 510 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x54, 0xcd, 0x6e, 0xd3, 0x40,
+	0x10, 0x8e, 0x9b, 0x34, 0x71, 0xa7, 0x88, 0x9f, 0x25, 0x42, 0x56, 0x85, 0xac, 0x28, 0x07, 0x08,
+	0x88, 0xda, 0xa4, 0x48, 0x3c, 0x40, 0x05, 0x42, 0x45, 0x20, 0x21, 0x53, 0x71, 0xe0, 0xb6, 0xb6,
+	0x27, 0xe9, 0x2a, 0xeb, 0xdd, 0xc8, 0x1e, 0x87, 0x72, 0xe2, 0x15, 0x78, 0x09, 0xde, 0x85, 0x63,
+	0x8f, 0x1c, 0x38, 0xa0, 0xe4, 0x45, 0x90, 0xd7, 0xce, 0x9f, 0xd3, 0x0a, 0x2e, 0xd1, 0xec, 0x37,
+	0xf3, 0xfd, 0x68, 0xb2, 0x6b, 0x78, 0xa2, 0x30, 0x23, 0x3f, 0xe1, 0xe9, 0x04, 0xe9, 0x38, 0xd1,
+	0x31, 0xca, 0xcc, 0x4f, 0xb4, 0xd2, 0xe6, 0xe7, 0x95, 0xc8, 0xa6, 0x39, 0xa1, 0x37, 0x4d, 0x35,
+	0x69, 0xf6, 0x38, 0x4a, 0xf5, 0x17, 0xc9, 0xc3, 0xcc, 0xc3, 0x69, 0x26, 0xa4, 0x56, 0x5e, 0xc1,
+	0xf5, 0x4a, 0x6e, 0x49, 0xf5, 0x0a, 0xd6, 0x91, 0x1b, 0xe9, 0x2c, 0xd1, 0x99, 0x1f, 0xf2, 0x0c,
+	0xfd, 0xd9, 0x30, 0x44, 0xe2, 0x43, 0x3f, 0xd2, 0x42, 0x95, 0x42, 0x47, 0xdd, 0xb1, 0x1e, 0x6b,
+	0x53, 0xfa, 0x45, 0x55, 0xa2, 0x7d, 0x09, 0xf6, 0xeb, 0x99, 0x88, 0x51, 0x45, 0xc8, 0x5c, 0x00,
+	0xac, 0xea, 0xb3, 0xd8, 0xb1, 0x7a, 0xd6, 0xe0, 0x20, 0xd8, 0x40, 0xd8, 0x43, 0x38, 0x88, 0xcb,
+	0x6c, 0x67, 0xb1, 0xb3, 0x67, 0xda, 0x6b, 0x80, 0xf5, 0xe1, 0x16, 0x5e, 0x12, 0xa6, 0x8a, 0xcb,
+	0x77, 0x42, 0x4d, 0x9c, 0xa6, 0x19, 0xd8, 0xc2, 0xfa, 0x17, 0x60, 0x07, 0x18, 0xe6, 0x44, 0x5c,
+	0x16, 0x6e, 0x69, 0x55, 0xaf, 0xdd, 0xd6, 0xc8, 0x3f, 0xdc, 0xb6, 0xb3, 0x36, 0xeb, 0x59, 0xfb,
+	0xdf, 0xa0, 0x53, 0xed, 0x71, 0x5b, 0xc8, 0xaa, 0x0b, 0x75, 0x61, 0x9f, 0x04, 0x49, 0xac, 0x2c,
+	0xca, 0x03, 0xeb, 0xc1, 0x61, 0x8c, 0x59, 0x94, 0x8a, 0x29, 0x09, 0xad, 0x2a, 0xfd, 0x4d, 0xa8,
+	0x16, 0xa0, 0xb5, 0x13, 0xe0, 0xf7, 0x1e, 0xd8, 0x1f, 0x51, 0x91, 0xd9, 0xec, 0x03, 0x68, 0xcf,
+	0xf4, 0x86, 0x7f, 0x75, 0x62, 0x8f, 0xe0, 0xf6, 0x54, 0x72, 0xa1, 0x48, 0x8c, 0xde, 0xe4, 0x42,
+	0xd2, 0x57, 0x93, 0xc2, 0x0e, 0x6a, 0x28, 0x1b, 0xc0, 0x9d, 0x18, 0x47, 0xa8, 0x62, 0xae, 0xa8,
+	0x1a, 0x6c, 0x9a, 0xc1, 0x3a, 0xcc, 0x9e, 0xc3, 0xfd, 0x25, 0xf7, 0x54, 0xf2, 0x68, 0x22, 0x45,
+	0x46, 0x58, 0xe6, 0xb3, 0x83, 0xeb, 0x5a, 0xec, 0x04, 0xba, 0x2b, 0x91, 0x4d, 0xca, 0xbe, 0xa1,
+	0x5c, 0xdb, 0x63, 0x4f, 0xe1, 0xee, 0x52, 0xea, 0x2d, 0x17, 0xf2, 0x5c, 0x24, 0xe8, 0xb4, 0x7b,
+	0xd6, 0xa0, 0x15, 0xec, 0xe0, 0xec, 0x19, 0xdc, 0x5b, 0x69, 0xac, 0x86, 0x3b, 0x66, 0x78, 0xb7,
+	0x51, 0x6c, 0x84, 0x27, 0x3a, 0x57, 0x74, 0xae, 0x03, 0xa4, 0x3c, 0x55, 0x8e, 0x6d, 0x46, 0x6b,
+	0x68, 0xff, 0x87, 0x05, 0xad, 0x4f, 0x9a, 0x6e, 0x5e, 0xad, 0x03, 0x9d, 0xa2, 0x4a, 0x57, 0x97,
+	0x67, 0x79, 0xdc, 0xbe, 0x0f, 0xcd, 0xfa, 0x7d, 0x78, 0x0f, 0xb6, 0x51, 0x50, 0x23, 0x6d, 0xb6,
+	0x76, 0x78, 0x32, 0xf4, 0xfe, 0xf3, 0x09, 0x7a, 0xcb, 0xff, 0x3b, 0x58, 0x49, 0x9c, 0x7e, 0xf8,
+	0x39, 0x77, 0xad, 0xab, 0xb9, 0x6b, 0xfd, 0x99, 0xbb, 0xd6, 0xf7, 0x85, 0xdb, 0xb8, 0x5a, 0xb8,
+	0x8d, 0x5f, 0x0b, 0xb7, 0xf1, 0xf9, 0xe5, 0x58, 0xd0, 0x45, 0x1e, 0x7a, 0x91, 0x4e, 0xfc, 0xc2,
+	0xe0, 0xb8, 0x70, 0xf0, 0x2b, 0x07, 0xff, 0xd2, 0xbf, 0xe1, 0x13, 0x11, 0xb6, 0xcd, 0xc3, 0x7d,
+	0xf1, 0x37, 0x00, 0x00, 0xff, 0xff, 0x5c, 0xce, 0x42, 0x2b, 0x44, 0x04, 0x00, 0x00,
 }
 
 func (m *Evidence) Marshal() (dAtA []byte, err error) {
@@ -494,15 +460,19 @@ func (m *Evidence) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	if m.DisputeId != 0 {
-		i = encodeVarintMonoDispute(dAtA, i, uint64(m.DisputeId))
+	if len(m.DisputeId) > 0 {
+		i -= len(m.DisputeId)
+		copy(dAtA[i:], m.DisputeId)
+		i = encodeVarintMonoDispute(dAtA, i, uint64(len(m.DisputeId)))
 		i--
-		dAtA[i] = 0x10
+		dAtA[i] = 0x12
 	}
-	if m.EvidenceId != 0 {
-		i = encodeVarintMonoDispute(dAtA, i, uint64(m.EvidenceId))
+	if len(m.EvidenceId) > 0 {
+		i -= len(m.EvidenceId)
+		copy(dAtA[i:], m.EvidenceId)
+		i = encodeVarintMonoDispute(dAtA, i, uint64(len(m.EvidenceId)))
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -527,27 +497,26 @@ func (m *Rebuttal) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.Evidence != nil {
-		{
-			size, err := m.Evidence.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMonoDispute(dAtA, i, uint64(size))
-		}
+	if len(m.EvidenceId) > 0 {
+		i -= len(m.EvidenceId)
+		copy(dAtA[i:], m.EvidenceId)
+		i = encodeVarintMonoDispute(dAtA, i, uint64(len(m.EvidenceId)))
 		i--
 		dAtA[i] = 0x1a
 	}
-	if m.DisputeId != 0 {
-		i = encodeVarintMonoDispute(dAtA, i, uint64(m.DisputeId))
+	if len(m.DisputeId) > 0 {
+		i -= len(m.DisputeId)
+		copy(dAtA[i:], m.DisputeId)
+		i = encodeVarintMonoDispute(dAtA, i, uint64(len(m.DisputeId)))
 		i--
-		dAtA[i] = 0x10
+		dAtA[i] = 0x12
 	}
-	if m.RebuttalId != 0 {
-		i = encodeVarintMonoDispute(dAtA, i, uint64(m.RebuttalId))
+	if len(m.RebuttalId) > 0 {
+		i -= len(m.RebuttalId)
+		copy(dAtA[i:], m.RebuttalId)
+		i = encodeVarintMonoDispute(dAtA, i, uint64(len(m.RebuttalId)))
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -572,15 +541,10 @@ func (m *Dispute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.Evidence != nil {
-		{
-			size, err := m.Evidence.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMonoDispute(dAtA, i, uint64(size))
-		}
+	if len(m.EvidenceId) > 0 {
+		i -= len(m.EvidenceId)
+		copy(dAtA[i:], m.EvidenceId)
+		i = encodeVarintMonoDispute(dAtA, i, uint64(len(m.EvidenceId)))
 		i--
 		dAtA[i] = 0x22
 	}
@@ -598,61 +562,12 @@ func (m *Dispute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	if m.DiputeId != 0 {
-		i = encodeVarintMonoDispute(dAtA, i, uint64(m.DiputeId))
+	if len(m.DisputeId) > 0 {
+		i -= len(m.DisputeId)
+		copy(dAtA[i:], m.DisputeId)
+		i = encodeVarintMonoDispute(dAtA, i, uint64(len(m.DisputeId)))
 		i--
-		dAtA[i] = 0x8
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *FundDistribution) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *FundDistribution) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *FundDistribution) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.DefendantAmount) > 0 {
-		for iNdEx := len(m.DefendantAmount) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.DefendantAmount[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintMonoDispute(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x12
-		}
-	}
-	if len(m.PlaintifAmount) > 0 {
-		for iNdEx := len(m.PlaintifAmount) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.PlaintifAmount[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintMonoDispute(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0xa
-		}
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -677,17 +592,20 @@ func (m *Sentence) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.FundDistr != nil {
-		{
-			size, err := m.FundDistr.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMonoDispute(dAtA, i, uint64(size))
-		}
+	if m.AmountToReturn != 0 {
+		i = encodeVarintMonoDispute(dAtA, i, uint64(m.AmountToReturn))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x40
+	}
+	if m.DefendantJailTime != 0 {
+		i = encodeVarintMonoDispute(dAtA, i, uint64(m.DefendantJailTime))
+		i--
+		dAtA[i] = 0x38
+	}
+	if m.PlaintifJailTime != 0 {
+		i = encodeVarintMonoDispute(dAtA, i, uint64(m.PlaintifJailTime))
+		i--
+		dAtA[i] = 0x30
 	}
 	if m.DefendantBlacklisted {
 		i--
@@ -699,9 +617,9 @@ func (m *Sentence) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x28
 	}
-	if m.PlainttifBlacklisted {
+	if m.PlaintifBlacklisted {
 		i--
-		if m.PlainttifBlacklisted {
+		if m.PlaintifBlacklisted {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
@@ -729,10 +647,12 @@ func (m *Sentence) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x10
 	}
-	if m.VoteId != 0 {
-		i = encodeVarintMonoDispute(dAtA, i, uint64(m.VoteId))
+	if len(m.VoteId) > 0 {
+		i -= len(m.VoteId)
+		copy(dAtA[i:], m.VoteId)
+		i = encodeVarintMonoDispute(dAtA, i, uint64(len(m.VoteId)))
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -757,9 +677,9 @@ func (m *Vote) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.BuyerId != nil {
+	if m.VoteInfo != nil {
 		{
-			size, err := m.BuyerId.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.VoteInfo.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -767,17 +687,28 @@ func (m *Vote) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintMonoDispute(dAtA, i, uint64(size))
 		}
 		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.DisputeId) > 0 {
+		i -= len(m.DisputeId)
+		copy(dAtA[i:], m.DisputeId)
+		i = encodeVarintMonoDispute(dAtA, i, uint64(len(m.DisputeId)))
+		i--
 		dAtA[i] = 0x1a
 	}
-	if m.DisputeId != 0 {
-		i = encodeVarintMonoDispute(dAtA, i, uint64(m.DisputeId))
+	if len(m.VoterId) > 0 {
+		i -= len(m.VoterId)
+		copy(dAtA[i:], m.VoterId)
+		i = encodeVarintMonoDispute(dAtA, i, uint64(len(m.VoterId)))
 		i--
-		dAtA[i] = 0x10
+		dAtA[i] = 0x12
 	}
-	if m.VoterId != 0 {
-		i = encodeVarintMonoDispute(dAtA, i, uint64(m.VoterId))
+	if len(m.VoteId) > 0 {
+		i -= len(m.VoteId)
+		copy(dAtA[i:], m.VoteId)
+		i = encodeVarintMonoDispute(dAtA, i, uint64(len(m.VoteId)))
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -799,11 +730,13 @@ func (m *Evidence) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.EvidenceId != 0 {
-		n += 1 + sovMonoDispute(uint64(m.EvidenceId))
+	l = len(m.EvidenceId)
+	if l > 0 {
+		n += 1 + l + sovMonoDispute(uint64(l))
 	}
-	if m.DisputeId != 0 {
-		n += 1 + sovMonoDispute(uint64(m.DisputeId))
+	l = len(m.DisputeId)
+	if l > 0 {
+		n += 1 + l + sovMonoDispute(uint64(l))
 	}
 	l = len(m.ExternalLink)
 	if l > 0 {
@@ -818,14 +751,16 @@ func (m *Rebuttal) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RebuttalId != 0 {
-		n += 1 + sovMonoDispute(uint64(m.RebuttalId))
+	l = len(m.RebuttalId)
+	if l > 0 {
+		n += 1 + l + sovMonoDispute(uint64(l))
 	}
-	if m.DisputeId != 0 {
-		n += 1 + sovMonoDispute(uint64(m.DisputeId))
+	l = len(m.DisputeId)
+	if l > 0 {
+		n += 1 + l + sovMonoDispute(uint64(l))
 	}
-	if m.Evidence != nil {
-		l = m.Evidence.Size()
+	l = len(m.EvidenceId)
+	if l > 0 {
 		n += 1 + l + sovMonoDispute(uint64(l))
 	}
 	return n
@@ -837,8 +772,9 @@ func (m *Dispute) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.DiputeId != 0 {
-		n += 1 + sovMonoDispute(uint64(m.DiputeId))
+	l = len(m.DisputeId)
+	if l > 0 {
+		n += 1 + l + sovMonoDispute(uint64(l))
 	}
 	l = len(m.Title)
 	if l > 0 {
@@ -848,30 +784,9 @@ func (m *Dispute) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovMonoDispute(uint64(l))
 	}
-	if m.Evidence != nil {
-		l = m.Evidence.Size()
+	l = len(m.EvidenceId)
+	if l > 0 {
 		n += 1 + l + sovMonoDispute(uint64(l))
-	}
-	return n
-}
-
-func (m *FundDistribution) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if len(m.PlaintifAmount) > 0 {
-		for _, e := range m.PlaintifAmount {
-			l = e.Size()
-			n += 1 + l + sovMonoDispute(uint64(l))
-		}
-	}
-	if len(m.DefendantAmount) > 0 {
-		for _, e := range m.DefendantAmount {
-			l = e.Size()
-			n += 1 + l + sovMonoDispute(uint64(l))
-		}
 	}
 	return n
 }
@@ -882,8 +797,9 @@ func (m *Sentence) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.VoteId != 0 {
-		n += 1 + sovMonoDispute(uint64(m.VoteId))
+	l = len(m.VoteId)
+	if l > 0 {
+		n += 1 + l + sovMonoDispute(uint64(l))
 	}
 	if m.PlaintifGuilty {
 		n += 2
@@ -891,15 +807,20 @@ func (m *Sentence) Size() (n int) {
 	if m.DefendantGuilty {
 		n += 2
 	}
-	if m.PlainttifBlacklisted {
+	if m.PlaintifBlacklisted {
 		n += 2
 	}
 	if m.DefendantBlacklisted {
 		n += 2
 	}
-	if m.FundDistr != nil {
-		l = m.FundDistr.Size()
-		n += 1 + l + sovMonoDispute(uint64(l))
+	if m.PlaintifJailTime != 0 {
+		n += 1 + sovMonoDispute(uint64(m.PlaintifJailTime))
+	}
+	if m.DefendantJailTime != 0 {
+		n += 1 + sovMonoDispute(uint64(m.DefendantJailTime))
+	}
+	if m.AmountToReturn != 0 {
+		n += 1 + sovMonoDispute(uint64(m.AmountToReturn))
 	}
 	return n
 }
@@ -910,14 +831,20 @@ func (m *Vote) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.VoterId != 0 {
-		n += 1 + sovMonoDispute(uint64(m.VoterId))
+	l = len(m.VoteId)
+	if l > 0 {
+		n += 1 + l + sovMonoDispute(uint64(l))
 	}
-	if m.DisputeId != 0 {
-		n += 1 + sovMonoDispute(uint64(m.DisputeId))
+	l = len(m.VoterId)
+	if l > 0 {
+		n += 1 + l + sovMonoDispute(uint64(l))
 	}
-	if m.BuyerId != nil {
-		l = m.BuyerId.Size()
+	l = len(m.DisputeId)
+	if l > 0 {
+		n += 1 + l + sovMonoDispute(uint64(l))
+	}
+	if m.VoteInfo != nil {
+		l = m.VoteInfo.Size()
 		n += 1 + l + sovMonoDispute(uint64(l))
 	}
 	return n
@@ -959,10 +886,10 @@ func (m *Evidence) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field EvidenceId", wireType)
 			}
-			m.EvidenceId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoDispute
@@ -972,16 +899,29 @@ func (m *Evidence) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.EvidenceId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EvidenceId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 2:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DisputeId", wireType)
 			}
-			m.DisputeId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoDispute
@@ -991,11 +931,24 @@ func (m *Evidence) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.DisputeId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DisputeId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExternalLink", wireType)
@@ -1079,10 +1032,10 @@ func (m *Rebuttal) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RebuttalId", wireType)
 			}
-			m.RebuttalId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoDispute
@@ -1092,65 +1045,87 @@ func (m *Rebuttal) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.RebuttalId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DisputeId", wireType)
-			}
-			m.DisputeId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowMonoDispute
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.DisputeId |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Evidence", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowMonoDispute
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthMonoDispute
 			}
-			postIndex := iNdEx + msglen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthMonoDispute
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Evidence == nil {
-				m.Evidence = &Evidence{}
+			m.RebuttalId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DisputeId", wireType)
 			}
-			if err := m.Evidence.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonoDispute
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DisputeId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EvidenceId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonoDispute
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EvidenceId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1203,10 +1178,10 @@ func (m *Dispute) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DiputeId", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DisputeId", wireType)
 			}
-			m.DiputeId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoDispute
@@ -1216,11 +1191,24 @@ func (m *Dispute) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.DiputeId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DisputeId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
@@ -1287,9 +1275,9 @@ func (m *Dispute) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Evidence", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field EvidenceId", wireType)
 			}
-			var msglen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoDispute
@@ -1299,145 +1287,23 @@ func (m *Dispute) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthMonoDispute
 			}
-			postIndex := iNdEx + msglen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthMonoDispute
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Evidence == nil {
-				m.Evidence = &Evidence{}
-			}
-			if err := m.Evidence.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipMonoDispute(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthMonoDispute
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *FundDistribution) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowMonoDispute
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: FundDistribution: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: FundDistribution: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PlaintifAmount", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowMonoDispute
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthMonoDispute
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMonoDispute
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.PlaintifAmount = append(m.PlaintifAmount, types.Coin{})
-			if err := m.PlaintifAmount[len(m.PlaintifAmount)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DefendantAmount", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowMonoDispute
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthMonoDispute
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMonoDispute
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.DefendantAmount = append(m.DefendantAmount, types.Coin{})
-			if err := m.DefendantAmount[len(m.DefendantAmount)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.EvidenceId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1490,10 +1356,10 @@ func (m *Sentence) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field VoteId", wireType)
 			}
-			m.VoteId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoDispute
@@ -1503,11 +1369,24 @@ func (m *Sentence) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.VoteId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.VoteId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field PlaintifGuilty", wireType)
@@ -1550,7 +1429,7 @@ func (m *Sentence) Unmarshal(dAtA []byte) error {
 			m.DefendantGuilty = bool(v != 0)
 		case 4:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PlainttifBlacklisted", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field PlaintifBlacklisted", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -1567,7 +1446,7 @@ func (m *Sentence) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.PlainttifBlacklisted = bool(v != 0)
+			m.PlaintifBlacklisted = bool(v != 0)
 		case 5:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DefendantBlacklisted", wireType)
@@ -1589,10 +1468,10 @@ func (m *Sentence) Unmarshal(dAtA []byte) error {
 			}
 			m.DefendantBlacklisted = bool(v != 0)
 		case 6:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field FundDistr", wireType)
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PlaintifJailTime", wireType)
 			}
-			var msglen int
+			m.PlaintifJailTime = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoDispute
@@ -1602,28 +1481,49 @@ func (m *Sentence) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				m.PlaintifJailTime |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
-				return ErrInvalidLengthMonoDispute
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DefendantJailTime", wireType)
 			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMonoDispute
+			m.DefendantJailTime = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonoDispute
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DefendantJailTime |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
 			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AmountToReturn", wireType)
 			}
-			if m.FundDistr == nil {
-				m.FundDistr = &FundDistribution{}
+			m.AmountToReturn = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonoDispute
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.AmountToReturn |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
 			}
-			if err := m.FundDistr.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMonoDispute(dAtA[iNdEx:])
@@ -1675,10 +1575,42 @@ func (m *Vote) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VoteId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonoDispute
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.VoteId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field VoterId", wireType)
 			}
-			m.VoterId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoDispute
@@ -1688,33 +1620,59 @@ func (m *Vote) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.VoterId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DisputeId", wireType)
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoDispute
 			}
-			m.DisputeId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowMonoDispute
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.DisputeId |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoDispute
 			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.VoterId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field BuyerId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DisputeId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonoDispute
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoDispute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DisputeId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VoteInfo", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1741,10 +1699,10 @@ func (m *Vote) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.BuyerId == nil {
-				m.BuyerId = &Sentence{}
+			if m.VoteInfo == nil {
+				m.VoteInfo = &Sentence{}
 			}
-			if err := m.BuyerId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.VoteInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

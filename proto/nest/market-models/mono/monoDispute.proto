@@ -10,45 +10,42 @@ option go_package = "github.com/crow-labs/epsilon/x/nest/market-models/mono";
 
 // Evidence defines evidence for a dispute/rebutal in the mono marketplace
 message Evidence{
-    uint64 evidenceId = 1;
-    uint64 disputeId = 2;
+    string evidenceId = 1;
+    string disputeId = 2;
     string externalLink = 3;
 }
 
 //Rebuttal defines the rebutal for a raised dispute in the mono marketplace
 message Rebuttal{
-    uint64 rebuttalId = 1;
-    uint64 disputeId = 2; 
-    Evidence evidence = 3;
+    string rebuttalId = 1;
+    string disputeId = 2; 
+    string evidenceId = 3;
 }
 
 //Dispute defines a dispute over a mono markeplace exchange of physical goods
 message Dispute{
-    uint64 diputeId = 1;
+    string disputeId = 1;
     string title = 2;
     string description = 3;
-    Evidence evidence = 4;
-}
-
-// FundDistribution defines a structure to divide distributed funds in
-message FundDistribution{
-    repeated cosmos.base.v1beta1.Coin plaintifAmount = 1 [(gogoproto.nullable) = false];
-    repeated cosmos.base.v1beta1.Coin defendantAmount = 2 [(gogoproto.nullable) = false];
+    string evidenceId = 4;
 }
 
 // Sentence defines the outcome of a dispute
 message Sentence{
-    uint64 voteId = 1;
+    string voteId = 1;
     bool plaintifGuilty = 2;
     bool defendantGuilty = 3;
-    bool plainttifBlacklisted = 4;
+    bool plaintifBlacklisted = 4;
     bool defendantBlacklisted = 5;
-    FundDistribution fundDistr = 6;
+    uint64 plaintifJailTime = 6;
+    uint64 defendantJailTime = 7; 
+    uint64 amountToReturn = 8;
 }
 
 // Vote defines the vote that is cast for a MonoDispute
 message Vote{
-    uint64 voterId = 1;
-    uint64 disputeId = 2;
-    Sentence buyerId = 3;
+    string voteId = 1;
+    string voterId = 2;
+    string disputeId = 3;
+    Sentence voteInfo = 4;
 }

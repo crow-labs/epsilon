@@ -1,12 +1,16 @@
 package types
 
 import (
-	"time"
-
 	proto "github.com/gogo/protobuf/proto"
-
-	sdk "github.com/cosmos/cosmos-sdk/types"
 )
+
+type RebuttalI interface {
+	proto.Message
+
+	GetEvidence() EvidenceI
+	GetId() string
+	GetDispute() DisputeI
+}
 
 // EvidenceI defines an interface to justfity a dispute or rebuttal
 type EvidenceI interface {
@@ -32,10 +36,10 @@ type SentenceI interface {
 	IsPlaintiffGuilty() bool
 	IsDefendantGuilty() bool
 
-	GetFundDistribution() (toBuyer sdk.Coins, toSeller sdk.Coins)
-	GetJailTime(jailTimeLeft time.Time)
+	GetPlaintifJailTime() uint64
+	GetDefendantJailTime() uint64
 
-	IsPlaintiffBlacklisted() bool
+	IsPlaintifBlacklisted() bool
 	IsDefendantBlacklisted() bool
 }
 
