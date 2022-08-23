@@ -7,7 +7,7 @@ package crowlabs.epsilon.nest.marketmodels.mono;
 //import "gogoproto/gogo.proto";
 
 import "nest/market-models/mono/monoDispute.proto";
-import "nest/market-models/mono/monoMarketplace.proto";
+import "nest/market-models/mono/monoMarket.proto";
 
 option go_package = "github.com/crow-labs/epsilon/x/nest/market-models";
 

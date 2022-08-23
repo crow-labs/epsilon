@@ -1,7 +1,7 @@
 /* eslint-disable */
 import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import { MonoItem } from "../../../nest/market-models/mono/monoMarketplace";
+import { MonoItem } from "../../../nest/market-models/mono/monoMarket";
 import { MonoVote } from "../../../nest/market-models/mono/monoDispute";
 
 export const protobufPackage = "crowlabs.epsilon.nest.marketmodels.mono";
