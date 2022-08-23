@@ -3,7 +3,7 @@ package crowlabs.epsilon.nest;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "github.com/crow-labs/epsilon/x/nest/types";
+option go_package = "github.com/crow-labs/epsilon/x/nest/market-models";
 
 // Params defines the parameters for the module.
 message Params {

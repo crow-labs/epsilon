@@ -3,7 +3,7 @@ package crowlabs.epsilon.nest;
 
 // this line is used by starport scaffolding # proto/packet/import
 
-option go_package = "github.com/crow-labs/epsilon/x/nest/types";
+option go_package = "github.com/crow-labs/epsilon/x/nest/market-models";
 
 message NestPacketData {
     oneof packet {

@@ -1,12 +1,15 @@
 syntax = "proto3";
-package crowlabs.epsilon.nest;
+package crowlabs.epsilon.nest.marketmodels.mono;
 
-import "cosmos_proto/cosmos.proto";
-import "cosmos/base/v1beta1/coin.proto";
+//import "cosmos_proto/cosmos.proto";
+//import "cosmos/base/v1beta1/coin.proto";
 
-import "gogoproto/gogo.proto";
+//import "gogoproto/gogo.proto";
 
-option go_package = "github.com/crow-labs/epsilon/x/nest/types";
+import "nest/market-models/mono/monoDispute.proto";
+import "nest/market-models/mono/monoMarketplace.proto";
+
+option go_package = "github.com/crow-labs/epsilon/x/nest/market-models";
 
 // MonoBuyer defines a buyer in a marketplace where each listing has a quanity of one
 message MonoBuyer {

@@ -1,12 +1,12 @@
 syntax = "proto3";
-package crowlabs.epsilon.nest;
+package crowlabs.epsilon.nest.marketmodels.mono;
 
-import "cosmos_proto/cosmos.proto";
+//import "cosmos_proto/cosmos.proto";
 import "cosmos/base/v1beta1/coin.proto";
 
 import "gogoproto/gogo.proto";
 
-option go_package = "github.com/crow-labs/epsilon/x/nest/types";
+option go_package = "github.com/crow-labs/epsilon/x/nest/market-models";
 
 // MonoItem defines an item on the mono marketplace, listed by a mono seller
 message MonoItem{
