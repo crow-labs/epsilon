@@ -10,10 +10,10 @@ option go_package = "github.com/crow-labs/epsilon/x/nest/market-models/mono";
 
 // Item defines an item on the mono marketplace, listed by a mono seller
 message Item{
-    uint64 itemId = 1;
+    string itemId = 1;
     string title = 2;
     string description = 3; 
-    string sellerAddress = 4;
+    string sellerId = 4;
     repeated cosmos.base.v1beta1.Coin minPrice = 5 [(gogoproto.nullable) = false]; 
     repeated cosmos.base.v1beta1.Coin collateral = 6 [(gogoproto.nullable) = false]; 
 }

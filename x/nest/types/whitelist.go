@@ -61,7 +61,7 @@ type SellerI interface {
 	// Removes deposit/collateral if order not yet confirmed
 	CloseOrder(SellOrderI) error
 
-	// Removes listing and loose collateral
+	// Removes listing and lose collateral
 	CancelOrder(SellOrderI) error
 
 	GetAddress() string

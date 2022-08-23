@@ -11,12 +11,12 @@ import (
 type ItemI interface {
 	proto.Message
 
-	GetId() uint64
+	GetId() string
 	GetTitle() string
 	GetDesc() string
 	GetSeller() SellerI
-	GetPrice() sdk.Coins
-	GetCollateral() sdk.Coins
+	GetPrice() []sdk.Coin
+	GetCollateral() []sdk.Coin
 }
 
 // OrderI defines a basic interface for orders

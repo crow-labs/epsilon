@@ -12,9 +12,9 @@ const (
 	whitelistedStatus = "whitelisted"
 	jailedStatus      = "jailed"
 	blacklistedStatus = "BLACKLISTED"
-	monoBuyerPrefix   = "MonoBuyer%d/"
-	monoSellerPrefix  = "MonoSeller%d/"
-	monoVoterPrefix   = "MonoSeller%d/"
+	monoBuyerPrefix   = "MonoBuyer%d"
+	monoSellerPrefix  = "MonoSeller%d"
+	monoVoterPrefix   = "MonoSeller%d"
 )
 
 var (
