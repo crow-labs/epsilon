@@ -20,14 +20,14 @@ message Item{
 
 // SellOrder defines the sell order placed by a seller in the mono marketplace
 message SellOrder{
-    uint64 sellOrderId =  1;
-    uint64 sellerId = 2;
-    uint64 itemId = 3;
+    string sellOrderId =  1;
+    string sellerId = 2;
+    string itemId = 3;
 } 
 
 // BuyOrder defines the buy order placed by a buyer in the mono Marketplace
 message BuyOrder{
-    uint64 buyOrderId = 1;
-    uint64 buyerId = 2;
-    uint64 itemId = 3;
+    string buyOrderId = 1;
+    string buyerId = 2;
+    string itemId = 3;
 }

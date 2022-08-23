@@ -9,11 +9,14 @@ import (
 )
 
 const (
-	monoItemPrefix = "monoItem%d"
+	monoItemPrefix      = "monoItem/%d"
+	monoSellOrderPrefix = "monoSellOrder/%d"
+	monoBuyOrderPrefix  = "monoBuyOrder/%d"
 )
 
 var (
-	_ types.ItemI = &Item{}
+	_ types.ItemI      = &Item{}
+	_ types.SellOrderI = &SellOrder{}
 )
 
 // NewMonoItem returns an item that can be listed by
@@ -53,4 +56,72 @@ func (i Item) GetSeller() types.SellerI {
 // TODO: implement
 func (i Item) GetPrice() []sdk.Coin {
 	return []sdk.Coin{}
+}
+
+// NewSellOrder returns a sell order that lists an item
+// on the mono marketplace from a mono whitelisted seller
+// Invariants that are assumed and not check:
+// * sellOrderId does not already exist
+// * itemId exists
+// * sellerId exists and is not jailed/blacklisted
+func NewSellOrder(sellOrderId uint64, sellerId, itemId string) SellOrder {
+
+	prefixedId := fmt.Sprintf(monoSellOrderPrefix, sellOrderId)
+
+	sellOrder := &SellOrder{
+		SellOrderId: prefixedId,
+		SellerId:    sellerId,
+		ItemId:      itemId,
+	}
+
+	return *sellOrder
+}
+
+// TODO: implement
+func (so SellOrder) GetItem() types.ItemI {
+	return nil
+}
+
+// TODO: implement
+func (so SellOrder) GetPrice() sdk.Coins {
+	return sdk.Coins{}
+}
+
+// TODO: implement
+func (so SellOrder) GetSeller() types.SellerI {
+	return nil
+}
+
+// NewBuyOrder returns a buy order for a listed item
+// on the mono marketplace from a mono whitelisted buyer
+// Invariants that are assumed and not check:
+// * buyerOrderId does not already exist
+// * itemId exists
+// * buyerId exists and is not jailed/blacklisted
+func NewBuyOrder(buyOrderId uint64, buyerId, itemId string) BuyOrder {
+
+	prefixedId := fmt.Sprintf(monoBuyOrderPrefix, buyOrderId)
+
+	buyOrder := &BuyOrder{
+		BuyOrderId: prefixedId,
+		BuyerId:    buyerId,
+		ItemId:     itemId,
+	}
+
+	return *buyOrder
+}
+
+// TODO: implement
+func (bo BuyOrder) GetItem() types.ItemI {
+	return nil
+}
+
+// TODO: implement
+func (bo BuyOrder) GetPrice() sdk.Coins {
+	return sdk.Coins{}
+}
+
+// TODO: implement
+func (bo BuyOrder) GetSeller() types.SellerI {
+	return nil
 }

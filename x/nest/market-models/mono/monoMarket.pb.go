@@ -111,9 +111,9 @@ func (m *Item) GetCollateral() []types.Coin {
 
 // SellOrder defines the sell order placed by a seller in the mono marketplace
 type SellOrder struct {
-	SellOrderId uint64 `protobuf:"varint,1,opt,name=sellOrderId,proto3" json:"sellOrderId,omitempty"`
-	SellerId    uint64 `protobuf:"varint,2,opt,name=sellerId,proto3" json:"sellerId,omitempty"`
-	ItemId      uint64 `protobuf:"varint,3,opt,name=itemId,proto3" json:"itemId,omitempty"`
+	SellOrderId string `protobuf:"bytes,1,opt,name=sellOrderId,proto3" json:"sellOrderId,omitempty"`
+	SellerId    string `protobuf:"bytes,2,opt,name=sellerId,proto3" json:"sellerId,omitempty"`
+	ItemId      string `protobuf:"bytes,3,opt,name=itemId,proto3" json:"itemId,omitempty"`
 }
 
 func (m *SellOrder) Reset()         { *m = SellOrder{} }
@@ -149,32 +149,32 @@ func (m *SellOrder) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_SellOrder proto.InternalMessageInfo
 
-func (m *SellOrder) GetSellOrderId() uint64 {
+func (m *SellOrder) GetSellOrderId() string {
 	if m != nil {
 		return m.SellOrderId
 	}
-	return 0
+	return ""
 }
 
-func (m *SellOrder) GetSellerId() uint64 {
+func (m *SellOrder) GetSellerId() string {
 	if m != nil {
 		return m.SellerId
 	}
-	return 0
+	return ""
 }
 
-func (m *SellOrder) GetItemId() uint64 {
+func (m *SellOrder) GetItemId() string {
 	if m != nil {
 		return m.ItemId
 	}
-	return 0
+	return ""
 }
 
 // BuyOrder defines the buy order placed by a buyer in the mono Marketplace
 type BuyOrder struct {
-	BuyOrderId uint64 `protobuf:"varint,1,opt,name=buyOrderId,proto3" json:"buyOrderId,omitempty"`
-	BuyerId    uint64 `protobuf:"varint,2,opt,name=buyerId,proto3" json:"buyerId,omitempty"`
-	ItemId     uint64 `protobuf:"varint,3,opt,name=itemId,proto3" json:"itemId,omitempty"`
+	BuyOrderId string `protobuf:"bytes,1,opt,name=buyOrderId,proto3" json:"buyOrderId,omitempty"`
+	BuyerId    string `protobuf:"bytes,2,opt,name=buyerId,proto3" json:"buyerId,omitempty"`
+	ItemId     string `protobuf:"bytes,3,opt,name=itemId,proto3" json:"itemId,omitempty"`
 }
 
 func (m *BuyOrder) Reset()         { *m = BuyOrder{} }
@@ -210,25 +210,25 @@ func (m *BuyOrder) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_BuyOrder proto.InternalMessageInfo
 
-func (m *BuyOrder) GetBuyOrderId() uint64 {
+func (m *BuyOrder) GetBuyOrderId() string {
 	if m != nil {
 		return m.BuyOrderId
 	}
-	return 0
+	return ""
 }
 
-func (m *BuyOrder) GetBuyerId() uint64 {
+func (m *BuyOrder) GetBuyerId() string {
 	if m != nil {
 		return m.BuyerId
 	}
-	return 0
+	return ""
 }
 
-func (m *BuyOrder) GetItemId() uint64 {
+func (m *BuyOrder) GetItemId() string {
 	if m != nil {
 		return m.ItemId
 	}
-	return 0
+	return ""
 }
 
 func init() {
@@ -242,32 +242,31 @@ func init() {
 }
 
 var fileDescriptor_12b9bb8f9ac92196 = []byte{
-	// 385 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0xbd, 0xce, 0x12, 0x41,
-	0x14, 0xdd, 0x85, 0x05, 0x61, 0xe8, 0x26, 0xc4, 0xac, 0x14, 0x23, 0xa1, 0x91, 0x86, 0x99, 0xa0,
-	0x89, 0x8d, 0x85, 0x09, 0x56, 0x14, 0x46, 0x82, 0x9d, 0xb1, 0xd9, 0x9f, 0x1b, 0x9c, 0x38, 0xb3,
-	0x97, 0xcc, 0x0c, 0x2a, 0x6f, 0xe1, 0x63, 0x51, 0x52, 0x5a, 0x19, 0x03, 0x2f, 0xe0, 0x23, 0x7c,
-	0xd9, 0xd9, 0x05, 0xf6, 0x2b, 0x48, 0xbe, 0x66, 0x73, 0xcf, 0x39, 0x39, 0x77, 0xee, 0xd9, 0x1c,
-	0x32, 0x2d, 0xc0, 0x3a, 0xa1, 0x13, 0xf3, 0x1d, 0xdc, 0x4c, 0x63, 0x0e, 0xca, 0x0a, 0x8d, 0x05,
-	0xfa, 0xcf, 0x47, 0x4f, 0xf3, 0xad, 0x41, 0x87, 0xf4, 0x55, 0x66, 0xf0, 0xa7, 0x4a, 0x52, 0xcb,
-	0x61, 0x6b, 0xa5, 0xc2, 0x82, 0x97, 0x56, 0x5e, 0x59, 0x2b, 0x27, 0x2f, 0x4d, 0x23, 0x96, 0xa1,
-	0xd5, 0x68, 0x45, 0x9a, 0x58, 0x10, 0x3f, 0xe6, 0x29, 0xb8, 0x64, 0x2e, 0x32, 0x94, 0x45, 0xb5,
-	0x68, 0x34, 0xdc, 0xe0, 0x06, 0xfd, 0x28, 0xca, 0xa9, 0x62, 0x27, 0xff, 0x43, 0x12, 0x2d, 0x1d,
-	0x68, 0xfa, 0x9c, 0x74, 0xa5, 0x03, 0xbd, 0xcc, 0xe3, 0x70, 0x1c, 0x4e, 0xfb, 0xeb, 0x1a, 0xd1,
-	0x21, 0xe9, 0x38, 0xe9, 0x14, 0xc4, 0x2d, 0x4f, 0x57, 0x80, 0x8e, 0xc9, 0x20, 0x07, 0x9b, 0x19,
-	0xb9, 0x75, 0x12, 0x8b, 0xb8, 0xed, 0xb5, 0x26, 0x45, 0x47, 0xa4, 0x67, 0x41, 0x29, 0x30, 0xcb,
-	0x3c, 0x8e, 0xbc, 0x7c, 0xc5, 0xf4, 0x1d, 0xe9, 0x69, 0x59, 0xac, 0x8c, 0xcc, 0x20, 0xee, 0x8c,
-	0xdb, 0xd3, 0xc1, 0xeb, 0x17, 0xbc, 0xba, 0x9e, 0x97, 0xd7, 0xf3, 0xfa, 0x7a, 0xfe, 0x01, 0x65,
-	0xb1, 0x88, 0x0e, 0x7f, 0x5f, 0x06, 0xeb, 0xab, 0x81, 0xbe, 0x27, 0x24, 0x43, 0xa5, 0x12, 0x07,
-	0x26, 0x51, 0x71, 0xf7, 0x69, 0xf6, 0x86, 0x65, 0x92, 0x90, 0xfe, 0x67, 0x50, 0xea, 0x93, 0xc9,
-	0xc1, 0x94, 0x41, 0xec, 0x05, 0xd4, 0xd9, 0xa3, 0x75, 0x93, 0x7a, 0x14, 0xa4, 0xe5, 0xe5, 0x5b,
-	0x90, 0xdb, 0x4f, 0x6b, 0x7b, 0xa5, 0x46, 0x93, 0xaf, 0xa4, 0xb7, 0xd8, 0xed, 0xab, 0x17, 0x18,
-	0x21, 0x69, 0x3d, 0x5f, 0x1f, 0x68, 0x30, 0x34, 0x26, 0xcf, 0xd2, 0xdd, 0xbe, 0xb1, 0xfe, 0x02,
-	0xef, 0x6d, 0x5f, 0xac, 0x0e, 0x27, 0x16, 0x1e, 0x4f, 0x2c, 0xfc, 0x77, 0x62, 0xe1, 0xef, 0x33,
-	0x0b, 0x8e, 0x67, 0x16, 0xfc, 0x39, 0xb3, 0xe0, 0xcb, 0xdb, 0x8d, 0x74, 0xdf, 0x76, 0x29, 0xcf,
-	0x50, 0x8b, 0xb2, 0x37, 0xb3, 0xb2, 0x38, 0xa2, 0x2e, 0x8e, 0xf8, 0x25, 0xee, 0xb4, 0x2e, 0xed,
-	0xfa, 0x32, 0xbc, 0x79, 0x08, 0x00, 0x00, 0xff, 0xff, 0x1a, 0xf0, 0x69, 0x23, 0x97, 0x02, 0x00,
-	0x00,
+	// 384 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0x3d, 0x6f, 0x1a, 0x41,
+	0x10, 0xbd, 0xe3, 0x2b, 0xb0, 0x74, 0x2b, 0x14, 0x5d, 0x28, 0x36, 0x88, 0x26, 0x34, 0xec, 0x8a,
+	0x44, 0x4a, 0x93, 0x22, 0x12, 0xa9, 0x28, 0xa2, 0x20, 0xd2, 0x45, 0x69, 0xee, 0x63, 0x44, 0x56,
+	0xd9, 0xbd, 0x41, 0xbb, 0x8b, 0x6d, 0xfe, 0x85, 0x7f, 0x16, 0x25, 0xa5, 0x2b, 0xcb, 0x82, 0x3f,
+	0xe0, 0x9f, 0x60, 0xdd, 0x07, 0xe7, 0xb3, 0x25, 0x24, 0x37, 0xab, 0x79, 0x6f, 0xf5, 0x66, 0xe6,
+	0x8d, 0x1e, 0x99, 0xa4, 0x60, 0x9d, 0xd0, 0xa1, 0xf9, 0x0f, 0x6e, 0xaa, 0x31, 0x01, 0x65, 0x85,
+	0xc6, 0x14, 0xf3, 0xe7, 0x67, 0x4e, 0xf3, 0x8d, 0x41, 0x87, 0xf4, 0x53, 0x6c, 0xf0, 0x5a, 0x85,
+	0x91, 0xe5, 0xb0, 0xb1, 0x52, 0x61, 0xca, 0x33, 0x29, 0x2f, 0xa4, 0x85, 0x92, 0x67, 0xa2, 0x21,
+	0x8b, 0xd1, 0x6a, 0xb4, 0x22, 0x0a, 0x2d, 0x88, 0xab, 0x59, 0x04, 0x2e, 0x9c, 0x89, 0x18, 0x65,
+	0x5a, 0x34, 0x1a, 0x0e, 0xd6, 0xb8, 0xc6, 0xbc, 0x14, 0x59, 0x55, 0xb0, 0xe3, 0x47, 0x9f, 0xb4,
+	0x16, 0x0e, 0x34, 0x7d, 0x4f, 0x3a, 0xd2, 0x81, 0x5e, 0x24, 0x81, 0x3f, 0xf2, 0x27, 0xbd, 0x55,
+	0x89, 0xe8, 0x80, 0xb4, 0x9d, 0x74, 0x0a, 0x82, 0x46, 0x4e, 0x17, 0x80, 0x8e, 0x48, 0x3f, 0x01,
+	0x1b, 0x1b, 0xb9, 0x71, 0x12, 0xd3, 0xa0, 0x99, 0xff, 0xd5, 0x29, 0x3a, 0x24, 0x5d, 0x0b, 0x4a,
+	0x81, 0x59, 0x24, 0x41, 0x2b, 0xff, 0xae, 0x30, 0xfd, 0x46, 0xba, 0x5a, 0xa6, 0x4b, 0x23, 0x63,
+	0x08, 0xda, 0xa3, 0xe6, 0xa4, 0xff, 0xf9, 0x03, 0x2f, 0xb6, 0xe7, 0xd9, 0xf6, 0xbc, 0xdc, 0x9e,
+	0xff, 0x40, 0x99, 0xce, 0x5b, 0xfb, 0xfb, 0x8f, 0xde, 0xaa, 0x12, 0xd0, 0xef, 0x84, 0xc4, 0xa8,
+	0x54, 0xe8, 0xc0, 0x84, 0x2a, 0xe8, 0xbc, 0x4d, 0x5e, 0x93, 0x8c, 0x43, 0xd2, 0xfb, 0x0d, 0x4a,
+	0xfd, 0x32, 0x09, 0x98, 0xcc, 0x88, 0x3d, 0x83, 0xca, 0x7b, 0x9d, 0x7a, 0x61, 0xa4, 0xf1, 0xca,
+	0xc8, 0xf3, 0xd1, 0x9a, 0xf5, 0xa3, 0x8d, 0xff, 0x92, 0xee, 0x7c, 0xbb, 0x2b, 0x26, 0x30, 0x42,
+	0xa2, 0xb2, 0xae, 0x06, 0xd4, 0x18, 0x1a, 0x90, 0x77, 0xd1, 0x76, 0x57, 0x6b, 0x7f, 0x86, 0x97,
+	0xba, 0xcf, 0x97, 0xfb, 0x23, 0xf3, 0x0f, 0x47, 0xe6, 0x3f, 0x1c, 0x99, 0x7f, 0x7b, 0x62, 0xde,
+	0xe1, 0xc4, 0xbc, 0xbb, 0x13, 0xf3, 0xfe, 0x7c, 0x5d, 0x4b, 0xf7, 0x6f, 0x1b, 0xf1, 0x18, 0xb5,
+	0xc8, 0x72, 0x33, 0xcd, 0x82, 0x23, 0xca, 0xe0, 0x88, 0x1b, 0x71, 0x21, 0x75, 0x51, 0x27, 0x0f,
+	0xc3, 0x97, 0xa7, 0x00, 0x00, 0x00, 0xff, 0xff, 0x7f, 0x73, 0x73, 0x53, 0x97, 0x02, 0x00, 0x00,
 }
 
 func (m *Item) Marshal() (dAtA []byte, err error) {
@@ -369,20 +368,26 @@ func (m *SellOrder) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.ItemId != 0 {
-		i = encodeVarintMonoMarket(dAtA, i, uint64(m.ItemId))
+	if len(m.ItemId) > 0 {
+		i -= len(m.ItemId)
+		copy(dAtA[i:], m.ItemId)
+		i = encodeVarintMonoMarket(dAtA, i, uint64(len(m.ItemId)))
 		i--
-		dAtA[i] = 0x18
+		dAtA[i] = 0x1a
 	}
-	if m.SellerId != 0 {
-		i = encodeVarintMonoMarket(dAtA, i, uint64(m.SellerId))
+	if len(m.SellerId) > 0 {
+		i -= len(m.SellerId)
+		copy(dAtA[i:], m.SellerId)
+		i = encodeVarintMonoMarket(dAtA, i, uint64(len(m.SellerId)))
 		i--
-		dAtA[i] = 0x10
+		dAtA[i] = 0x12
 	}
-	if m.SellOrderId != 0 {
-		i = encodeVarintMonoMarket(dAtA, i, uint64(m.SellOrderId))
+	if len(m.SellOrderId) > 0 {
+		i -= len(m.SellOrderId)
+		copy(dAtA[i:], m.SellOrderId)
+		i = encodeVarintMonoMarket(dAtA, i, uint64(len(m.SellOrderId)))
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -407,20 +412,26 @@ func (m *BuyOrder) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.ItemId != 0 {
-		i = encodeVarintMonoMarket(dAtA, i, uint64(m.ItemId))
+	if len(m.ItemId) > 0 {
+		i -= len(m.ItemId)
+		copy(dAtA[i:], m.ItemId)
+		i = encodeVarintMonoMarket(dAtA, i, uint64(len(m.ItemId)))
 		i--
-		dAtA[i] = 0x18
+		dAtA[i] = 0x1a
 	}
-	if m.BuyerId != 0 {
-		i = encodeVarintMonoMarket(dAtA, i, uint64(m.BuyerId))
+	if len(m.BuyerId) > 0 {
+		i -= len(m.BuyerId)
+		copy(dAtA[i:], m.BuyerId)
+		i = encodeVarintMonoMarket(dAtA, i, uint64(len(m.BuyerId)))
 		i--
-		dAtA[i] = 0x10
+		dAtA[i] = 0x12
 	}
-	if m.BuyOrderId != 0 {
-		i = encodeVarintMonoMarket(dAtA, i, uint64(m.BuyOrderId))
+	if len(m.BuyOrderId) > 0 {
+		i -= len(m.BuyOrderId)
+		copy(dAtA[i:], m.BuyOrderId)
+		i = encodeVarintMonoMarket(dAtA, i, uint64(len(m.BuyOrderId)))
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -479,14 +490,17 @@ func (m *SellOrder) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.SellOrderId != 0 {
-		n += 1 + sovMonoMarket(uint64(m.SellOrderId))
+	l = len(m.SellOrderId)
+	if l > 0 {
+		n += 1 + l + sovMonoMarket(uint64(l))
 	}
-	if m.SellerId != 0 {
-		n += 1 + sovMonoMarket(uint64(m.SellerId))
+	l = len(m.SellerId)
+	if l > 0 {
+		n += 1 + l + sovMonoMarket(uint64(l))
 	}
-	if m.ItemId != 0 {
-		n += 1 + sovMonoMarket(uint64(m.ItemId))
+	l = len(m.ItemId)
+	if l > 0 {
+		n += 1 + l + sovMonoMarket(uint64(l))
 	}
 	return n
 }
@@ -497,14 +511,17 @@ func (m *BuyOrder) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.BuyOrderId != 0 {
-		n += 1 + sovMonoMarket(uint64(m.BuyOrderId))
+	l = len(m.BuyOrderId)
+	if l > 0 {
+		n += 1 + l + sovMonoMarket(uint64(l))
 	}
-	if m.BuyerId != 0 {
-		n += 1 + sovMonoMarket(uint64(m.BuyerId))
+	l = len(m.BuyerId)
+	if l > 0 {
+		n += 1 + l + sovMonoMarket(uint64(l))
 	}
-	if m.ItemId != 0 {
-		n += 1 + sovMonoMarket(uint64(m.ItemId))
+	l = len(m.ItemId)
+	if l > 0 {
+		n += 1 + l + sovMonoMarket(uint64(l))
 	}
 	return n
 }
@@ -791,10 +808,10 @@ func (m *SellOrder) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SellOrderId", wireType)
 			}
-			m.SellOrderId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoMarket
@@ -804,16 +821,29 @@ func (m *SellOrder) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.SellOrderId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SellOrderId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 2:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SellerId", wireType)
 			}
-			m.SellerId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoMarket
@@ -823,16 +853,29 @@ func (m *SellOrder) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.SellerId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SellerId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 3:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ItemId", wireType)
 			}
-			m.ItemId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoMarket
@@ -842,11 +885,24 @@ func (m *SellOrder) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ItemId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ItemId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMonoMarket(dAtA[iNdEx:])
@@ -898,10 +954,10 @@ func (m *BuyOrder) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BuyOrderId", wireType)
 			}
-			m.BuyOrderId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoMarket
@@ -911,16 +967,29 @@ func (m *BuyOrder) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.BuyOrderId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BuyOrderId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 2:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BuyerId", wireType)
 			}
-			m.BuyerId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoMarket
@@ -930,16 +999,29 @@ func (m *BuyOrder) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.BuyerId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BuyerId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 3:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ItemId", wireType)
 			}
-			m.ItemId = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowMonoMarket
@@ -949,11 +1031,24 @@ func (m *BuyOrder) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ItemId |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonoMarket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ItemId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMonoMarket(dAtA[iNdEx:])
