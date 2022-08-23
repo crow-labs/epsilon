@@ -1,0 +1,51 @@
+syntax = "proto3";
+package crowlabs.epsilon.nest.marketmodels.mono;
+
+//import "cosmos_proto/cosmos.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/crow-labs/epsilon/x/nest/market-models/mono";
+
+// Evidence defines evidence for a dispute/rebutal in the mono marketplace
+message Evidence{
+    string evidenceId = 1;
+    string disputeId = 2;
+    string externalLink = 3;
+}
+
+//Rebuttal defines the rebutal for a raised dispute in the mono marketplace
+message Rebuttal{
+    string rebuttalId = 1;
+    string disputeId = 2; 
+    string evidenceId = 3;
+}
+
+//Dispute defines a dispute over a mono markeplace exchange of physical goods
+message Dispute{
+    string disputeId = 1;
+    string title = 2;
+    string description = 3;
+    string evidenceId = 4;
+}
+
+// Sentence defines the outcome of a dispute
+message Sentence{
+    string voteId = 1;
+    bool plaintifGuilty = 2;
+    bool defendantGuilty = 3;
+    bool plaintifBlacklisted = 4;
+    bool defendantBlacklisted = 5;
+    uint64 plaintifJailTime = 6;
+    uint64 defendantJailTime = 7; 
+    uint64 amountToReturn = 8;
+}
+
+// Vote defines the vote that is cast for a MonoDispute
+message Vote{
+    string voteId = 1;
+    string voterId = 2;
+    string disputeId = 3;
+    Sentence voteInfo = 4;
+}

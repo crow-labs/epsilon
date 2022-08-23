@@ -7,7 +7,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "nest/params.proto";
 // this line is used by starport scaffolding # 1
 
-option go_package = "github.com/crow-labs/epsilon/x/nest/types";
+option go_package = "github.com/crow-labs/epsilon/x/nest/market-models/mono";
 
 // Query defines the gRPC querier service.
 service Query {

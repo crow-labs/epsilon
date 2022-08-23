@@ -1,8 +1,6 @@
 package types
 
 import (
-	"time"
-
 	proto "github.com/gogo/protobuf/proto"
 
 	//"github.com/cosmos/cosmos-sdk/types/address"
@@ -15,12 +13,12 @@ import (
 type MemberI interface {
 	proto.Message
 
-	GetName(id string) (string, error)
-	GetId(AccAddr sdk.AccAddress) string
+	GetName() string
+	GetId(sdk.AccAddress) string
 	String() string
-	IsActive(id string, ctx sdk.Context) bool
-	IsJailed(id string, ctx sdk.Context) bool
-	IsBlacklisted(id string, ctx sdk.Context) bool
+	IsWhitelisted() bool
+	IsJailed() bool
+	IsBlacklisted() bool
 }
 
 // MarketActorI is an extension of the MemberI interface
@@ -31,113 +29,51 @@ type MarketActorI interface {
 
 	GetPrevOrders() []OrderI
 	GetActiveOrders() []OrderI
-
-	// Lists the order on the marketplace. Buy orders will deposit funds
-	// and sell orders will deposit collateral
-	OpenOrder(OrderI) error
-
-	// Removes deposit/collateral if order not yet confirmed
-	CloseOrder(OrderI) error
-
-	// Removes listing and loose collateral
-	CancelOrder(OrderI) error
 }
 
-// ItemI defines a basic interface for items to be listed on the marketplace
-// by sellers
-type ItemI interface {
-	proto.Message
-
-	GetId() uint64
-	GetTitle() string
-	GetDesc() string
-	GetSeller() SellerI
-	GetPrice() sdk.Coins
-	GetCollateral() sdk.Coins
-}
-
-// OrderI defines a basic interface for orders
-type OrderI interface {
-	proto.Message
-
-	GetItem() ItemI
-	GetPrice() sdk.Coins
-}
-
-// SellOrderI is an extension of the OrderI interface,
-// currently adding a method to get the seller
-type SellOrderI interface {
-	OrderI
-
-	GetSeller() SellerI
-}
-
-// BuyOrderI is an extension of the OrderI interface,
-// currently adding a method to get the buyer
-type BuyOrderI interface {
-	OrderI
-
-	GetBuyer() BuyerI
-}
-
-// EvidenceI defines an interface to justfity a dispute or rebuttal
-type EvidenceI interface {
-	proto.Message
-
-	GetExternalLink() string
-}
-
-// DisputeI defines an interface to raise a dispute against the other party
-// in a marketplace exchange already in escrow (Crow)
-type DisputeI interface {
-	proto.Message
-
-	GetTitle() string
-	GetDesc() string
-	GetEvidence() EvidenceI
-}
-
-type SentenceI interface {
-	proto.Message
-
-	IsPlaintiffGuilty() bool
-	IsDefendantGuilty() bool
-
-	GetFundDistribution() (toBuyer sdk.Coins, toSeller sdk.Coins)
-	GetJailTime(jailTimeLeft time.Time)
-
-	IsPlaintiffBlacklisted() bool
-	IsDefendantBlacklisted() bool
-}
-
-// VoteI defines an interface for a vote cast by a voter in regards to a dispute
-type VoteI interface {
-	proto.Message
-
-	GetDispute() DisputeI
-	GetVoter() VoterI
-	GetSentence() SentenceI
-}
-
+// BuyerI defines an interface for a buyer in the marketplace
+// (Buyers and sellers are treated independently on the whitelist/jail/blacklist)
 type BuyerI interface {
 	MarketActorI
 
-	GetAddress(id string) sdk.AccAddress
+	// Lists the order on the marketplace. Buy orders will deposit funds
+	// and sell orders will deposit collateral
+	OpenOrder(BuyOrderI) error
+
+	// Removes deposit/collateral if order not yet confirmed
+	CloseOrder(BuyOrderI) error
+
+	// Removes listing and loose collateral
+	CancelOrder(BuyOrderI) error
+
+	GetAddress() string
 	ConfirmBuyOrder(BuyOrderI) error
 }
 
+// SellerI defines an interface for a seller in the marketplace
 type SellerI interface {
 	MarketActorI
 
-	GetAddress(id string) sdk.AccAddress
+	// Lists the order on the marketplace. Buy orders will deposit funds
+	// and sell orders will deposit collateral
+	OpenOrder(SellOrderI) error
+
+	// Removes deposit/collateral if order not yet confirmed
+	CloseOrder(SellOrderI) error
+
+	// Removes listing and lose collateral
+	CancelOrder(SellOrderI) error
+
+	GetAddress() string
 	ListItem(ItemI) error
 	CreateItem(title string, desc string, sellerId string, price sdk.Coins, collateral sdk.Coins) (ItemI, error)
 	ConfirmSellOrder(SellOrderI) error
 }
 
+// VoterI defines an interface for a voter who votes to settle disputes in the marketplace
 type VoterI interface {
 	MemberI
 
 	GetVotingPower() sdk.Int
-	VoteForDispute(DisputeI, VoteI)
+	VoteForDispute(DisputeI, VoteI) uint64
 }

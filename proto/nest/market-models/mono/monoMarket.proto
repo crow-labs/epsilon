@@ -1,0 +1,33 @@
+syntax = "proto3";
+package crowlabs.epsilon.nest.marketmodels.mono;
+
+//import "cosmos_proto/cosmos.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/crow-labs/epsilon/x/nest/market-models/mono";
+
+// Item defines an item on the mono marketplace, listed by a mono seller
+message Item{
+    string itemId = 1;
+    string title = 2;
+    string description = 3; 
+    string sellerId = 4;
+    repeated cosmos.base.v1beta1.Coin minPrice = 5 [(gogoproto.nullable) = false]; 
+    repeated cosmos.base.v1beta1.Coin collateral = 6 [(gogoproto.nullable) = false]; 
+}
+
+// SellOrder defines the sell order placed by a seller in the mono marketplace
+message SellOrder{
+    string sellOrderId =  1;
+    string sellerId = 2;
+    string itemId = 3;
+} 
+
+// BuyOrder defines the buy order placed by a buyer in the mono Marketplace
+message BuyOrder{
+    string buyOrderId = 1;
+    string buyerId = 2;
+    string itemId = 3;
+}
