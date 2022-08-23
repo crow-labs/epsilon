@@ -66,3 +66,24 @@ func NewMonoSeller(sellerId uint64, name, status, address, contactInfo string) S
 
 	return *seller
 }
+
+// NewMonoVoter returns a voter for the mono whitelist
+// Invariants that are assumed but not checked:
+//  * voterId doesn't already exist
+func NewMonoVoter(voterId uint64, name, status, address string) Voter {
+	activeVotes := make([]*Vote, 0)
+	completedVotes := make([]*Vote, 0)
+
+	prefixedId := fmt.Sprintf(monoVoterPrefix, voterId)
+
+	voter := &Voter{
+		Name:           name,
+		VoterId:        prefixedId,
+		Status:         status,
+		Address:        address,
+		ActiveVotes:    activeVotes,
+		CompletedVotes: completedVotes,
+	}
+
+	return *voter
+}
