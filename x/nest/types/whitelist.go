@@ -14,7 +14,7 @@ type MemberI interface {
 	proto.Message
 
 	GetName() string
-	GetId(sdk.AccAddress) string
+	GetId() uint64
 	String() string
 	IsWhitelisted() bool
 	IsJailed() bool

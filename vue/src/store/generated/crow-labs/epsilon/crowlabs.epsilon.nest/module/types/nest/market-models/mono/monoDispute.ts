@@ -1,64 +1,64 @@
 /* eslint-disable */
 import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import { Coin } from "../../../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "crowlabs.epsilon.nest.marketmodels.mono";
 
 /** Evidence defines evidence for a dispute/rebutal in the mono marketplace */
 export interface Evidence {
-  evidenceId: number;
-  disputeId: number;
+  evidenceId: string;
+  disputeId: string;
   externalLink: string;
 }
 
 /** Rebuttal defines the rebutal for a raised dispute in the mono marketplace */
 export interface Rebuttal {
-  rebuttalId: number;
-  disputeId: number;
-  evidence: Evidence | undefined;
+  rebuttalId: string;
+  disputeId: string;
+  evidenceId: string;
 }
 
 /** Dispute defines a dispute over a mono markeplace exchange of physical goods */
 export interface Dispute {
-  diputeId: number;
+  disputeId: string;
   title: string;
   description: string;
-  evidence: Evidence | undefined;
-}
-
-/** FundDistribution defines a structure to divide distributed funds in */
-export interface FundDistribution {
-  plaintifAmount: Coin[];
-  defendantAmount: Coin[];
+  evidenceId: string;
 }
 
 /** Sentence defines the outcome of a dispute */
 export interface Sentence {
-  voteId: number;
+  voteId: string;
   plaintifGuilty: boolean;
   defendantGuilty: boolean;
-  plainttifBlacklisted: boolean;
+  plaintifBlacklisted: boolean;
   defendantBlacklisted: boolean;
-  fundDistr: FundDistribution | undefined;
+  plaintifJailTime: number;
+  defendantJailTime: number;
+  amountToReturn: number;
 }
 
 /** Vote defines the vote that is cast for a MonoDispute */
 export interface Vote {
-  voterId: number;
-  disputeId: number;
-  buyerId: Sentence | undefined;
+  voteId: string;
+  voterId: string;
+  disputeId: string;
+  voteInfo: Sentence | undefined;
 }
 
-const baseEvidence: object = { evidenceId: 0, disputeId: 0, externalLink: "" };
+const baseEvidence: object = {
+  evidenceId: "",
+  disputeId: "",
+  externalLink: "",
+};
 
 export const Evidence = {
   encode(message: Evidence, writer: Writer = Writer.create()): Writer {
-    if (message.evidenceId !== 0) {
-      writer.uint32(8).uint64(message.evidenceId);
+    if (message.evidenceId !== "") {
+      writer.uint32(10).string(message.evidenceId);
     }
-    if (message.disputeId !== 0) {
-      writer.uint32(16).uint64(message.disputeId);
+    if (message.disputeId !== "") {
+      writer.uint32(18).string(message.disputeId);
     }
     if (message.externalLink !== "") {
       writer.uint32(26).string(message.externalLink);
@@ -74,10 +74,10 @@ export const Evidence = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.evidenceId = longToNumber(reader.uint64() as Long);
+          message.evidenceId = reader.string();
           break;
         case 2:
-          message.disputeId = longToNumber(reader.uint64() as Long);
+          message.disputeId = reader.string();
           break;
         case 3:
           message.externalLink = reader.string();
@@ -93,14 +93,14 @@ export const Evidence = {
   fromJSON(object: any): Evidence {
     const message = { ...baseEvidence } as Evidence;
     if (object.evidenceId !== undefined && object.evidenceId !== null) {
-      message.evidenceId = Number(object.evidenceId);
+      message.evidenceId = String(object.evidenceId);
     } else {
-      message.evidenceId = 0;
+      message.evidenceId = "";
     }
     if (object.disputeId !== undefined && object.disputeId !== null) {
-      message.disputeId = Number(object.disputeId);
+      message.disputeId = String(object.disputeId);
     } else {
-      message.disputeId = 0;
+      message.disputeId = "";
     }
     if (object.externalLink !== undefined && object.externalLink !== null) {
       message.externalLink = String(object.externalLink);
@@ -124,12 +124,12 @@ export const Evidence = {
     if (object.evidenceId !== undefined && object.evidenceId !== null) {
       message.evidenceId = object.evidenceId;
     } else {
-      message.evidenceId = 0;
+      message.evidenceId = "";
     }
     if (object.disputeId !== undefined && object.disputeId !== null) {
       message.disputeId = object.disputeId;
     } else {
-      message.disputeId = 0;
+      message.disputeId = "";
     }
     if (object.externalLink !== undefined && object.externalLink !== null) {
       message.externalLink = object.externalLink;
@@ -140,18 +140,18 @@ export const Evidence = {
   },
 };
 
-const baseRebuttal: object = { rebuttalId: 0, disputeId: 0 };
+const baseRebuttal: object = { rebuttalId: "", disputeId: "", evidenceId: "" };
 
 export const Rebuttal = {
   encode(message: Rebuttal, writer: Writer = Writer.create()): Writer {
-    if (message.rebuttalId !== 0) {
-      writer.uint32(8).uint64(message.rebuttalId);
+    if (message.rebuttalId !== "") {
+      writer.uint32(10).string(message.rebuttalId);
     }
-    if (message.disputeId !== 0) {
-      writer.uint32(16).uint64(message.disputeId);
+    if (message.disputeId !== "") {
+      writer.uint32(18).string(message.disputeId);
     }
-    if (message.evidence !== undefined) {
-      Evidence.encode(message.evidence, writer.uint32(26).fork()).ldelim();
+    if (message.evidenceId !== "") {
+      writer.uint32(26).string(message.evidenceId);
     }
     return writer;
   },
@@ -164,13 +164,13 @@ export const Rebuttal = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.rebuttalId = longToNumber(reader.uint64() as Long);
+          message.rebuttalId = reader.string();
           break;
         case 2:
-          message.disputeId = longToNumber(reader.uint64() as Long);
+          message.disputeId = reader.string();
           break;
         case 3:
-          message.evidence = Evidence.decode(reader, reader.uint32());
+          message.evidenceId = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -183,19 +183,19 @@ export const Rebuttal = {
   fromJSON(object: any): Rebuttal {
     const message = { ...baseRebuttal } as Rebuttal;
     if (object.rebuttalId !== undefined && object.rebuttalId !== null) {
-      message.rebuttalId = Number(object.rebuttalId);
+      message.rebuttalId = String(object.rebuttalId);
     } else {
-      message.rebuttalId = 0;
+      message.rebuttalId = "";
     }
     if (object.disputeId !== undefined && object.disputeId !== null) {
-      message.disputeId = Number(object.disputeId);
+      message.disputeId = String(object.disputeId);
     } else {
-      message.disputeId = 0;
+      message.disputeId = "";
     }
-    if (object.evidence !== undefined && object.evidence !== null) {
-      message.evidence = Evidence.fromJSON(object.evidence);
+    if (object.evidenceId !== undefined && object.evidenceId !== null) {
+      message.evidenceId = String(object.evidenceId);
     } else {
-      message.evidence = undefined;
+      message.evidenceId = "";
     }
     return message;
   },
@@ -204,10 +204,7 @@ export const Rebuttal = {
     const obj: any = {};
     message.rebuttalId !== undefined && (obj.rebuttalId = message.rebuttalId);
     message.disputeId !== undefined && (obj.disputeId = message.disputeId);
-    message.evidence !== undefined &&
-      (obj.evidence = message.evidence
-        ? Evidence.toJSON(message.evidence)
-        : undefined);
+    message.evidenceId !== undefined && (obj.evidenceId = message.evidenceId);
     return obj;
   },
 
@@ -216,28 +213,33 @@ export const Rebuttal = {
     if (object.rebuttalId !== undefined && object.rebuttalId !== null) {
       message.rebuttalId = object.rebuttalId;
     } else {
-      message.rebuttalId = 0;
+      message.rebuttalId = "";
     }
     if (object.disputeId !== undefined && object.disputeId !== null) {
       message.disputeId = object.disputeId;
     } else {
-      message.disputeId = 0;
+      message.disputeId = "";
     }
-    if (object.evidence !== undefined && object.evidence !== null) {
-      message.evidence = Evidence.fromPartial(object.evidence);
+    if (object.evidenceId !== undefined && object.evidenceId !== null) {
+      message.evidenceId = object.evidenceId;
     } else {
-      message.evidence = undefined;
+      message.evidenceId = "";
     }
     return message;
   },
 };
 
-const baseDispute: object = { diputeId: 0, title: "", description: "" };
+const baseDispute: object = {
+  disputeId: "",
+  title: "",
+  description: "",
+  evidenceId: "",
+};
 
 export const Dispute = {
   encode(message: Dispute, writer: Writer = Writer.create()): Writer {
-    if (message.diputeId !== 0) {
-      writer.uint32(8).uint64(message.diputeId);
+    if (message.disputeId !== "") {
+      writer.uint32(10).string(message.disputeId);
     }
     if (message.title !== "") {
       writer.uint32(18).string(message.title);
@@ -245,8 +247,8 @@ export const Dispute = {
     if (message.description !== "") {
       writer.uint32(26).string(message.description);
     }
-    if (message.evidence !== undefined) {
-      Evidence.encode(message.evidence, writer.uint32(34).fork()).ldelim();
+    if (message.evidenceId !== "") {
+      writer.uint32(34).string(message.evidenceId);
     }
     return writer;
   },
@@ -259,7 +261,7 @@ export const Dispute = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.diputeId = longToNumber(reader.uint64() as Long);
+          message.disputeId = reader.string();
           break;
         case 2:
           message.title = reader.string();
@@ -268,7 +270,7 @@ export const Dispute = {
           message.description = reader.string();
           break;
         case 4:
-          message.evidence = Evidence.decode(reader, reader.uint32());
+          message.evidenceId = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -280,10 +282,10 @@ export const Dispute = {
 
   fromJSON(object: any): Dispute {
     const message = { ...baseDispute } as Dispute;
-    if (object.diputeId !== undefined && object.diputeId !== null) {
-      message.diputeId = Number(object.diputeId);
+    if (object.disputeId !== undefined && object.disputeId !== null) {
+      message.disputeId = String(object.disputeId);
     } else {
-      message.diputeId = 0;
+      message.disputeId = "";
     }
     if (object.title !== undefined && object.title !== null) {
       message.title = String(object.title);
@@ -295,33 +297,30 @@ export const Dispute = {
     } else {
       message.description = "";
     }
-    if (object.evidence !== undefined && object.evidence !== null) {
-      message.evidence = Evidence.fromJSON(object.evidence);
+    if (object.evidenceId !== undefined && object.evidenceId !== null) {
+      message.evidenceId = String(object.evidenceId);
     } else {
-      message.evidence = undefined;
+      message.evidenceId = "";
     }
     return message;
   },
 
   toJSON(message: Dispute): unknown {
     const obj: any = {};
-    message.diputeId !== undefined && (obj.diputeId = message.diputeId);
+    message.disputeId !== undefined && (obj.disputeId = message.disputeId);
     message.title !== undefined && (obj.title = message.title);
     message.description !== undefined &&
       (obj.description = message.description);
-    message.evidence !== undefined &&
-      (obj.evidence = message.evidence
-        ? Evidence.toJSON(message.evidence)
-        : undefined);
+    message.evidenceId !== undefined && (obj.evidenceId = message.evidenceId);
     return obj;
   },
 
   fromPartial(object: DeepPartial<Dispute>): Dispute {
     const message = { ...baseDispute } as Dispute;
-    if (object.diputeId !== undefined && object.diputeId !== null) {
-      message.diputeId = object.diputeId;
+    if (object.disputeId !== undefined && object.disputeId !== null) {
+      message.disputeId = object.disputeId;
     } else {
-      message.diputeId = 0;
+      message.disputeId = "";
     }
     if (object.title !== undefined && object.title !== null) {
       message.title = object.title;
@@ -333,123 +332,30 @@ export const Dispute = {
     } else {
       message.description = "";
     }
-    if (object.evidence !== undefined && object.evidence !== null) {
-      message.evidence = Evidence.fromPartial(object.evidence);
+    if (object.evidenceId !== undefined && object.evidenceId !== null) {
+      message.evidenceId = object.evidenceId;
     } else {
-      message.evidence = undefined;
-    }
-    return message;
-  },
-};
-
-const baseFundDistribution: object = {};
-
-export const FundDistribution = {
-  encode(message: FundDistribution, writer: Writer = Writer.create()): Writer {
-    for (const v of message.plaintifAmount) {
-      Coin.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    for (const v of message.defendantAmount) {
-      Coin.encode(v!, writer.uint32(18).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: Reader | Uint8Array, length?: number): FundDistribution {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseFundDistribution } as FundDistribution;
-    message.plaintifAmount = [];
-    message.defendantAmount = [];
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.plaintifAmount.push(Coin.decode(reader, reader.uint32()));
-          break;
-        case 2:
-          message.defendantAmount.push(Coin.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): FundDistribution {
-    const message = { ...baseFundDistribution } as FundDistribution;
-    message.plaintifAmount = [];
-    message.defendantAmount = [];
-    if (object.plaintifAmount !== undefined && object.plaintifAmount !== null) {
-      for (const e of object.plaintifAmount) {
-        message.plaintifAmount.push(Coin.fromJSON(e));
-      }
-    }
-    if (
-      object.defendantAmount !== undefined &&
-      object.defendantAmount !== null
-    ) {
-      for (const e of object.defendantAmount) {
-        message.defendantAmount.push(Coin.fromJSON(e));
-      }
-    }
-    return message;
-  },
-
-  toJSON(message: FundDistribution): unknown {
-    const obj: any = {};
-    if (message.plaintifAmount) {
-      obj.plaintifAmount = message.plaintifAmount.map((e) =>
-        e ? Coin.toJSON(e) : undefined
-      );
-    } else {
-      obj.plaintifAmount = [];
-    }
-    if (message.defendantAmount) {
-      obj.defendantAmount = message.defendantAmount.map((e) =>
-        e ? Coin.toJSON(e) : undefined
-      );
-    } else {
-      obj.defendantAmount = [];
-    }
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<FundDistribution>): FundDistribution {
-    const message = { ...baseFundDistribution } as FundDistribution;
-    message.plaintifAmount = [];
-    message.defendantAmount = [];
-    if (object.plaintifAmount !== undefined && object.plaintifAmount !== null) {
-      for (const e of object.plaintifAmount) {
-        message.plaintifAmount.push(Coin.fromPartial(e));
-      }
-    }
-    if (
-      object.defendantAmount !== undefined &&
-      object.defendantAmount !== null
-    ) {
-      for (const e of object.defendantAmount) {
-        message.defendantAmount.push(Coin.fromPartial(e));
-      }
+      message.evidenceId = "";
     }
     return message;
   },
 };
 
 const baseSentence: object = {
-  voteId: 0,
+  voteId: "",
   plaintifGuilty: false,
   defendantGuilty: false,
-  plainttifBlacklisted: false,
+  plaintifBlacklisted: false,
   defendantBlacklisted: false,
+  plaintifJailTime: 0,
+  defendantJailTime: 0,
+  amountToReturn: 0,
 };
 
 export const Sentence = {
   encode(message: Sentence, writer: Writer = Writer.create()): Writer {
-    if (message.voteId !== 0) {
-      writer.uint32(8).uint64(message.voteId);
+    if (message.voteId !== "") {
+      writer.uint32(10).string(message.voteId);
     }
     if (message.plaintifGuilty === true) {
       writer.uint32(16).bool(message.plaintifGuilty);
@@ -457,17 +363,20 @@ export const Sentence = {
     if (message.defendantGuilty === true) {
       writer.uint32(24).bool(message.defendantGuilty);
     }
-    if (message.plainttifBlacklisted === true) {
-      writer.uint32(32).bool(message.plainttifBlacklisted);
+    if (message.plaintifBlacklisted === true) {
+      writer.uint32(32).bool(message.plaintifBlacklisted);
     }
     if (message.defendantBlacklisted === true) {
       writer.uint32(40).bool(message.defendantBlacklisted);
     }
-    if (message.fundDistr !== undefined) {
-      FundDistribution.encode(
-        message.fundDistr,
-        writer.uint32(50).fork()
-      ).ldelim();
+    if (message.plaintifJailTime !== 0) {
+      writer.uint32(48).uint64(message.plaintifJailTime);
+    }
+    if (message.defendantJailTime !== 0) {
+      writer.uint32(56).uint64(message.defendantJailTime);
+    }
+    if (message.amountToReturn !== 0) {
+      writer.uint32(64).uint64(message.amountToReturn);
     }
     return writer;
   },
@@ -480,7 +389,7 @@ export const Sentence = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.voteId = longToNumber(reader.uint64() as Long);
+          message.voteId = reader.string();
           break;
         case 2:
           message.plaintifGuilty = reader.bool();
@@ -489,13 +398,19 @@ export const Sentence = {
           message.defendantGuilty = reader.bool();
           break;
         case 4:
-          message.plainttifBlacklisted = reader.bool();
+          message.plaintifBlacklisted = reader.bool();
           break;
         case 5:
           message.defendantBlacklisted = reader.bool();
           break;
         case 6:
-          message.fundDistr = FundDistribution.decode(reader, reader.uint32());
+          message.plaintifJailTime = longToNumber(reader.uint64() as Long);
+          break;
+        case 7:
+          message.defendantJailTime = longToNumber(reader.uint64() as Long);
+          break;
+        case 8:
+          message.amountToReturn = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -508,9 +423,9 @@ export const Sentence = {
   fromJSON(object: any): Sentence {
     const message = { ...baseSentence } as Sentence;
     if (object.voteId !== undefined && object.voteId !== null) {
-      message.voteId = Number(object.voteId);
+      message.voteId = String(object.voteId);
     } else {
-      message.voteId = 0;
+      message.voteId = "";
     }
     if (object.plaintifGuilty !== undefined && object.plaintifGuilty !== null) {
       message.plaintifGuilty = Boolean(object.plaintifGuilty);
@@ -526,12 +441,12 @@ export const Sentence = {
       message.defendantGuilty = false;
     }
     if (
-      object.plainttifBlacklisted !== undefined &&
-      object.plainttifBlacklisted !== null
+      object.plaintifBlacklisted !== undefined &&
+      object.plaintifBlacklisted !== null
     ) {
-      message.plainttifBlacklisted = Boolean(object.plainttifBlacklisted);
+      message.plaintifBlacklisted = Boolean(object.plaintifBlacklisted);
     } else {
-      message.plainttifBlacklisted = false;
+      message.plaintifBlacklisted = false;
     }
     if (
       object.defendantBlacklisted !== undefined &&
@@ -541,10 +456,26 @@ export const Sentence = {
     } else {
       message.defendantBlacklisted = false;
     }
-    if (object.fundDistr !== undefined && object.fundDistr !== null) {
-      message.fundDistr = FundDistribution.fromJSON(object.fundDistr);
+    if (
+      object.plaintifJailTime !== undefined &&
+      object.plaintifJailTime !== null
+    ) {
+      message.plaintifJailTime = Number(object.plaintifJailTime);
     } else {
-      message.fundDistr = undefined;
+      message.plaintifJailTime = 0;
+    }
+    if (
+      object.defendantJailTime !== undefined &&
+      object.defendantJailTime !== null
+    ) {
+      message.defendantJailTime = Number(object.defendantJailTime);
+    } else {
+      message.defendantJailTime = 0;
+    }
+    if (object.amountToReturn !== undefined && object.amountToReturn !== null) {
+      message.amountToReturn = Number(object.amountToReturn);
+    } else {
+      message.amountToReturn = 0;
     }
     return message;
   },
@@ -556,14 +487,16 @@ export const Sentence = {
       (obj.plaintifGuilty = message.plaintifGuilty);
     message.defendantGuilty !== undefined &&
       (obj.defendantGuilty = message.defendantGuilty);
-    message.plainttifBlacklisted !== undefined &&
-      (obj.plainttifBlacklisted = message.plainttifBlacklisted);
+    message.plaintifBlacklisted !== undefined &&
+      (obj.plaintifBlacklisted = message.plaintifBlacklisted);
     message.defendantBlacklisted !== undefined &&
       (obj.defendantBlacklisted = message.defendantBlacklisted);
-    message.fundDistr !== undefined &&
-      (obj.fundDistr = message.fundDistr
-        ? FundDistribution.toJSON(message.fundDistr)
-        : undefined);
+    message.plaintifJailTime !== undefined &&
+      (obj.plaintifJailTime = message.plaintifJailTime);
+    message.defendantJailTime !== undefined &&
+      (obj.defendantJailTime = message.defendantJailTime);
+    message.amountToReturn !== undefined &&
+      (obj.amountToReturn = message.amountToReturn);
     return obj;
   },
 
@@ -572,7 +505,7 @@ export const Sentence = {
     if (object.voteId !== undefined && object.voteId !== null) {
       message.voteId = object.voteId;
     } else {
-      message.voteId = 0;
+      message.voteId = "";
     }
     if (object.plaintifGuilty !== undefined && object.plaintifGuilty !== null) {
       message.plaintifGuilty = object.plaintifGuilty;
@@ -588,12 +521,12 @@ export const Sentence = {
       message.defendantGuilty = false;
     }
     if (
-      object.plainttifBlacklisted !== undefined &&
-      object.plainttifBlacklisted !== null
+      object.plaintifBlacklisted !== undefined &&
+      object.plaintifBlacklisted !== null
     ) {
-      message.plainttifBlacklisted = object.plainttifBlacklisted;
+      message.plaintifBlacklisted = object.plaintifBlacklisted;
     } else {
-      message.plainttifBlacklisted = false;
+      message.plaintifBlacklisted = false;
     }
     if (
       object.defendantBlacklisted !== undefined &&
@@ -603,27 +536,46 @@ export const Sentence = {
     } else {
       message.defendantBlacklisted = false;
     }
-    if (object.fundDistr !== undefined && object.fundDistr !== null) {
-      message.fundDistr = FundDistribution.fromPartial(object.fundDistr);
+    if (
+      object.plaintifJailTime !== undefined &&
+      object.plaintifJailTime !== null
+    ) {
+      message.plaintifJailTime = object.plaintifJailTime;
     } else {
-      message.fundDistr = undefined;
+      message.plaintifJailTime = 0;
+    }
+    if (
+      object.defendantJailTime !== undefined &&
+      object.defendantJailTime !== null
+    ) {
+      message.defendantJailTime = object.defendantJailTime;
+    } else {
+      message.defendantJailTime = 0;
+    }
+    if (object.amountToReturn !== undefined && object.amountToReturn !== null) {
+      message.amountToReturn = object.amountToReturn;
+    } else {
+      message.amountToReturn = 0;
     }
     return message;
   },
 };
 
-const baseVote: object = { voterId: 0, disputeId: 0 };
+const baseVote: object = { voteId: "", voterId: "", disputeId: "" };
 
 export const Vote = {
   encode(message: Vote, writer: Writer = Writer.create()): Writer {
-    if (message.voterId !== 0) {
-      writer.uint32(8).uint64(message.voterId);
+    if (message.voteId !== "") {
+      writer.uint32(10).string(message.voteId);
     }
-    if (message.disputeId !== 0) {
-      writer.uint32(16).uint64(message.disputeId);
+    if (message.voterId !== "") {
+      writer.uint32(18).string(message.voterId);
     }
-    if (message.buyerId !== undefined) {
-      Sentence.encode(message.buyerId, writer.uint32(26).fork()).ldelim();
+    if (message.disputeId !== "") {
+      writer.uint32(26).string(message.disputeId);
+    }
+    if (message.voteInfo !== undefined) {
+      Sentence.encode(message.voteInfo, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -636,13 +588,16 @@ export const Vote = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.voterId = longToNumber(reader.uint64() as Long);
+          message.voteId = reader.string();
           break;
         case 2:
-          message.disputeId = longToNumber(reader.uint64() as Long);
+          message.voterId = reader.string();
           break;
         case 3:
-          message.buyerId = Sentence.decode(reader, reader.uint32());
+          message.disputeId = reader.string();
+          break;
+        case 4:
+          message.voteInfo = Sentence.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -654,51 +609,62 @@ export const Vote = {
 
   fromJSON(object: any): Vote {
     const message = { ...baseVote } as Vote;
-    if (object.voterId !== undefined && object.voterId !== null) {
-      message.voterId = Number(object.voterId);
+    if (object.voteId !== undefined && object.voteId !== null) {
+      message.voteId = String(object.voteId);
     } else {
-      message.voterId = 0;
+      message.voteId = "";
+    }
+    if (object.voterId !== undefined && object.voterId !== null) {
+      message.voterId = String(object.voterId);
+    } else {
+      message.voterId = "";
     }
     if (object.disputeId !== undefined && object.disputeId !== null) {
-      message.disputeId = Number(object.disputeId);
+      message.disputeId = String(object.disputeId);
     } else {
-      message.disputeId = 0;
+      message.disputeId = "";
     }
-    if (object.buyerId !== undefined && object.buyerId !== null) {
-      message.buyerId = Sentence.fromJSON(object.buyerId);
+    if (object.voteInfo !== undefined && object.voteInfo !== null) {
+      message.voteInfo = Sentence.fromJSON(object.voteInfo);
     } else {
-      message.buyerId = undefined;
+      message.voteInfo = undefined;
     }
     return message;
   },
 
   toJSON(message: Vote): unknown {
     const obj: any = {};
+    message.voteId !== undefined && (obj.voteId = message.voteId);
     message.voterId !== undefined && (obj.voterId = message.voterId);
     message.disputeId !== undefined && (obj.disputeId = message.disputeId);
-    message.buyerId !== undefined &&
-      (obj.buyerId = message.buyerId
-        ? Sentence.toJSON(message.buyerId)
+    message.voteInfo !== undefined &&
+      (obj.voteInfo = message.voteInfo
+        ? Sentence.toJSON(message.voteInfo)
         : undefined);
     return obj;
   },
 
   fromPartial(object: DeepPartial<Vote>): Vote {
     const message = { ...baseVote } as Vote;
+    if (object.voteId !== undefined && object.voteId !== null) {
+      message.voteId = object.voteId;
+    } else {
+      message.voteId = "";
+    }
     if (object.voterId !== undefined && object.voterId !== null) {
       message.voterId = object.voterId;
     } else {
-      message.voterId = 0;
+      message.voterId = "";
     }
     if (object.disputeId !== undefined && object.disputeId !== null) {
       message.disputeId = object.disputeId;
     } else {
-      message.disputeId = 0;
+      message.disputeId = "";
     }
-    if (object.buyerId !== undefined && object.buyerId !== null) {
-      message.buyerId = Sentence.fromPartial(object.buyerId);
+    if (object.voteInfo !== undefined && object.voteInfo !== null) {
+      message.voteInfo = Sentence.fromPartial(object.voteInfo);
     } else {
-      message.buyerId = undefined;
+      message.voteInfo = undefined;
     }
     return message;
   },

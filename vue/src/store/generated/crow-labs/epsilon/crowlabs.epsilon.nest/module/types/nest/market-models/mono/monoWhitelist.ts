@@ -9,28 +9,30 @@ export const protobufPackage = "crowlabs.epsilon.nest.marketmodels.mono";
 /** Buyer defines a buyer in a marketplace where each listing has a quanity of one */
 export interface Buyer {
   name: string;
-  buyerId: string;
+  buyerId: number;
   status: string;
   address: string;
   activeOrderId: number[];
   completedOrderId: number[];
+  contactInfo: string;
 }
 
 /** Seller defines a seller in the mono marketplace */
 export interface Seller {
   name: string;
-  sellerId: string;
+  sellerId: number;
   status: string;
   address: string;
   activeOrderId: number[];
   activeItems: Item[];
   completedOrderId: number[];
+  contactInfo: string;
 }
 
 /** Voter defines a voter for the mono marketplace */
 export interface Voter {
   name: string;
-  voterId: string;
+  voterId: number;
   status: string;
   address: string;
   activeVotes: Vote[];
@@ -39,11 +41,12 @@ export interface Voter {
 
 const baseBuyer: object = {
   name: "",
-  buyerId: "",
+  buyerId: 0,
   status: "",
   address: "",
   activeOrderId: 0,
   completedOrderId: 0,
+  contactInfo: "",
 };
 
 export const Buyer = {
@@ -51,8 +54,8 @@ export const Buyer = {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
-    if (message.buyerId !== "") {
-      writer.uint32(18).string(message.buyerId);
+    if (message.buyerId !== 0) {
+      writer.uint32(16).uint64(message.buyerId);
     }
     if (message.status !== "") {
       writer.uint32(26).string(message.status);
@@ -70,6 +73,9 @@ export const Buyer = {
       writer.uint64(v);
     }
     writer.ldelim();
+    if (message.contactInfo !== "") {
+      writer.uint32(58).string(message.contactInfo);
+    }
     return writer;
   },
 
@@ -86,7 +92,7 @@ export const Buyer = {
           message.name = reader.string();
           break;
         case 2:
-          message.buyerId = reader.string();
+          message.buyerId = longToNumber(reader.uint64() as Long);
           break;
         case 3:
           message.status = reader.string();
@@ -118,6 +124,9 @@ export const Buyer = {
             );
           }
           break;
+        case 7:
+          message.contactInfo = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -136,9 +145,9 @@ export const Buyer = {
       message.name = "";
     }
     if (object.buyerId !== undefined && object.buyerId !== null) {
-      message.buyerId = String(object.buyerId);
+      message.buyerId = Number(object.buyerId);
     } else {
-      message.buyerId = "";
+      message.buyerId = 0;
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = String(object.status);
@@ -163,6 +172,11 @@ export const Buyer = {
         message.completedOrderId.push(Number(e));
       }
     }
+    if (object.contactInfo !== undefined && object.contactInfo !== null) {
+      message.contactInfo = String(object.contactInfo);
+    } else {
+      message.contactInfo = "";
+    }
     return message;
   },
 
@@ -182,6 +196,8 @@ export const Buyer = {
     } else {
       obj.completedOrderId = [];
     }
+    message.contactInfo !== undefined &&
+      (obj.contactInfo = message.contactInfo);
     return obj;
   },
 
@@ -197,7 +213,7 @@ export const Buyer = {
     if (object.buyerId !== undefined && object.buyerId !== null) {
       message.buyerId = object.buyerId;
     } else {
-      message.buyerId = "";
+      message.buyerId = 0;
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = object.status;
@@ -222,17 +238,23 @@ export const Buyer = {
         message.completedOrderId.push(e);
       }
     }
+    if (object.contactInfo !== undefined && object.contactInfo !== null) {
+      message.contactInfo = object.contactInfo;
+    } else {
+      message.contactInfo = "";
+    }
     return message;
   },
 };
 
 const baseSeller: object = {
   name: "",
-  sellerId: "",
+  sellerId: 0,
   status: "",
   address: "",
   activeOrderId: 0,
   completedOrderId: 0,
+  contactInfo: "",
 };
 
 export const Seller = {
@@ -240,8 +262,8 @@ export const Seller = {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
-    if (message.sellerId !== "") {
-      writer.uint32(18).string(message.sellerId);
+    if (message.sellerId !== 0) {
+      writer.uint32(16).uint64(message.sellerId);
     }
     if (message.status !== "") {
       writer.uint32(26).string(message.status);
@@ -262,6 +284,9 @@ export const Seller = {
       writer.uint64(v);
     }
     writer.ldelim();
+    if (message.contactInfo !== "") {
+      writer.uint32(66).string(message.contactInfo);
+    }
     return writer;
   },
 
@@ -279,7 +304,7 @@ export const Seller = {
           message.name = reader.string();
           break;
         case 2:
-          message.sellerId = reader.string();
+          message.sellerId = longToNumber(reader.uint64() as Long);
           break;
         case 3:
           message.status = reader.string();
@@ -314,6 +339,9 @@ export const Seller = {
             );
           }
           break;
+        case 8:
+          message.contactInfo = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -333,9 +361,9 @@ export const Seller = {
       message.name = "";
     }
     if (object.sellerId !== undefined && object.sellerId !== null) {
-      message.sellerId = String(object.sellerId);
+      message.sellerId = Number(object.sellerId);
     } else {
-      message.sellerId = "";
+      message.sellerId = 0;
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = String(object.status);
@@ -365,6 +393,11 @@ export const Seller = {
         message.completedOrderId.push(Number(e));
       }
     }
+    if (object.contactInfo !== undefined && object.contactInfo !== null) {
+      message.contactInfo = String(object.contactInfo);
+    } else {
+      message.contactInfo = "";
+    }
     return message;
   },
 
@@ -391,6 +424,8 @@ export const Seller = {
     } else {
       obj.completedOrderId = [];
     }
+    message.contactInfo !== undefined &&
+      (obj.contactInfo = message.contactInfo);
     return obj;
   },
 
@@ -407,7 +442,7 @@ export const Seller = {
     if (object.sellerId !== undefined && object.sellerId !== null) {
       message.sellerId = object.sellerId;
     } else {
-      message.sellerId = "";
+      message.sellerId = 0;
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = object.status;
@@ -437,19 +472,24 @@ export const Seller = {
         message.completedOrderId.push(e);
       }
     }
+    if (object.contactInfo !== undefined && object.contactInfo !== null) {
+      message.contactInfo = object.contactInfo;
+    } else {
+      message.contactInfo = "";
+    }
     return message;
   },
 };
 
-const baseVoter: object = { name: "", voterId: "", status: "", address: "" };
+const baseVoter: object = { name: "", voterId: 0, status: "", address: "" };
 
 export const Voter = {
   encode(message: Voter, writer: Writer = Writer.create()): Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
-    if (message.voterId !== "") {
-      writer.uint32(18).string(message.voterId);
+    if (message.voterId !== 0) {
+      writer.uint32(16).uint64(message.voterId);
     }
     if (message.status !== "") {
       writer.uint32(26).string(message.status);
@@ -479,7 +519,7 @@ export const Voter = {
           message.name = reader.string();
           break;
         case 2:
-          message.voterId = reader.string();
+          message.voterId = longToNumber(reader.uint64() as Long);
           break;
         case 3:
           message.status = reader.string();
@@ -511,9 +551,9 @@ export const Voter = {
       message.name = "";
     }
     if (object.voterId !== undefined && object.voterId !== null) {
-      message.voterId = String(object.voterId);
+      message.voterId = Number(object.voterId);
     } else {
-      message.voterId = "";
+      message.voterId = 0;
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = String(object.status);
@@ -573,7 +613,7 @@ export const Voter = {
     if (object.voterId !== undefined && object.voterId !== null) {
       message.voterId = object.voterId;
     } else {
-      message.voterId = "";
+      message.voterId = 0;
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = object.status;

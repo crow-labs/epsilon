@@ -1,8 +1,6 @@
 package mono
 
 import (
-	"fmt"
-
 	"github.com/crow-labs/epsilon/x/nest/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -12,9 +10,6 @@ const (
 	whitelistedStatus = "whitelisted"
 	jailedStatus      = "jailed"
 	blacklistedStatus = "BLACKLISTED"
-	monoBuyerPrefix   = "MonoBuyer/%d"
-	monoSellerPrefix  = "MonoSeller/%d"
-	monoVoterPrefix   = "MonoSeller/%d"
 )
 
 var (
@@ -31,11 +26,9 @@ func NewMonoBuyer(buyerId uint64, name, status, address, contactInfo string) Buy
 	activeOrders := make([]uint64, 0)
 	completedOrders := make([]uint64, 0)
 
-	prefixedId := fmt.Sprintf(monoBuyerPrefix, buyerId)
-
 	buyer := &Buyer{
 		Name:             name,
-		BuyerId:          prefixedId,
+		BuyerId:          buyerId,
 		Status:           whitelistedStatus,
 		Address:          address,
 		ActiveOrderId:    activeOrders,
@@ -47,8 +40,8 @@ func NewMonoBuyer(buyerId uint64, name, status, address, contactInfo string) Buy
 }
 
 // TODO: implement
-func (b Buyer) GetId(accAddr sdk.AccAddress) string {
-	return ""
+func (b Buyer) GetId() uint64 {
+	return b.BuyerId
 }
 
 func (b Buyer) IsWhitelisted() bool {
@@ -102,11 +95,9 @@ func NewMonoSeller(sellerId uint64, name, status, address, contactInfo string) S
 	completedOrders := make([]uint64, 0)
 	activeItems := make([]*Item, 0)
 
-	prefixedId := fmt.Sprintf(monoSellerPrefix, sellerId)
-
 	seller := &Seller{
 		Name:             name,
-		SellerId:         prefixedId,
+		SellerId:         sellerId,
 		Status:           whitelistedStatus,
 		Address:          address,
 		ActiveOrderId:    activeOrders,
@@ -119,8 +110,8 @@ func NewMonoSeller(sellerId uint64, name, status, address, contactInfo string) S
 }
 
 // TODO: implement
-func (s Seller) GetId(accAddr sdk.AccAddress) string {
-	return ""
+func (s Seller) GetId() uint64 {
+	return s.SellerId
 }
 
 func (s Seller) IsWhitelisted() bool {
@@ -182,11 +173,9 @@ func NewMonoVoter(voterId uint64, name, status, address string) Voter {
 	activeVotes := make([]*Vote, 0)
 	completedVotes := make([]*Vote, 0)
 
-	prefixedId := fmt.Sprintf(monoVoterPrefix, voterId)
-
 	voter := &Voter{
 		Name:           name,
-		VoterId:        prefixedId,
+		VoterId:        voterId,
 		Status:         status,
 		Address:        address,
 		ActiveVotes:    activeVotes,
@@ -197,8 +186,8 @@ func NewMonoVoter(voterId uint64, name, status, address string) Voter {
 }
 
 // TODO: implement
-func (v Voter) GetId(accAddr sdk.AccAddress) string {
-	return ""
+func (v Voter) GetId() uint64 {
+	return v.VoterId
 }
 
 func (v Voter) IsWhitelisted() bool {

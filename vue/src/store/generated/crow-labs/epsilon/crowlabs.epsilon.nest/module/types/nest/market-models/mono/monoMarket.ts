@@ -1,45 +1,44 @@
 /* eslint-disable */
-import * as Long from "long";
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
+import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "crowlabs.epsilon.nest.marketmodels.mono";
 
 /** Item defines an item on the mono marketplace, listed by a mono seller */
 export interface Item {
-  itemId: number;
+  itemId: string;
   title: string;
   description: string;
-  sellerAddress: string;
+  sellerId: string;
   minPrice: Coin[];
   collateral: Coin[];
 }
 
 /** SellOrder defines the sell order placed by a seller in the mono marketplace */
-export interface MonoSellOrder {
-  sellOrderId: number;
-  sellerId: number;
-  itemId: number;
+export interface SellOrder {
+  sellOrderId: string;
+  sellerId: string;
+  itemId: string;
 }
 
 /** BuyOrder defines the buy order placed by a buyer in the mono Marketplace */
 export interface BuyOrder {
-  buyOrderId: number;
-  buyerId: number;
-  itemId: number;
+  buyOrderId: string;
+  buyerId: string;
+  itemId: string;
 }
 
 const baseItem: object = {
-  itemId: 0,
+  itemId: "",
   title: "",
   description: "",
-  sellerAddress: "",
+  sellerId: "",
 };
 
 export const Item = {
   encode(message: Item, writer: Writer = Writer.create()): Writer {
-    if (message.itemId !== 0) {
-      writer.uint32(8).uint64(message.itemId);
+    if (message.itemId !== "") {
+      writer.uint32(10).string(message.itemId);
     }
     if (message.title !== "") {
       writer.uint32(18).string(message.title);
@@ -47,8 +46,8 @@ export const Item = {
     if (message.description !== "") {
       writer.uint32(26).string(message.description);
     }
-    if (message.sellerAddress !== "") {
-      writer.uint32(34).string(message.sellerAddress);
+    if (message.sellerId !== "") {
+      writer.uint32(34).string(message.sellerId);
     }
     for (const v of message.minPrice) {
       Coin.encode(v!, writer.uint32(42).fork()).ldelim();
@@ -69,7 +68,7 @@ export const Item = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.itemId = longToNumber(reader.uint64() as Long);
+          message.itemId = reader.string();
           break;
         case 2:
           message.title = reader.string();
@@ -78,7 +77,7 @@ export const Item = {
           message.description = reader.string();
           break;
         case 4:
-          message.sellerAddress = reader.string();
+          message.sellerId = reader.string();
           break;
         case 5:
           message.minPrice.push(Coin.decode(reader, reader.uint32()));
@@ -99,9 +98,9 @@ export const Item = {
     message.minPrice = [];
     message.collateral = [];
     if (object.itemId !== undefined && object.itemId !== null) {
-      message.itemId = Number(object.itemId);
+      message.itemId = String(object.itemId);
     } else {
-      message.itemId = 0;
+      message.itemId = "";
     }
     if (object.title !== undefined && object.title !== null) {
       message.title = String(object.title);
@@ -113,10 +112,10 @@ export const Item = {
     } else {
       message.description = "";
     }
-    if (object.sellerAddress !== undefined && object.sellerAddress !== null) {
-      message.sellerAddress = String(object.sellerAddress);
+    if (object.sellerId !== undefined && object.sellerId !== null) {
+      message.sellerId = String(object.sellerId);
     } else {
-      message.sellerAddress = "";
+      message.sellerId = "";
     }
     if (object.minPrice !== undefined && object.minPrice !== null) {
       for (const e of object.minPrice) {
@@ -137,8 +136,7 @@ export const Item = {
     message.title !== undefined && (obj.title = message.title);
     message.description !== undefined &&
       (obj.description = message.description);
-    message.sellerAddress !== undefined &&
-      (obj.sellerAddress = message.sellerAddress);
+    message.sellerId !== undefined && (obj.sellerId = message.sellerId);
     if (message.minPrice) {
       obj.minPrice = message.minPrice.map((e) =>
         e ? Coin.toJSON(e) : undefined
@@ -163,7 +161,7 @@ export const Item = {
     if (object.itemId !== undefined && object.itemId !== null) {
       message.itemId = object.itemId;
     } else {
-      message.itemId = 0;
+      message.itemId = "";
     }
     if (object.title !== undefined && object.title !== null) {
       message.title = object.title;
@@ -175,10 +173,10 @@ export const Item = {
     } else {
       message.description = "";
     }
-    if (object.sellerAddress !== undefined && object.sellerAddress !== null) {
-      message.sellerAddress = object.sellerAddress;
+    if (object.sellerId !== undefined && object.sellerId !== null) {
+      message.sellerId = object.sellerId;
     } else {
-      message.sellerAddress = "";
+      message.sellerId = "";
     }
     if (object.minPrice !== undefined && object.minPrice !== null) {
       for (const e of object.minPrice) {
@@ -194,37 +192,37 @@ export const Item = {
   },
 };
 
-const baseMonoSellOrder: object = { sellOrderId: 0, sellerId: 0, itemId: 0 };
+const baseSellOrder: object = { sellOrderId: "", sellerId: "", itemId: "" };
 
-export const MonoSellOrder = {
-  encode(message: MonoSellOrder, writer: Writer = Writer.create()): Writer {
-    if (message.sellOrderId !== 0) {
-      writer.uint32(8).uint64(message.sellOrderId);
+export const SellOrder = {
+  encode(message: SellOrder, writer: Writer = Writer.create()): Writer {
+    if (message.sellOrderId !== "") {
+      writer.uint32(10).string(message.sellOrderId);
     }
-    if (message.sellerId !== 0) {
-      writer.uint32(16).uint64(message.sellerId);
+    if (message.sellerId !== "") {
+      writer.uint32(18).string(message.sellerId);
     }
-    if (message.itemId !== 0) {
-      writer.uint32(24).uint64(message.itemId);
+    if (message.itemId !== "") {
+      writer.uint32(26).string(message.itemId);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MonoSellOrder {
+  decode(input: Reader | Uint8Array, length?: number): SellOrder {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMonoSellOrder } as MonoSellOrder;
+    const message = { ...baseSellOrder } as SellOrder;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.sellOrderId = longToNumber(reader.uint64() as Long);
+          message.sellOrderId = reader.string();
           break;
         case 2:
-          message.sellerId = longToNumber(reader.uint64() as Long);
+          message.sellerId = reader.string();
           break;
         case 3:
-          message.itemId = longToNumber(reader.uint64() as Long);
+          message.itemId = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -234,27 +232,27 @@ export const MonoSellOrder = {
     return message;
   },
 
-  fromJSON(object: any): MonoSellOrder {
-    const message = { ...baseMonoSellOrder } as MonoSellOrder;
+  fromJSON(object: any): SellOrder {
+    const message = { ...baseSellOrder } as SellOrder;
     if (object.sellOrderId !== undefined && object.sellOrderId !== null) {
-      message.sellOrderId = Number(object.sellOrderId);
+      message.sellOrderId = String(object.sellOrderId);
     } else {
-      message.sellOrderId = 0;
+      message.sellOrderId = "";
     }
     if (object.sellerId !== undefined && object.sellerId !== null) {
-      message.sellerId = Number(object.sellerId);
+      message.sellerId = String(object.sellerId);
     } else {
-      message.sellerId = 0;
+      message.sellerId = "";
     }
     if (object.itemId !== undefined && object.itemId !== null) {
-      message.itemId = Number(object.itemId);
+      message.itemId = String(object.itemId);
     } else {
-      message.itemId = 0;
+      message.itemId = "";
     }
     return message;
   },
 
-  toJSON(message: MonoSellOrder): unknown {
+  toJSON(message: SellOrder): unknown {
     const obj: any = {};
     message.sellOrderId !== undefined &&
       (obj.sellOrderId = message.sellOrderId);
@@ -263,39 +261,39 @@ export const MonoSellOrder = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MonoSellOrder>): MonoSellOrder {
-    const message = { ...baseMonoSellOrder } as MonoSellOrder;
+  fromPartial(object: DeepPartial<SellOrder>): SellOrder {
+    const message = { ...baseSellOrder } as SellOrder;
     if (object.sellOrderId !== undefined && object.sellOrderId !== null) {
       message.sellOrderId = object.sellOrderId;
     } else {
-      message.sellOrderId = 0;
+      message.sellOrderId = "";
     }
     if (object.sellerId !== undefined && object.sellerId !== null) {
       message.sellerId = object.sellerId;
     } else {
-      message.sellerId = 0;
+      message.sellerId = "";
     }
     if (object.itemId !== undefined && object.itemId !== null) {
       message.itemId = object.itemId;
     } else {
-      message.itemId = 0;
+      message.itemId = "";
     }
     return message;
   },
 };
 
-const baseBuyOrder: object = { buyOrderId: 0, buyerId: 0, itemId: 0 };
+const baseBuyOrder: object = { buyOrderId: "", buyerId: "", itemId: "" };
 
 export const BuyOrder = {
   encode(message: BuyOrder, writer: Writer = Writer.create()): Writer {
-    if (message.buyOrderId !== 0) {
-      writer.uint32(8).uint64(message.buyOrderId);
+    if (message.buyOrderId !== "") {
+      writer.uint32(10).string(message.buyOrderId);
     }
-    if (message.buyerId !== 0) {
-      writer.uint32(16).uint64(message.buyerId);
+    if (message.buyerId !== "") {
+      writer.uint32(18).string(message.buyerId);
     }
-    if (message.itemId !== 0) {
-      writer.uint32(24).uint64(message.itemId);
+    if (message.itemId !== "") {
+      writer.uint32(26).string(message.itemId);
     }
     return writer;
   },
@@ -308,13 +306,13 @@ export const BuyOrder = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.buyOrderId = longToNumber(reader.uint64() as Long);
+          message.buyOrderId = reader.string();
           break;
         case 2:
-          message.buyerId = longToNumber(reader.uint64() as Long);
+          message.buyerId = reader.string();
           break;
         case 3:
-          message.itemId = longToNumber(reader.uint64() as Long);
+          message.itemId = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -327,19 +325,19 @@ export const BuyOrder = {
   fromJSON(object: any): BuyOrder {
     const message = { ...baseBuyOrder } as BuyOrder;
     if (object.buyOrderId !== undefined && object.buyOrderId !== null) {
-      message.buyOrderId = Number(object.buyOrderId);
+      message.buyOrderId = String(object.buyOrderId);
     } else {
-      message.buyOrderId = 0;
+      message.buyOrderId = "";
     }
     if (object.buyerId !== undefined && object.buyerId !== null) {
-      message.buyerId = Number(object.buyerId);
+      message.buyerId = String(object.buyerId);
     } else {
-      message.buyerId = 0;
+      message.buyerId = "";
     }
     if (object.itemId !== undefined && object.itemId !== null) {
-      message.itemId = Number(object.itemId);
+      message.itemId = String(object.itemId);
     } else {
-      message.itemId = 0;
+      message.itemId = "";
     }
     return message;
   },
@@ -357,31 +355,21 @@ export const BuyOrder = {
     if (object.buyOrderId !== undefined && object.buyOrderId !== null) {
       message.buyOrderId = object.buyOrderId;
     } else {
-      message.buyOrderId = 0;
+      message.buyOrderId = "";
     }
     if (object.buyerId !== undefined && object.buyerId !== null) {
       message.buyerId = object.buyerId;
     } else {
-      message.buyerId = 0;
+      message.buyerId = "";
     }
     if (object.itemId !== undefined && object.itemId !== null) {
       message.itemId = object.itemId;
     } else {
-      message.itemId = 0;
+      message.itemId = "";
     }
     return message;
   },
 };
-
-declare var self: any | undefined;
-declare var window: any | undefined;
-var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
-  throw "Unable to locate global object";
-})();
 
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin
@@ -393,15 +381,3 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
-
-function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  return long.toNumber();
-}
-
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
-}
