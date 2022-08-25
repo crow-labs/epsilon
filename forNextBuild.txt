@@ -84,9 +84,13 @@ Zeta Plan:
         - Creates buyerId for the member & updates the member map struct 
         - Responds with buyerId
 
-    ignite s message buyerApplication contactInfo:string --module whitelist --resp buyerId
+    ignite s message buyerApplication contactInfo:string --module whitelist --response buyerId:uint
 
-    7. Test the functionality
+    7. Add KeyNextGlobalBuyerID to genesis proto and go files
+
+    8. Add functionality for creating and adding a buyer to the members struct via buyerId
+
+    9. Test the functionality
         - Try to create a member twice in a row 
             - 2nd member should fail
         - Try to create a buyer twice in a row
@@ -94,5 +98,5 @@ Zeta Plan:
         - Create a member, create the buyer, then create another member for same account 
             - 2nd member should fail
 
-    
+    10. Repeate 5-9 for sellers and then voters
     
