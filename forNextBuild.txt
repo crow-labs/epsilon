@@ -1,0 +1,98 @@
+Epsilon Approach:
+    1. Scaffold chain and module:
+        ignite s chain epsilon --no-module --address-prefix crow
+        ignite s module nest --ibc --dep bank,account
+    2. Add Interfaces:
+        whitelist.go:
+         - MemberI
+         - MarketActorI
+         - BuyerI
+         - SellerI
+         - VoterI
+        market.go:
+         - ItemI
+         - OrderI
+         - SellOrderI
+         - BuyOrderI
+        disputes.go:
+         - EvidenceI
+         - DisputeI
+         - SentenceI
+         - VoteI
+    3. Add proto message definitions:
+        monoWhitelist.proto:
+         - Buyer
+         - Seller
+         - Voter
+        monoMarket.proto:
+         - Item
+         - SellOrder
+         - BuyOrder
+        monoDispute.proto:
+         - Evidence
+         - Rebuttal
+         - Dispute
+         - Sentence
+         - Vote
+    4. Add methods (mostly empty functionality) for types to satisfy associated Interfaces
+    5. Write messages
+
+What we've learned for Zeta:
+    - Interfaces and then methods approach sound for types
+    - Should scaffold maps w/ --no-message
+        - A lot under the hood automatically taken care of when scaffolding
+    - There are so many types that will eventually exist but developing all of them in joint phases 
+        is slow and any errors will persist for all the types
+        - Go back to using multiple modules but only develop them one at a time starting with whitelist
+    - Should the map from AccAddress to User Ids be from 1 Address to 3 or 3 separate maps
+        - Is there an advantage to using Ids?
+        - 2D map?
+            - members[address]
+                - buyers[id]
+                - sellers[id]
+                - voters[id]
+    - Should scaffold create messages and then write interfaces for them to satisfy
+
+Zeta Plan:
+    1. Scaffold chain
+    
+    ignite s chain zeta --address-prefix crow --no-module
+    
+    2. Scaffold whitelist module
+    
+    ignite s module whitelist --dep account 
+
+    3. Scaffold whitelist member map[string]struct{} w/ --no-message
+        - When id is 0 the member has 
+        - Different messages to enroll for buyer, seller and voter once a member
+    
+    ignite s map member name:string buyerId:uint sellerId:uint voterId:uint --index baseAddr --no-message --module whitelist 
+    
+    4. Scaffold message to become a member
+        - Checks if address is associated with a member
+        - Set member[AccAddress] = struct {buyerId = 0, sellerId = 0, voterId = 0}
+
+    ignite s message membershipApplication name:string --module whitelist --repsonse joined:bool
+
+    5. Scaffold whitelist buyer map[uint]struct{} w/ --no-messages
+
+    ignite s map buyer name:string contactInfo:string address:string status:string --index buyerId:uint --no-message --module whitelist 
+
+    6. Scaffold message to become a buyer
+        - Checks if address is associated with a member
+        - Checks if member already has a buyerId (non-zero buyerId)
+        - Creates buyerId for the member & updates the member map struct 
+        - Responds with buyerId
+
+    ignite s message buyerApplication contactInfo:string --module whitelist --resp buyerId
+
+    7. Test the functionality
+        - Try to create a member twice in a row 
+            - 2nd member should fail
+        - Try to create a buyer twice in a row
+            - 2nd buyer should fail
+        - Create a member, create the buyer, then create another member for same account 
+            - 2nd member should fail
+
+    
+    
